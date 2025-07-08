@@ -2,7 +2,7 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import 'bootstrap-icons/font/bootstrap-icons.css';
 createInertiaApp({
   resolve: name => {
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
