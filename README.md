@@ -1,0 +1,2 @@
+# jobscout
+jobscout project
