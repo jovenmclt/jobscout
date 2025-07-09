@@ -4,6 +4,7 @@
             <nav class="navbar col-12  navbar-expand-md px-md-4 px-1">
                 <div class="container-fluid">
                     <a class="navbar-brand d-md-block d-none" href="#">
+                        <img src="../Components/Assets/magnifying-glass.png" width="30" height="30" class="position-relative" style="bottom: 6px;"  alt="">
                         <span class="fw-bold fs-3" style="color: #5A81FA;">Job</span>
                         <span class="fw-bold fs-3">Scout</span>
                     </a>
@@ -11,19 +12,20 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand d-md-none d-block" href="#">
+                        <img src="../Components/Assets/magnifying-glass.png" width="30" height="30" class="position-relative" style="bottom: 6px;"  alt="">
                         <span class="fw-bold fs-3" style="color: #5A81FA;">Job</span>
                         <span class="fw-bold fs-3">Scout</span>
                     </a>
                     <div class="collapse navbar-collapse justify-content-end" id="indexnavbar">
                         <ul class="navbar-nav">
                             <li class="nav-item mt-1">
-                                <a class="nav-link fw-semibold" aria-current="page" href="#">Home</a>
+                                <a class="nav-link fw-semibold mx-md-3" aria-current="page" href="#home">Home</a>
                             </li>
                             <li class="nav-item mt-1">
-                                <a class="nav-link fw-semibold" aria-current="page" href="#">Jobs</a>
+                                <a class="nav-link fw-semibold mx-md-3" aria-current="page" href="#jobs">Jobs</a>
                             </li>
                             <li class="nav-item mt-1">
-                                <a class="nav-link fw-semibold" aria-current="page" href="#">About</a>
+                                <a class="nav-link fw-semibold mx-md-3" aria-current="page" href="#about">About</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="#">
@@ -35,13 +37,13 @@
                 </div>
             </nav>
             <main class="col-12">
-                <section id="section1" class="px-md-4 px-1">
-                    <div class="row justify-content-start">
+                <section id="home" class="px-md-4 px-1">
+                    <div class="row justify-content-center">
                         <div class="col-lg-10">
-                            <div class="text-start">
+                            <div class="text-center">
                                 <h1 class="fw-semibold display-1">Discover your future <br class="d-lg-block d-none"> with  <span class="fw-bold" style="color: #5A81FA;">Sweet Treats PH</span> </h1>
                                 <h4 class="fw-normal mb-5 mt-4">Explore a dynamic work environment that fosters growth, creativity, and <br class="d-lg-block d-none"> teamwork with Sweet Treats PH</h4>
-                                <button class="btn btn-secondary rounded-5 px-lg-5 py-lg-3 fs-5">Get Started <i class="bi bi-arrow-right"></i></button>
+                                <button class="btn btn-secondary rounded-5 px-lg-5 py-lg-3 fs-6">Get Started <i class="bi bi-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -63,7 +65,7 @@
                         </div>
                     </div>
                 </section>
-                <section id="section3" class="px-md-4 px-1">
+                <section id="jobs" class="px-md-4 px-1">
                     <div class="row justify-content-center">
                         <div class="col-lg-12">
                             <div class="text-center">
@@ -118,7 +120,7 @@
                         </div>
                     </div>
                 </section>
-                <section id="section5">
+                <section id="about">
                     <div class="row justify-content-center">
                         <div class="col-lg-12">
                             <div class="d-flex flex-lg-nowrap flex-wrap justify-content-between">
@@ -126,7 +128,7 @@
                                     <img src="../Components/Assets/ph-img.png" class="d-lg-inline d-none" alt="">
                                 </div>
                                 <div class="text-start mt-lg-3">
-                                    <h1 class="fw-normal display-3 ">Work in <span class="fw-bold" style="color: #5A81FA;">10 branches</span> <br class="d-lg-block d-none"> of   Sweet Treats PH</h1>
+                                    <h1 class="fw-normal display-4 text-lg-start text-center">Work in <span class="fw-bold" style="color: #5A81FA;">10 branches</span> <br class="d-lg-block d-none"> of   Sweet Treats PH</h1>
                                     <p class="fw-normal my-4 text-secondary">Were excited to share that Sweet Treats PH has grown to 25 branches across the Philippines! Bringing you the finest Filipino sweet delicacies, we’re now closer than ever to satisfy your cravings. Visit us at a location near you and enjoy the sweet taste of tradition!</p>
                                     <div class="d-flex gap-4">
                                         <ul>
@@ -170,6 +172,34 @@
                     </div>
                 </section>
             </main>
+            <footer class="footer col-12 py-4 px-5" style="background-color: #2A2C5A;">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="d-flex flex-wrap gap-4 justify-content-between">
+                            <div class="text-start d-flex">
+                                <img src="../Components/Assets/magnifying-glass.png" width="35" height="35" alt="">
+                                <span class="fw-bold fs-3" style="color: #5A81FA;"> Job</span>
+                                <span class="fw-bold fs-3 text-white">Scout</span>
+                            </div>
+                            <ul class="d-flex gap-4 list-unstyled">
+                                <li class=" mt-1">
+                                    <a class="fw-semibold text-white text-decoration-none" aria-current="page" href="#home">Home</a>
+                                </li>
+                                <li class=" mt-1">
+                                    <a class=" fw-semibold text-white text-decoration-none" aria-current="page" href="#jobs">Jobs</a>
+                                </li>
+                                <li class=" mt-1">
+                                    <a class=" fw-semibold text-white text-decoration-none" aria-current="page" href="#about">About</a>
+                                </li>
+                            </ul>
+                            <div class="text-start  ">
+                                <button class="btn btn-outline-primary rounded-5 px-4 py-1 text-white mx-2"><i class="bi bi-person-fill-check"> Login</i></button>
+                                 <button class="btn btn-secondary rounded-5 px-4 py-1 text-white mx-2"><i class="bi bi-box-arrow-in-right"> Signup</i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
 </template>
@@ -185,7 +215,7 @@ export default {
 
 section{
     font-family: "Poppins", sans-serif;
-    padding: calc(50px + 1rem) 0;
+    padding: calc(65px + 1rem) 0;
 }
 
 .section4-style{
