@@ -28,9 +28,9 @@
                                 <a class="nav-link fw-semibold mx-md-3" aria-current="page" href="#about">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="#">
+                                <inertiaLink class="nav-link" aria-current="page" href="/login/account">
                                     <button class="btn btn-primary rounded-5 px-4 py-1 fw-semibold">Login</button>
-                                </a>
+                                </inertiaLink>
                             </li>
                         </ul>
                     </div>
@@ -43,7 +43,9 @@
                             <div class="text-center">
                                 <h1 class="fw-semibold display-1">Discover your future <br class="d-lg-block d-none"> with  <span class="fw-bold" style="color: #5A81FA;">Sweet Treats PH</span> </h1>
                                 <h4 class="fw-normal mb-5 mt-4">Explore a dynamic work environment that fosters growth, creativity, and <br class="d-lg-block d-none"> teamwork with Sweet Treats PH</h4>
-                                <button class="btn btn-secondary rounded-5 px-lg-5 py-lg-3 fs-6">Get Started <i class="bi bi-arrow-right"></i></button>
+                                <inertiaLink href="/register/account">
+                                    <button class="btn btn-secondary rounded-5 px-lg-5 py-lg-3 fs-6">Get Started <i class="bi bi-arrow-right"></i></button>
+                                </inertiaLink>
                             </div>
                         </div>
                     </div>
@@ -177,8 +179,8 @@
                     <div class="col-lg-12">
                         <div class="d-flex flex-wrap gap-4 justify-content-between">
                             <div class="text-start d-flex">
-                                <img src="../Components/Assets/magnifying-glass.png" width="35" height="35" alt="">
-                                <span class="fw-bold fs-3" style="color: #5A81FA;"> Job</span>
+                                <img src="../Components/Assets/magnifying-glass.png" width="30" height="30" class="mt-1" alt="">
+                                <span class="fw-bold fs-3" style="color: #5A81FA;">Job</span>
                                 <span class="fw-bold fs-3 text-white">Scout</span>
                             </div>
                             <ul class="d-flex gap-4 list-unstyled">
@@ -193,8 +195,12 @@
                                 </li>
                             </ul>
                             <div class="text-start  ">
-                                <button class="btn btn-outline-primary rounded-5 px-4 py-1 text-white mx-2"><i class="bi bi-person-fill-check"> Login</i></button>
-                                 <button class="btn btn-secondary rounded-5 px-4 py-1 text-white mx-2"><i class="bi bi-box-arrow-in-right"> Signup</i></button>
+                                <inertiaLink href="/login/account">
+                                    <button class="btn btn-outline-primary rounded-5 px-4 py-1 text-white mx-2"><i class="bi bi-person-fill-check"> Login</i></button>
+                                </inertiaLink>
+                                <inertiaLink href="/register/account">
+                                    <button class="btn btn-secondary rounded-5 px-4 py-1 text-white mx-2"><i class="bi bi-box-arrow-in-right"> Signup</i></button>
+                                </inertiaLink>
                             </div>
                         </div>
                     </div>
@@ -205,8 +211,10 @@
 </template>
 
 <script>
+import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'Index',
+    components: {inertiaLink}
 }
 </script>
 
@@ -216,6 +224,7 @@ export default {
 section{
     font-family: "Poppins", sans-serif;
     padding: calc(65px + 1rem) 0;
+    overflow-wrap: break-word;
 }
 
 .section4-style{
