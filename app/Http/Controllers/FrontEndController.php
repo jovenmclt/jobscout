@@ -7,17 +7,24 @@ use Illuminate\Http\Request;
 
 class FrontEndController extends Controller
 {
-    //
+    // Landing Page
 
     public function index(){
         return Inertia::render('Index/Index');
     }
 
-    public function RegisterAccount(){
+    public function RegisterPage(){
         return Inertia::render('Index/RegisterAccount');
     }
 
-    public function LoginAccount(){
+    public function LoginPage(){
         return Inertia::render('Index/LoginAccount');
     }
+
+    // Admin
+
+    public function AdminDashboard(){
+        return Inertia::render('Index/AdminDashboard');
+    }
 }
+

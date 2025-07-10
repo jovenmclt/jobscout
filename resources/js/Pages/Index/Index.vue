@@ -76,7 +76,7 @@
                             <div class="d-flex flex-md-nowrap flex-wrap gap-3 justify-content-md-between justify-content-center pt-4">
                                 <div class="border border-primary border-2 py-3 px-2 rounded-5" style="width: 400px;">
                                     <div class="text-end" >
-                                        <p class="fw-semibold text-primary d-inline-block py-1 px-3 rounded-4" style=" background-color: #EAEFFF;">APALIT BRANCH</p>
+                                        <p class="fw-semibold text-primary d-inline-block py-1 px-3 rounded-4" style=" background-color: #EAEFFF;">BALER BRANCH</p>
                                     </div>
                                     <div class="text-start">
                                         <img src="../Components/Assets/Waiter.png" alt="">
@@ -91,20 +91,20 @@
                                     </div>
                                     <div class="text-start">
                                         <img src="../Components/Assets/Waiter.png" alt="">
-                                        <h5 class="fw-semibold ps-lg-4">Fastfood Attendant</h5>
-                                        <p class="fw-normal text-secondary ps-lg-4">Provides quick and efficient customer service, takes orders, and ensures food is served promptly.</p>
-                                        <h5 class="fw-semibold ps-lg-4">₱11, 687.00</h5>
+                                        <h5 class="fw-semibold ps-lg-4">Busser</h5>
+                                        <p class="fw-normal text-secondary ps-lg-4">Clears tables, resets dining areas, and assists in maintaining cleanliness in the restaurant.</p>
+                                        <h5 class="fw-semibold ps-lg-4">₱18, 194.00</h5>
                                     </div>
                                 </div>
                                 <div class="border border-primary border-2 py-3 px-2 rounded-5" style="width: 400px;">
                                     <div class="text-end" >
-                                        <p class="fw-semibold text-primary d-inline-block py-1 px-3 rounded-4" style=" background-color: #EAEFFF;">APALIT BRANCH</p>
+                                        <p class="fw-semibold text-primary d-inline-block py-1 px-3 rounded-4" style=" background-color: #EAEFFF;">CEBU BRANCH</p>
                                     </div>
                                     <div class="text-start">
                                         <img src="../Components/Assets/Waiter.png" alt="">
-                                        <h5 class="fw-semibold ps-lg-4">Fastfood Attendant</h5>
-                                        <p class="fw-normal text-secondary ps-lg-4">Provides quick and efficient customer service, takes orders, and ensures food is served promptly.</p>
-                                        <h5 class="fw-semibold ps-lg-4">₱11, 687.00</h5>
+                                        <h5 class="fw-semibold ps-lg-4">Food Runner</h5>
+                                        <p class="fw-normal text-secondary ps-lg-4">Delivers orders from the kitchen to guests, ensuring accuracy and timely service.</p>
+                                        <h5 class="fw-semibold ps-lg-4">₱16, 404.00</h5>
                                     </div>
                                 </div>
                             </div>
