@@ -1,5 +1,5 @@
 <template>
-    <div class="col-12 py-2 px-md-4 px-2 bg-white shadow-sm d-md-block d-none">
+    <div id="navtop" class="col-12 py-2 px-md-4 px-2 bg-white shadow-sm d-md-block d-none z-1">
         <div class="d-flex justify-content-between">
             <div class="text-start">
                 <img src="../Assets/magnifying-glass.png" width="30" height="30" class="position-relative" style="bottom: 6px;"  alt="">
@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="adminnavbar">
             <ul class="navbar-nav flex-md-column ms-md-3">
                 <li class="navbar-item ">
-                    <inertiaLink href="/admin/dashboard" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-5 px-lg-3 px-2"><i class="bi bi-house"></i> Dashboard</inertiaLink>
+                    <inertiaLink href="/admin/dashboard" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-house"></i> Dashboard</inertiaLink>
                 </li>
                 <a  data-bs-toggle="collapse" href="#collapseExample" class="mt-4 text-decoration-none fw-noemal fs-6 text-secondary d-flex justify-content-between px-lg-3 px-2">
                     <span>Career</span>
@@ -31,13 +31,13 @@
                 </a>
                 <div class="collapse show" id="collapseExample">
                     <li class="navbar-item mt-3">
-                        <a href="" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-5 px-lg-3 px-2"><i class="bi bi-briefcase"></i> Jobs</a>
+                        <inertiaLink href="/admin/jobs" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-briefcase"></i> Jobs</inertiaLink>
                     </li>
                     <li class="navbar-item mt-3">
-                        <a href="" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-5 px-lg-3 px-2"><i class="bi bi-file-earmark-person"></i> Application</a>
+                        <inertiaLink href="/admin/application" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-file-earmark-person"></i> Application</inertiaLink>
                     </li>
                     <li class="navbar-item mt-3">
-                        <a href="" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-5 px-lg-3 px-2"><i class="bi bi-people"></i> Members</a>
+                        <inertiaLink href="/admin/members" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-people"></i> Members</inertiaLink>
                     </li>
                 </div>
             </ul>
@@ -63,7 +63,11 @@ export default {
 
 @media (min-width: 768px) {
     #navigationbar{
-        position: sticky;
+        position: fixed;
+        top: 70px;
+    }
+    #navtop{
+        position: fixed;
         top: 0;
     }
 }

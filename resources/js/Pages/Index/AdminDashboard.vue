@@ -1,13 +1,17 @@
 <template>
     <div class="container-xxl bg-color">
-        <div class="row">
+        <div class="row pe-xl-3">
             <AdminNavigation />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
+                <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
                     <div class="row justify-content-start">
-                        <div class="text-start">
+
+
+
+                        <div class="text-start mt-3">
                             <h4 class="fw-semibold">Dashboard</h4>
-                            <div class="py-3 px-3 bg-white rounded shadow-sm d-flex justify-content-between mt-3 mb-4" style="width: 350px;">
+                            <div class="py-3 px-3 bg-white rounded shadow-sm d-flex justify-content-between mt-3 mb-4 border" style="width: 350px;">
                                 <div class="d-flex gap-2">
                                     <div class="text-start">
                                         <img src="../Components/Assets/admin-profile.png" alt="" width="50">
@@ -25,7 +29,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="bg-white rounded shadow-sm">
+                            <div class="bg-white rounded shadow-sm border">
                                 <div class="text-start pt-3 px-3 ">
                                     <p class="fw-normal text-secondary mb-2">Jobs Open</p>
                                     <h3 class="fw-semibold">191</h3>
@@ -34,7 +38,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 mt-lg-0 mt-3">
-                            <div class="bg-white rounded shadow-sm">
+                            <div class="bg-white rounded shadow-sm border">
                                 <div class="text-start pt-3 px-3 ">
                                     <p class="fw-normal text-secondary mb-2">New Members</p>
                                     <h3 class="fw-semibold">1340</h3>
@@ -43,7 +47,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 mt-lg-0 mt-3">
-                            <div class="bg-white rounded shadow-sm">
+                            <div class="bg-white rounded shadow-sm border">
                                 <div class="text-start pt-3 px-3 ">
                                     <p class="fw-normal text-secondary mb-2">New Applicants</p>
                                     <h3 class="fw-semibold">5343</h3>
@@ -51,12 +55,18 @@
                                 <canvas id="applicantschart" class="bg-transparent" style="width: 100%; height: 40px; "></canvas>
                             </div>
                         </div>
+
+
+
                     </div>
                 </section>
                 <section id="section2">
                     <div class="row justify-content-center">
+
+
+
                         <div class="col-lg-6">
-                            <div class="bg-white py-3 px-3 rounded shadow-sm">
+                            <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start border-bottom">
                                     <h6 class="fw-semibold">Applicants per month</h6>
                                 </div>
@@ -64,19 +74,26 @@
                             </div>
                         </div>
                         <div class="col-lg-6 mt-lg-0 mt-3">
-                            <div class="bg-white py-3 px-3 rounded shadow-sm">
+                            <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start border-bottom">
                                     <h6 class="fw-semibold">Total Members</h6>
                                 </div>
                                 <canvas id="totalmembers" class="mt-3" style="height: 300px; width: 100%;"></canvas>
                             </div>
                         </div>
+
+
+
                     </div>
                 </section>
                 <section id="section3">
                     <div class="row justify-content-center">
+
+
+
+
                         <div class="col-lg-12">
-                            <div class="bg-white py-3 px-3">
+                            <div class="bg-white py-3 px-3 shadow-sm rounded border">
                                 <div class="table-responsive">
                                     <div class="text-start border-bottom mb-3">
                                         <h6 class="fw-semibold">Latest Applications</h6>
@@ -141,6 +158,10 @@
                                 </div>
                             </div>
                         </div>
+
+
+
+
                     </div>
                 </section>
             </main>
@@ -375,6 +396,6 @@ thead th {
 }
 
 tbody td{
-     white-space: nowrap;
+    white-space: nowrap;
 }
 </style>
