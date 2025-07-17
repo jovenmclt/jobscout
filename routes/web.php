@@ -7,6 +7,11 @@ Route::get('/', [FrontEndController::class, 'Index']);
 Route::get('/register/account', [FrontEndController::class, 'RegisterPage']);
 Route::get('/login/account', [FrontEndController::class, 'LoginPage']);
 
+// user
+Route::get('/user/dashboard', [FrontEndController::class, 'UserDashboard']);
+Route::get('/user/jobs', [FrontEndController::class, 'UserJobs']);
+Route::get('/user/jobs/details', [FrontEndController::class, 'UserJobsDetails']);
+
 
 // admin
 Route::get('/admin/dashboard', [FrontEndController::class, 'AdminDashboard']);

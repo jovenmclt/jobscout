@@ -62,5 +62,20 @@ class FrontEndController extends Controller
     public function AdminViewMember(){
         return Inertia::render('Index/AdminViewMember');
     }
+
+
+    // User
+
+    public function UserDashboard(){
+        return Inertia::render('Index/UserDashboard');
+    }
+
+    public function UserJobs(){
+        return Inertia::render('Index/UserJobs');
+    }
+
+    public function UserJobsDetails(){
+        return Inertia::render('Index/UserJobsDetails');
+    }
 }
 

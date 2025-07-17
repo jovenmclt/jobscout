@@ -13,7 +13,7 @@
                             <br>
                             <h4 class="fw-semibold mt-2">View Member</h4>
                         </div>
-                        <div class="col-lg-10 mt-3">
+                        <div class="col-lg-12 mt-3">
                             <div class="bg-white py-3 px-3 shadow-sm rounded border">
                                 <div class="text-start">
 
