@@ -19,7 +19,7 @@
 
                                     <div class="text-center">
                                         <img src="../Components/Assets/profile.png" width="100" alt="">
-                                          <h5 class="fw-semibold">John Doe</h5>
+                                        <h5 class="fw-semibold">John Doe</h5>
                                     </div>
                                     <div class="d-flex justify-content-between  flex-md-nowrap gap-3">
                                         <div class="text-start w-75">

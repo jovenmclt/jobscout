@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="adminnavbar">
             <ul class="navbar-nav flex-md-column ms-md-3">
                 <li class="navbar-item ">
-                    <inertiaLink href="/admin/dashboard" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-house"></i> Dashboard</inertiaLink>
+                    <inertiaLink href="/admin/dashboard" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-house"></i> Dashboard</inertiaLink>
                 </li>
                 <a  data-bs-toggle="collapse" href="#collapseExample" class="mt-4 text-decoration-none fw-noemal fs-6 text-secondary d-flex justify-content-between px-lg-3 px-2">
                     <span>Career</span>
@@ -31,13 +31,13 @@
                 </a>
                 <div class="collapse show" id="collapseExample">
                     <li class="navbar-item mt-3">
-                        <inertiaLink href="/admin/jobs" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-briefcase"></i> Jobs</inertiaLink>
+                        <inertiaLink href="/admin/jobs" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-briefcase"></i> Jobs</inertiaLink>
                     </li>
                     <li class="navbar-item mt-3">
-                        <inertiaLink href="/admin/application" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-file-earmark-person"></i> Application</inertiaLink>
+                        <inertiaLink href="/admin/application" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-file-earmark-person"></i> Application</inertiaLink>
                     </li>
                     <li class="navbar-item mt-3">
-                        <inertiaLink href="/admin/members" class="navbar-link text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-people"></i> Members</inertiaLink>
+                        <inertiaLink href="/admin/members" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-people"></i> Members</inertiaLink>
                     </li>
                 </div>
             </ul>
@@ -53,10 +53,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=League+Spartan:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-.nav-link:hover{
+.admin-nav-hov:hover{
     background-color: #F3F3F3;
     color: #5A81FA !important;
 }

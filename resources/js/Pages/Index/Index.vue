@@ -19,16 +19,16 @@
                     <div class="collapse navbar-collapse justify-content-end" id="indexnavbar">
                         <ul class="navbar-nav">
                             <li class="nav-item mt-1">
-                                <a class="nav-link fw-semibold mx-md-3" aria-current="page" href="#home">Home</a>
+                                <a class="nav-link fw-semibold mx-md-3" href="#home">Home</a>
                             </li>
                             <li class="nav-item mt-1">
-                                <a class="nav-link fw-semibold mx-md-3" aria-current="page" href="#jobs">Jobs</a>
+                                <a class="nav-link fw-semibold mx-md-3" href="#jobs">Jobs</a>
                             </li>
                             <li class="nav-item mt-1">
-                                <a class="nav-link fw-semibold mx-md-3" aria-current="page" href="#about">About</a>
+                                <a class="nav-link fw-semibold mx-md-3" href="#about">About</a>
                             </li>
                             <li class="nav-item">
-                                <inertiaLink class="nav-link" aria-current="page" href="/login/account">
+                                <inertiaLink class="nav-link" href="/login/account">
                                     <button class="btn btn-primary rounded-5 px-4 py-1 fw-semibold">Login</button>
                                 </inertiaLink>
                             </li>

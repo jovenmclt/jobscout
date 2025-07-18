@@ -11,6 +11,10 @@ Route::get('/login/account', [FrontEndController::class, 'LoginPage']);
 Route::get('/user/dashboard', [FrontEndController::class, 'UserDashboard']);
 Route::get('/user/jobs', [FrontEndController::class, 'UserJobs']);
 Route::get('/user/jobs/details', [FrontEndController::class, 'UserJobsDetails']);
+Route::get('/user/jobs/interview', [FrontEndController::class, 'UserJobsInterview']);
+Route::get('/user/applicationstats', [FrontEndController::class, 'UserApplicationStats']);
+Route::get('/user/view/application', [FrontEndController::class, 'UserViewApplication']);
+Route::get('/user/profile', [FrontEndController::class, 'UserProfile']);
 
 
 // admin

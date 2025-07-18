@@ -77,5 +77,21 @@ class FrontEndController extends Controller
     public function UserJobsDetails(){
         return Inertia::render('Index/UserJobsDetails');
     }
+
+    public function UserJobsInterview(){
+        return Inertia::render('Index/UserJobsInterview');
+    }
+
+    public function UserApplicationStats(){
+        return Inertia::render('Index/UserApplicationStats');
+    }
+
+    public function UserViewApplication(){
+        return Inertia::render('Index/UserViewApplication');
+    }
+
+    public function UserProfile(){
+        return Inertia::render('Index/UserProfile');
+    }
 }
 
