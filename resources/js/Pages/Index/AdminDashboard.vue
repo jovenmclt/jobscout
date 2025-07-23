@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="text-start mt-1">
                                     <a href="#">
-                                        <button class="btn btn-outline-secondary"><i class="bi bi-box-arrow-left"> Sign out</i></button>
+                                        <button @click="btnLogoutAccount" class="btn btn-outline-secondary"><i class="bi bi-box-arrow-left"> Sign out</i></button>
                                     </a>
                                 </div>
                             </div>
@@ -172,6 +172,7 @@
 <script>
 import chart from 'chart.js/auto'
 import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
+import {router} from '@inertiajs/vue3'
 export default {
     name: 'AdminDashboard',
     components: {AdminNavigation},
@@ -366,6 +367,10 @@ export default {
             };
 
             new chart(ctx,config);
+        },
+
+        btnLogoutAccount(){
+            router.post('/logoutaccount');
         }
     },
     mounted(){

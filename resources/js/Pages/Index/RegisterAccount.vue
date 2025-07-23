@@ -5,28 +5,31 @@
                 <section class="section1">
                     <div class="row justify-content-center vh-100">
                         <div class="col-lg-6 col-12 d-flex align-items-center justify-content-center">
-                            <div class="text-start">
+                            <div class="text-start w-75">
                                 <h3 class="fw-bold">Sign up account</h3>
                                 <p class="fw-normal">Lorem ipsum dolor sit amet consectetur </p>
-                                <form action="">
+                                <form @submit.prevent="btnRegisterAccount" action="">
                                     <label for="Fullname" class="form-label">Fullname:</label>
-                                    <input id="Fullname" type="text" class="form-control shadow-none rounded-5 w-100 ">
+                                    <input v-model="fullname" id="Fullname" type="text" class="form-control shadow-none rounded-5 w-100 ">
+                                    <p class="fw-normal text-danger mb-0 ms-2 mt-2" v-if="errors.fullname">{{ errors.fullname }}</p>
 
                                     <label for="Email" class="form-label mt-3">Email:</label>
-                                    <input id="Email" type="email" class="form-control shadow-none rounded-5 w-100 ">
+                                    <input v-model="email" id="Email" type="email" class="form-control shadow-none rounded-5 w-100 ">
+                                    <p class="fw-normal text-danger mb-0 ms-2 mt-2" v-if="errors.email">{{ errors.email }}</p>
 
                                     <label for="Password" class="form-label mt-3">Password:</label>
-                                    <input id="Password" type="password" class="form-control shadow-none rounded-5 w-100">
+                                    <input v-model="password" id="Password" type="password" class="form-control shadow-none rounded-5 w-100">
+                                    <p class="fw-normal text-danger mb-0 ms-2 mt-2" v-if="errors.password">{{ errors.password }}</p>
 
                                     <label for="ConfirmPassword" class="form-label mt-3">Confirm Password:</label>
-                                    <input id="ConfirmPassword" type="password" class="form-control shadow-none rounded-5 w-100">
-
+                                    <input v-model="confirmpassword" id="ConfirmPassword" type="password" class="form-control shadow-none rounded-5 w-100">
+                                    <p class="fw-normal text-danger mb-0 mt-2 ms-2" style="font-size: 14px;">{{ errorconfirmpassword }}</p>
                                     <br>
-                                    <button class="btn btn-primary w-100">Sign up</button>
+                                    <button type="submit" class="btn btn-primary w-100">Sign up</button>
                                 </form>
                                 <div class="text-center mt-3">
                                     <p class="fw-normal">Already a member?
-                                        <a href="#">Log in</a>
+                                        <inertiaLink href="/login/account">Log in</inertiaLink>
                                     </p>
                                 </div>
                             </div>
@@ -44,8 +47,37 @@
 </template>
 
 <script>
+import {Link as inertiaLink} from '@inertiajs/vue3'
+import {router} from '@inertiajs/vue3'
 export default {
-    name: 'RegisterAccount'
+    name: 'RegisterAccount',
+    components: {inertiaLink},
+    props: {errors:Object},
+    data(){
+        return{
+            fullname: '',
+            email: '',
+            password: '',
+            confirmpassword: '',
+
+            errorconfirmpassword: ''
+        }
+    },
+    methods: {
+        btnRegisterAccount(){
+            const data = {
+                fullname: this.fullname,
+                email: this.email,
+                password: this.password
+            }
+
+            if(this.password == this.confirmpassword){
+                router.post('/registeraccount', data);
+            }else{
+                this.errorconfirmpassword = 'Mismatch detected between password and confirmation.'
+            }
+        }
+    }
 }
 </script>
 

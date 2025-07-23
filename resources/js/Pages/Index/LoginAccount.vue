@@ -5,15 +5,17 @@
                 <section class="section1">
                     <div class="row justify-content-center vh-100">
                         <div class="col-lg-6 col-12 d-flex align-items-center justify-content-center">
-                            <div class="text-start">
+                            <div class="text-start w-75">
                                 <h3 class="fw-bold">Welcome Back!</h3>
                                 <p class="fw-normal">Lorem ipsum dolor sit amet consectetur </p>
-                                <form action="">
+                                <form @submit.prevent="btnlogin" action="">
                                     <label for="Email" class="form-label">Email:</label>
-                                    <input id="Email" type="text" class="form-control shadow-none rounded-5 w-100 ">
+                                    <input v-model="email" id="Email" type="text" class="form-control shadow-none rounded-5 w-100 ">
 
                                     <label for="Password" class="form-label mt-3">Password:</label>
-                                    <input id="Password" type="password" class="form-control shadow-none rounded-5 w-100">
+                                    <input v-model="password" id="Password" type="password" class="form-control shadow-none rounded-5 w-100">
+
+                                    <p class="fw-normal mb-0 mt-2 ms-2 text-danger" v-if="$page.props.flash.loginmessage">{{ $page.props.flash.loginmessage }}</p>
 
                                     <div class="mt-3 ms-1">
                                         <input type="checkbox" class="form-check-input shadow-none">
@@ -24,7 +26,7 @@
                                 </form>
                                 <div class="text-center mt-3">
                                     <p class="fw-normal">Don't have an account?
-                                        <a href="#">Sign up</a>
+                                        <inertiaLink href="/register/account">Sign up</inertiaLink>
                                     </p>
                                 </div>
                             </div>
@@ -42,8 +44,26 @@
 </template>
 
 <script>
+import {Link as inertiaLink} from '@inertiajs/vue3'
+import {router} from '@inertiajs/vue3'
 export default {
-    name: 'LoginAccount'
+    name: 'LoginAccount',
+    components: {inertiaLink},
+    data(){
+        return{
+            email: '',
+            password: ''
+        }
+    },
+    methods: {
+        btnlogin(){
+            const data = {
+                email: this.email,
+                password: this.password
+            }
+            router.post('/loginaccount', data);
+        }
+    }
 }
 </script>
 

@@ -20,6 +20,16 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'cv_path',
+        'resume_path',
+        'experience',
+        'about',
+        'gender',
+        'age',
+        'education',
+        'location',
+        'profile_picture'
     ];
 
     /**
@@ -40,7 +50,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

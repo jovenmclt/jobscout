@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="text-start mt-1">
                                     <a href="#">
-                                        <button class="btn btn-outline-secondary"><i class="bi bi-box-arrow-left"> Sign out</i></button>
+                                        <button @click="btnlogout" class="btn btn-outline-secondary"><i class="bi bi-box-arrow-left"> Sign out</i></button>
                                     </a>
                                 </div>
                             </div>
@@ -138,9 +138,15 @@
 
 <script>
 import UserNavigation from '../Components/UserNavigation/UserNavigation.vue';
+import {router} from '@inertiajs/vue3'
 export default {
     name: 'UserDashboard',
-    components: {UserNavigation}
+    components: {UserNavigation},
+    methods:{
+        btnlogout(){
+            router.post('/logoutaccount');
+        }
+    }
 }
 </script>
 
