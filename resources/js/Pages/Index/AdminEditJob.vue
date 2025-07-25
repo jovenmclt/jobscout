@@ -24,21 +24,27 @@
                                     <div class="d-flex gap-3">
                                         <div class="text-start w-50">
                                             <label for="jobtitle" class="form-label">Job Title<span class="text-danger">*</span></label>
-                                            <input id="jobtitle" type="text" class="form-control shadow-none">
+                                            <input v-model="jobtitle" id="jobtitle" type="text" class="form-control shadow-none">
                                         </div>
                                         <div class="text-start w-50">
                                             <label for="salary" class="form-label">Salary<span class="text-danger">*</span></label>
-                                            <input id="salary" type="text" class="form-control shadow-none">
+                                            <input v-model="salary" id="salary" type="text" class="form-control shadow-none">
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3 mt-3">
                                         <div class="text-start w-50">
                                             <label for="location" class="form-label">Location<span class="text-danger">*</span></label>
-                                            <input id="location" type="text" class="form-control shadow-none">
+                                            <select v-model="location" class="form-select shadow-none">
+                                                <option selected></option>
+                                                <option value="San Fernando, Pampanga">San Fernando, Pampanga</option>
+                                                <option value="Apalit, Pampanga">Apalit, Pampanga</option>
+                                                <option value="Mexico, Pampanga">Mexico, Pampanga</option>
+                                                <option value="Bacolor, Pampanga">Bacolor, Pampanga</option>
+                                            </select>
                                         </div>
                                         <div class="text-start w-50">
                                             <label for="type" class="form-label">Type<span class="text-danger">*</span></label>
-                                            <select class="form-select shadow-none">
+                                            <select v-model="type" class="form-select shadow-none">
                                                 <option selected></option>
                                                 <option value="Full-time">Full-time</option>
                                                 <option value="Part-time">Part-time</option>
@@ -47,15 +53,15 @@
                                     </div>
                                     <div class="text-start mt-3">
                                         <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
-                                        <textarea class="form-control shadow-none"  style="height: 100px" ></textarea>
+                                        <textarea v-model="description" class="form-control shadow-none"  style="height: 100px" ></textarea>
                                     </div>
 
                                     <div class="text-start mt-3">
                                         <label for="interview" class="form-label">Interview Questions<span class="text-danger">*</span></label>
                                         <template v-for="(getquestion, index) in interview_array" :key="index">
                                             <div class="d-flex gap-2 mt-2">
-                                                <i @click="DeleteQuestion(index)" v-if="index > 0" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
                                                 <input v-model="getquestion.question" id="interview" type="text" class="form-control shadow-none">
+                                                <i @click="DeleteQuestion(index)" v-if="index > 0" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
                                             </div>
                                         </template>
                                     </div>
@@ -99,8 +105,16 @@ import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
 export default {
     name:'AdminEditJob',
     components: {AdminNavigation},
+    props: {job_data:Object, job_interview:Array},
     data(){
         return{
+            jobtitle: this.job_data ? this.job_data.job_title : '',
+            salary: this.job_data ? this.job_data.salary : '',
+            location: this.job_data ? this.job_data.location : '',
+            type: this.job_data ? this.job_data.type : '',
+            description: this.job_data ? this.job_data.description : '',
+            status: this.job_data.status ? true : false,
+
             interview_array: [
                 {question: ''}
             ]
@@ -114,7 +128,21 @@ export default {
         },
         DeleteQuestion(index){
             this.interview_array.splice(index, 1);
+        },
+        retrieveinterview(){
+            if(this.job_interview.length > 0){
+                this.interview_array = [];
+                for(let i = 0; i < this.job_interview.length; i++){
+                    this.interview_array.push({
+                        question: this.job_interview[i].question
+                    })
+                }
+
+            }
         }
+    },
+    mounted(){
+        this.retrieveinterview();
     }
 }
 </script>

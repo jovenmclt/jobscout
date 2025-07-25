@@ -15,14 +15,17 @@
                         </div>
                         <div class="col-lg-7 mt-3">
                             <div class="bg-white py-3 px-3 shadow-sm border rounded">
+
                                     <div class="d-flex gap-3">
                                         <div class="text-start w-50">
                                             <label for="jobtitle" class="form-label">Job Title<span class="text-danger">*</span></label>
-                                            <input id="jobtitle" type="text" class="form-control shadow-none">
+                                            <input v-model="jobtitle" id="jobtitle" type="text" class="form-control shadow-none">
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.jobtitle"> {{ errors.jobtitle }}</p>
                                         </div>
                                         <div class="text-start w-50">
                                             <label for="salary" class="form-label">Salary<span class="text-danger">*</span></label>
-                                            <input id="salary" type="text" class="form-control shadow-none">
+                                            <input v-model="salary" id="salary" type="text" class="form-control shadow-none">
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.salary"> {{ errors.salary }}</p>
                                         </div>
                                     </div>
 
@@ -30,22 +33,31 @@
                                     <div class="d-flex gap-3 mt-3">
                                         <div class="text-start w-50">
                                             <label for="location" class="form-label">Location<span class="text-danger">*</span></label>
-                                            <input id="location" type="text" class="form-control shadow-none">
+                                            <select v-model="location" class="form-select shadow-none">
+                                                <option selected></option>
+                                                <option value="San Fernando, Pampanga">San Fernando, Pampanga</option>
+                                                <option value="Apalit, Pampanga">Apalit, Pampanga</option>
+                                                <option value="Mexico, Pampanga">Mexico, Pampanga</option>
+                                                <option value="Bacolor, Pampanga">Bacolor, Pampanga</option>
+                                            </select>
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.location"> {{ errors.location }}</p>
                                         </div>
                                         <div class="text-start w-50">
                                             <label for="type" class="form-label">Type<span class="text-danger">*</span></label>
-                                            <select class="form-select shadow-none">
+                                            <select v-model="type" class="form-select shadow-none">
                                                 <option selected></option>
                                                 <option value="Full-time">Full-time</option>
                                                 <option value="Part-time">Part-time</option>
                                             </select>
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.type"> {{ errors.type }}</p>
                                         </div>
                                     </div>
 
 
                                     <div class="text-start mt-3">
                                         <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
-                                        <textarea class="form-control shadow-none"  style="height: 100px" ></textarea>
+                                        <textarea v-model="description" class="form-control shadow-none"  style="height: 100px" ></textarea>
+                                        <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.description"> {{ errors.description }}</p>
                                     </div>
 
 
@@ -53,9 +65,10 @@
                                         <label for="interview" class="form-label">Interview Questions<span class="text-danger">*</span></label>
                                         <template v-for="(getquestion, index) in interview_array" :key="index">
                                             <div class="d-flex gap-2 mt-2">
-                                                <i @click="DeleteQuestion(index)" v-if="index > 0" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
                                                 <input v-model="getquestion.question" id="interview" type="text" class="form-control shadow-none">
+                                                <i @click="DeleteQuestion(index)" v-if="index > 0" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
                                             </div>
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors[`interview_questions.${index}.question`]">The interview question {{ index + 1 }} field is required</p>
                                         </template>
                                     </div>
                                     <div class="text-end">
@@ -63,8 +76,8 @@
                                     </div>
                             </div>
                             <div class="text-start mt-3 d-lg-block d-none">
-                                <button class="btn btn-primary px-4 rounded">Create</button>
-                                <button class="btn btn-outline-secondary px-4 rounded mx-3">Cancel</button>
+                                <button @click="btnCreateJob" class="btn btn-primary px-4 rounded">Create</button>
+                                <button @click="btnCancel" class="btn btn-outline-secondary px-4 rounded mx-3">Cancel</button>
                             </div>
                         </div>
                         <div class="col-lg-5 mt-3">
@@ -73,7 +86,7 @@
                                     <h6 class="fw-semibold pb-2 border-bottom">Status</h6>
 
                                     <div class="form-check form-switch bg-transparent mb-1 mt-3">
-                                        <input class="form-check-input shadow-none " type="checkbox" id="stats" checked v-model="status" />
+                                        <input v-model="status" class="form-check-input shadow-none " type="checkbox" id="stats" checked  />
                                         <label class="form-check-label" for="stats">Available</label>
                                     </div>
 
@@ -81,14 +94,15 @@
                                 </div>
                             </div>
                             <div class="text-start mt-3 d-lg-none d-block">
-                                <button class="btn btn-primary px-4 rounded">Create</button>
-                                <button class="btn btn-outline-secondary px-4 rounded mx-3">Cancel</button>
+                                <button @click="btnCreateJob" class="btn btn-primary px-4 rounded">Create</button>
+                                <button @click="btnCancel" class="btn btn-outline-secondary px-4 rounded mx-3">Cancel</button>
                             </div>
                         </div>
 
 
                     </div>
                 </section>
+                <jobcreatedVue v-if="showpopup" />
             </main>
         </div>
     </div>
@@ -96,14 +110,26 @@
 
 <script>
 import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
+import {router} from '@inertiajs/vue3'
+import jobcreatedVue from '../Components/popup_pages/jobcreated.vue';
+
 export default {
     name:'AdminCreateJob',
-    components: {AdminNavigation},
+    components: {AdminNavigation, jobcreatedVue},
+    props:{ errors:Object },
     data(){
         return{
+            jobtitle: '',
+            salary: '',
+            location: '',
+            type: '',
+            description: '',
+            status: true,
             interview_array: [
                 {question: ''}
-            ]
+            ],
+
+            showpopup: false
         }
     },
     methods:{
@@ -114,6 +140,29 @@ export default {
         },
         DeleteQuestion(index){
             this.interview_array.splice(index, 1);
+        },
+        btnCreateJob(){
+            const data = {
+                jobtitle: this.jobtitle,
+                salary: this.salary,
+                location: this.location,
+                type: this.type,
+                description: this.description,
+                status: this.status,
+                interview_questions: this.interview_array
+            }
+            router.post('/createnewjob', data, {
+                onSuccess: () => {
+                    console.log('Job created successfully!');
+                    this.showpopup = !this.showpopup
+                },
+                onError: (errors) => {
+                    console.log('Validation failed:', errors);
+                }
+            });
+        },
+        btnCancel(){
+            router.visit('/admin/jobs');
         }
     }
 }

@@ -16,19 +16,27 @@
                                 </inertiaLink>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-5">
+                        <div class="col-lg-3 col-md-4 col-12">
                             <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
                                 <div class="text-start">
                                     <p class="fw-normal text-secondary mb-2">Total Jobs</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <h3 class="fw-semibold">{{ job_count }}</h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-5">
+                        <div class="col-lg-3 col-md-4 col-12">
                             <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
                                 <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2">Jobs Open</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <p class="fw-normal text-secondary mb-2">Available </p>
+                                    <h3 class="fw-semibold">{{ job_avail }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
+                                <div class="text-start">
+                                    <p class="fw-normal text-secondary mb-2">Not available</p>
+                                    <h3 class="fw-semibold">{{ job_unavail }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -78,45 +86,36 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Fastfood Attendant</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-x-circle-fill text-danger"></i></td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Mar 13, 2024</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-pencil-square text-primary fw-semibold"> Edit</i></td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-trash3 text-danger fw-semibold"> Delete</i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Waiter</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱10,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">San Fernando, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-check-circle-fill text-success"></i></td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Full-time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Mar 13, 2024</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-pencil-square text-primary fw-semibold"> Edit</i></td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-trash3 text-danger fw-semibold"> Delete</i></td>
-                                            </tr>
-                                             <tr>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Fastfood Attendant</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-x-circle-fill text-danger"></i></td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Mar 13, 2024</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-pencil-square text-primary fw-semibold"> Edit</i></td>
+                                            <tr v-for="(getjob, index) in job_list.data" :key="index">
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getjob.job_title }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱{{ getjob.salary }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getjob.location }}</td>
+                                                <td v-if="getjob.status" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                                <td v-else class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getjob.type }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ new Date(getjob.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    <inertiaLink :href="`/admin/jobs/edit/${getjob.id}`">
+                                                        <i class="bi bi-pencil-square text-primary fw-semibold"> Edit</i>
+                                                    </inertiaLink>
+                                                </td>
                                                 <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-trash3 text-danger fw-semibold"> Delete</i></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <div class="text-end">
-                                        <button class="btn btn-outline-secondary px-4" style="font-size: 13px;">Next</button>
+                                        <div class="d-flex justify-content-end mt-3 gap-2 flex-wrap">
+                                            <inertiaLink v-if="job_list.prev_page_url" :href="job_list.prev_page_url" class="fw-noramal py-1 text-decoration-none rounded">
+                                                <button class="btn btn-outline-secondary py-1" style="font-size: 13px;">Previous</button>
+                                            </inertiaLink>
+                                            <inertiaLink v-if="job_list.next_page_url" :href="job_list.next_page_url" class="fw-noramal py-1 text-decoration-none rounded">
+                                                <button class="btn btn-outline-secondary py-1 px-3" style="font-size: 13px;">Next</button>
+                                            </inertiaLink>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
                     </div>
                 </section>
@@ -130,7 +129,8 @@ import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
 import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'AdminJobs',
-    components: {AdminNavigation, inertiaLink}
+    components: {AdminNavigation, inertiaLink},
+    props: {job_list:Object, job_count:Number, job_avail:Number, job_unavail:Number},
 }
 </script>
 

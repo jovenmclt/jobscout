@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\Job_list;
+use App\Models\Interview_questions;
 
 class FrontEndController extends Controller
 {
@@ -28,15 +30,37 @@ class FrontEndController extends Controller
     }
 
     public function AdminJobs(){
-        return Inertia::render('Index/AdminJobs');
+
+        $get_joblist = Job_list::orderBy('created_at', 'desc')
+                    ->simplePaginate(10);
+        $get_jobcount = Job_list::all()
+                    ->count();
+        $get_availcount = Job_list::where('status', true)
+                    ->count();
+        $get_unavailcount = Job_list::where('status', false)
+                    ->count();
+
+        return Inertia::render('Index/AdminJobs',[
+            'job_list' => $get_joblist,
+            'job_count' => $get_jobcount,
+            'job_avail' => $get_availcount,
+            'job_unavail' => $get_unavailcount
+        ]);
     }
 
     public function AdminCreateJob(){
         return Inertia::render('Index/AdminCreateJob');
     }
 
-    public function AdminEditJob(){
-        return Inertia::render('Index/AdminEditJob');
+    public function AdminEditJob(Job_list $jobdata){
+
+        $jobid = $jobdata->id;
+        $job_interview = Interview_questions::where('job_id', $jobid)
+                       ->get();
+        return Inertia::render('Index/AdminEditJob', [
+            'job_data' => $jobdata,
+            'job_interview' => $job_interview
+        ]);
     }
 
     public function AdminApplication(){

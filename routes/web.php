@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\JobListController;
 use App\Http\Controllers\FrontEndController;
 
 Route::get('/', [FrontEndController::class, 'Index']);
@@ -23,7 +24,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [FrontEndController::class, 'AdminDashboard'])->name('admindashboard');
     Route::get('/admin/jobs', [FrontEndController::class, 'AdminJobs']);
     Route::get('/admin/jobs/create', [FrontEndController::class, 'AdminCreateJob']);
-    Route::get('/admin/jobs/edit', [FrontEndController::class, 'AdminEditJob']);
+    Route::get('/admin/jobs/edit/{jobdata}', [FrontEndController::class, 'AdminEditJob']);
     Route::get('/admin/application', [FrontEndController::class, 'AdminApplication']);
     Route::get('/admin/application/view', [FrontEndController::class, 'AdminViewApp']);
     Route::get('/admin/members', [FrontEndController::class, 'AdminMembers']);
@@ -31,8 +32,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/members/edit', [FrontEndController::class, 'AdminEditMember']);
     Route::get('/admin/members/view', [FrontEndController::class, 'AdminViewMember']);
 
-
-
+    // actions
+    Route::post('/createnewjob', [JobListController::class, 'CreateNewJob']);
 });
 
 Route::post('/registeraccount', [AuthController::class, 'RegisterAccount']);
