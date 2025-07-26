@@ -99,7 +99,9 @@
                                                         <i class="bi bi-pencil-square text-primary fw-semibold"> Edit</i>
                                                     </inertiaLink>
                                                 </td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-trash3 text-danger fw-semibold"> Delete</i></td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    <i @click="btnDeleteJob(getjob.id)" class="bi bi-trash3 text-danger fw-semibold" style="cursor: pointer;"> Delete</i>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -127,10 +129,20 @@
 <script>
 import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
 import {Link as inertiaLink} from '@inertiajs/vue3'
+import {router} from '@inertiajs/vue3'
 export default {
     name: 'AdminJobs',
     components: {AdminNavigation, inertiaLink},
     props: {job_list:Object, job_count:Number, job_avail:Number, job_unavail:Number},
+    methods:{
+        btnDeleteJob(jobid){
+            const confirmDelete = confirm("Do you really want to delete this job?");
+            if(confirmDelete){
+                router.post(`/deletejob/${jobid}`);
+            }
+
+        },
+    }
 }
 </script>
 

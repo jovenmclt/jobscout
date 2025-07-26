@@ -6,8 +6,8 @@
             <div class="col-auto">
                 <div class="bg-white py-4 px-4 rounded shadow ">
                     <div class="text-center">
-                        <img src="../Assets/popup_icon.png" width="150" alt="">
-                        <p class="fw-normal mt-3">The job posting has been successfully created. You may now <br> review and manage it within the job listings section.</p>
+                        <img src="../Assets/edited-icon.png" width="130" alt="">
+                        <p class="fw-normal mt-3">Your changes to the job post have been saved. <br> The updated job details are now live and visible to users.</p>
                         <button @click="btnvisitjobs" class="btn btn-primary px-4">Continue</button>
                     </div>
 
@@ -22,7 +22,7 @@
 <script>
 import {router} from '@inertiajs/vue3'
 export default {
-    name: 'jobcreated',
+    name: 'jobedited',
     methods:{
         btnvisitjobs(){
             router.visit('/admin/jobs');

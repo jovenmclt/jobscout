@@ -13,9 +13,7 @@
                             <br>
                             <div class="d-flex justify-content-between gap-3">
                                 <h4 class="fw-semibold mt-2">Edit Job</h4>
-                                <a href="">
-                                    <button class="btn btn-danger px-3 rounded">Delete</button>
-                                </a>
+                                <button @click="btnDeleteJob" class="btn btn-danger px-3 rounded">Delete</button>
                             </div>
                         </div>
                         <div class="col-lg-7 mt-3">
@@ -25,10 +23,12 @@
                                         <div class="text-start w-50">
                                             <label for="jobtitle" class="form-label">Job Title<span class="text-danger">*</span></label>
                                             <input v-model="jobtitle" id="jobtitle" type="text" class="form-control shadow-none">
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.jobtitle"> {{ errors.jobtitle }}</p>
                                         </div>
                                         <div class="text-start w-50">
                                             <label for="salary" class="form-label">Salary<span class="text-danger">*</span></label>
                                             <input v-model="salary" id="salary" type="text" class="form-control shadow-none">
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.salary"> {{ errors.salary }}</p>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3 mt-3">
@@ -41,6 +41,7 @@
                                                 <option value="Mexico, Pampanga">Mexico, Pampanga</option>
                                                 <option value="Bacolor, Pampanga">Bacolor, Pampanga</option>
                                             </select>
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.location"> {{ errors.location }}</p>
                                         </div>
                                         <div class="text-start w-50">
                                             <label for="type" class="form-label">Type<span class="text-danger">*</span></label>
@@ -49,11 +50,13 @@
                                                 <option value="Full-time">Full-time</option>
                                                 <option value="Part-time">Part-time</option>
                                             </select>
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.type"> {{ errors.type }}</p>
                                         </div>
                                     </div>
                                     <div class="text-start mt-3">
                                         <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
                                         <textarea v-model="description" class="form-control shadow-none"  style="height: 100px" ></textarea>
+                                        <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.description"> {{ errors.description }}</p>
                                     </div>
 
                                     <div class="text-start mt-3">
@@ -61,8 +64,9 @@
                                         <template v-for="(getquestion, index) in interview_array" :key="index">
                                             <div class="d-flex gap-2 mt-2">
                                                 <input v-model="getquestion.question" id="interview" type="text" class="form-control shadow-none">
-                                                <i @click="DeleteQuestion(index)" v-if="index > 0" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
+                                                <i @click="DeleteQuestion(index)" v-if="index + 1 > job_interview.length" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
                                             </div>
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors[`interview_questions.${index}.question`]">The interview question {{ index + 1 }} field is required</p>
                                         </template>
                                     </div>
                                     <div class="text-end">
@@ -70,8 +74,8 @@
                                     </div>
                             </div>
                             <div class="text-start mt-3 d-lg-block d-none">
-                                <button class="btn btn-primary px-4 rounded">Save changes</button>
-                                <button class="btn btn-outline-secondary px-4 rounded mx-3">Cancel</button>
+                                <button @click="BtnSaveChanges" class="btn btn-primary px-4 rounded">Save changes</button>
+                                <button @click="btnCancelEdit" class="btn btn-outline-secondary px-4 rounded mx-3">Cancel</button>
                             </div>
                         </div>
                         <div class="col-lg-5 mt-3">
@@ -87,14 +91,15 @@
                             </div>
 
                             <div class="text-start mt-3 d-lg-none d-block">
-                                <button class="btn btn-primary px-4 rounded">Save changes</button>
-                                <button class="btn btn-outline-secondary px-4 rounded mx-3">Cancel</button>
+                                <button @click="BtnSaveChanges" class="btn btn-primary px-4 rounded">Save changes</button>
+                                <button @click="btnCancelEdit" class="btn btn-outline-secondary px-4 rounded mx-3">Cancel</button>
                             </div>
                         </div>
 
 
                     </div>
                 </section>
+                <jobeditedVue v-if="showpopup" />
             </main>
         </div>
     </div>
@@ -102,12 +107,16 @@
 
 <script>
 import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
+import {router} from '@inertiajs/vue3'
+import jobeditedVue from '../Components/popup_pages/jobedited.vue';
+import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name:'AdminEditJob',
-    components: {AdminNavigation},
-    props: {job_data:Object, job_interview:Array},
+    components: {AdminNavigation, jobeditedVue, inertiaLink},
+    props: {job_data:Object, job_interview:Array, errors:Object},
     data(){
         return{
+            jobid: this.job_data ? this.job_data.id : '',
             jobtitle: this.job_data ? this.job_data.job_title : '',
             salary: this.job_data ? this.job_data.salary : '',
             location: this.job_data ? this.job_data.location : '',
@@ -117,7 +126,9 @@ export default {
 
             interview_array: [
                 {question: ''}
-            ]
+            ],
+
+            showpopup: false
         }
     },
     methods:{
@@ -131,14 +142,51 @@ export default {
         },
         retrieveinterview(){
             if(this.job_interview.length > 0){
+
                 this.interview_array = [];
+
                 for(let i = 0; i < this.job_interview.length; i++){
+
                     this.interview_array.push({
+                        id: this.job_interview[i].id,
                         question: this.job_interview[i].question
                     })
+
                 }
 
             }
+        },
+        btnDeleteJob(){
+            const confirmDelete = confirm("Do you really want to delete this job?");
+            if(confirmDelete){
+                router.post(`/deletejob/${this.jobid}`);
+            }
+
+        },
+        BtnSaveChanges(){
+            const jobid = this.jobid;
+            const data = {
+                jobtitle: this.jobtitle,
+                salary: this.salary,
+                location: this.location,
+                type: this.type,
+                description: this.description,
+                status: this.status,
+                interview_questions: this.interview_array
+            }
+
+            router.post(`/editjob/${jobid}`, data, {
+                onSuccess:() => {
+                    console.log('Job edited successfully!');
+                    this.showpopup = !this.showpopup
+                },
+                onError: (errors) => {
+                    console.log('Validation failed:', errors);
+                }
+            });
+        },
+        btnCancelEdit(){
+            router.visit('/admin/jobs');
         }
     },
     mounted(){

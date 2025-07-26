@@ -22,7 +22,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [FrontEndController::class, 'AdminDashboard'])->name('admindashboard');
-    Route::get('/admin/jobs', [FrontEndController::class, 'AdminJobs']);
+    Route::get('/admin/jobs', [FrontEndController::class, 'AdminJobs'])->name('jobpage');
     Route::get('/admin/jobs/create', [FrontEndController::class, 'AdminCreateJob']);
     Route::get('/admin/jobs/edit/{jobdata}', [FrontEndController::class, 'AdminEditJob']);
     Route::get('/admin/application', [FrontEndController::class, 'AdminApplication']);
@@ -34,6 +34,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // actions
     Route::post('/createnewjob', [JobListController::class, 'CreateNewJob']);
+    Route::post('/editjob/{jobupdateID}', [JobListController::class, 'EditJob']);
+    Route::post('/deletejob/{jobdeleteID}', [JobListController::class, 'DeleteJob']);
 });
 
 Route::post('/registeraccount', [AuthController::class, 'RegisterAccount']);
