@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Job_list;
 use App\Models\Interview_questions;
+use App\Models\job_qualification;
 class JobListController extends Controller
 {
     //
@@ -18,7 +19,8 @@ class JobListController extends Controller
             'type' => 'required|string|max:255',
             'description' => 'required|string|max:1000',
             'status' => 'required|boolean',
-            'interview_questions.*.question' => 'required|string|max:255'
+            'interview_questions.*.question' => 'required|string|max:255',
+            'job_qualification.*.qualification' => 'required|string|max:255'
         ]);
 
         $newJob = Job_list::create([
@@ -37,6 +39,13 @@ class JobListController extends Controller
             ]);
         }
 
+        foreach($validateRequest['job_qualification'] as $quali){
+            job_qualification::create([
+                'jobid' => $newJob->id,
+                'qualification' => $quali['qualification']
+            ]);
+        }
+
         return back();
     }
 
@@ -51,7 +60,9 @@ class JobListController extends Controller
             'description' => 'required|string|max:1000',
             'status' => 'required|boolean',
             'interview_questions.*.id' => 'nullable|integer',
-            'interview_questions.*.question' => 'required|string|max:255'
+            'interview_questions.*.question' => 'required|string|max:255',
+            'job_qualification.*.id' => 'nullable|integer',
+            'job_qualification.*.qualification' => 'required|string|max:255'
         ]);
 
         $jobupdateID->update([
@@ -78,12 +89,27 @@ class JobListController extends Controller
 
         }
 
+        foreach($validateUpdateRequest['job_qualification'] as $qual){
+            if (!empty($qual['id'])) {
+                job_qualification::where('id', $qual['id'])->update([
+                    'qualification' => $qual['qualification'],
+                ]);
+            } else {
+                job_qualification::create([
+                    'jobid' => $jobupdateID->id,
+                    'qualification' => $qual['qualification'],
+                ]);
+            }
+
+        }
+
         return back();
     }
 
     public function DeleteJob(Job_list $jobdeleteID){
 
         Interview_questions::where('job_id', $jobdeleteID->id)->delete();
+        job_qualification::where('jobid', $jobdeleteID->id)->delete();
         $jobdeleteID->delete();
 
         return redirect()->route('jobpage');

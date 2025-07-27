@@ -60,12 +60,25 @@
                                         <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.description"> {{ errors.description }}</p>
                                     </div>
 
+                                    <div class="text-start mt-3">
+                                        <label for="interview" class="form-label">Job Qualification<span class="text-danger">*</span></label>
+                                        <template v-for="(inputqualification, index) in qualification_array" :key="index">
+                                            <div class="d-flex gap-2 mt-2">
+                                                <input v-model="inputqualification.qualification" id="interview" type="text" class="form-control shadow-none">
+                                                <i @click="DeleteQualification(index)" v-if="index > 0" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
+                                            </div>
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors[`job_qualification.${index}.qualification`]">The qualification input {{ index + 1 }} field is required</p>
+                                        </template>
+                                    </div>
+                                    <div class="text-end">
+                                        <button @click="AddQualification" class="btn btn-secondary mt-3">Add Qualification</button>
+                                    </div>
 
                                     <div class="text-start mt-3">
                                         <label for="interview" class="form-label">Interview Questions<span class="text-danger">*</span></label>
-                                        <template v-for="(getquestion, index) in interview_array" :key="index">
+                                        <template v-for="(inputquestion, index) in interview_array" :key="index">
                                             <div class="d-flex gap-2 mt-2">
-                                                <input v-model="getquestion.question" id="interview" type="text" class="form-control shadow-none">
+                                                <input v-model="inputquestion.question" id="interview" type="text" class="form-control shadow-none">
                                                 <i @click="DeleteQuestion(index)" v-if="index > 0" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
                                             </div>
                                             <p class="fw-normal text-danger mb-0 mt-1" v-if="errors[`interview_questions.${index}.question`]">The interview question {{ index + 1 }} field is required</p>
@@ -128,6 +141,9 @@ export default {
             interview_array: [
                 {question: ''}
             ],
+            qualification_array: [
+                {qualification: ''}
+            ],
 
             showpopup: false
         }
@@ -138,8 +154,16 @@ export default {
                 question: ''
             });
         },
+        AddQualification(){
+            this.qualification_array.push({
+                qualification: ''
+            });
+        },
         DeleteQuestion(index){
             this.interview_array.splice(index, 1);
+        },
+        DeleteQualification(index){
+            this.qualification_array.splice(index, 1);
         },
         btnCreateJob(){
             const data = {
@@ -149,7 +173,8 @@ export default {
                 type: this.type,
                 description: this.description,
                 status: this.status,
-                interview_questions: this.interview_array
+                interview_questions: this.interview_array,
+                job_qualification: this.qualification_array
             }
             router.post('/createnewjob', data, {
                 onSuccess: () => {

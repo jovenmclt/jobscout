@@ -60,10 +60,24 @@
                                     </div>
 
                                     <div class="text-start mt-3">
-                                        <label for="interview" class="form-label">Interview Questions<span class="text-danger">*</span></label>
-                                        <template v-for="(getquestion, index) in interview_array" :key="index">
+                                        <label for="interview" class="form-label">Job Qualification<span class="text-danger">*</span></label>
+                                        <template v-for="(inputqualification, index) in qualification_array" :key="index">
                                             <div class="d-flex gap-2 mt-2">
-                                                <input v-model="getquestion.question" id="interview" type="text" class="form-control shadow-none">
+                                                <input v-model="inputqualification.qualification" id="interview" type="text" class="form-control shadow-none">
+                                                <i @click="DeleteQualification(index)" v-if="index + 1 > job_qualification.length" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
+                                            </div>
+                                            <p class="fw-normal text-danger mb-0 mt-1" v-if="errors[`job_qualification.${index}.qualification`]">The qualification input {{ index + 1 }} field is required</p>
+                                        </template>
+                                    </div>
+                                    <div class="text-end">
+                                        <button @click="AddQualification" class="btn btn-secondary mt-3">Add Qualification</button>
+                                    </div>
+
+                                    <div class="text-start mt-3">
+                                        <label for="interview" class="form-label">Interview Questions<span class="text-danger">*</span></label>
+                                        <template v-for="(inputquestion, index) in interview_array" :key="index">
+                                            <div class="d-flex gap-2 mt-2">
+                                                <input v-model="inputquestion.question" id="interview" type="text" class="form-control shadow-none">
                                                 <i @click="DeleteQuestion(index)" v-if="index + 1 > job_interview.length" class="bi bi-dash-circle-fill text-danger fs-6 mt-2" style="cursor: pointer;"></i>
                                             </div>
                                             <p class="fw-normal text-danger mb-0 mt-1" v-if="errors[`interview_questions.${index}.question`]">The interview question {{ index + 1 }} field is required</p>
@@ -113,7 +127,7 @@ import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name:'AdminEditJob',
     components: {AdminNavigation, jobeditedVue, inertiaLink},
-    props: {job_data:Object, job_interview:Array, errors:Object},
+    props: {job_data:Object, job_interview:Array, errors:Object, job_qualification:Array},
     data(){
         return{
             jobid: this.job_data ? this.job_data.id : '',
@@ -128,6 +142,10 @@ export default {
                 {question: ''}
             ],
 
+            qualification_array: [
+                {qualification: ''}
+            ],
+
             showpopup: false
         }
     },
@@ -136,6 +154,14 @@ export default {
             this.interview_array.push({
                 question: ''
             });
+        },
+        AddQualification(){
+            this.qualification_array.push({
+                qualification: ''
+            });
+        },
+        DeleteQualification(index){
+            this.qualification_array.splice(index, 1);
         },
         DeleteQuestion(index){
             this.interview_array.splice(index, 1);
@@ -156,12 +182,27 @@ export default {
 
             }
         },
+        retrieveQualification(){
+            if(this.job_qualification.length > 0){
+
+                this.qualification_array = [];
+
+                for(let i = 0; i < this.job_qualification.length; i++){
+
+                    this.qualification_array.push({
+                        id: this.job_qualification[i].id,
+                        qualification: this.job_qualification[i].qualification
+                    });
+
+                }
+
+            }
+        },
         btnDeleteJob(){
             const confirmDelete = confirm("Do you really want to delete this job?");
             if(confirmDelete){
                 router.post(`/deletejob/${this.jobid}`);
             }
-
         },
         BtnSaveChanges(){
             const jobid = this.jobid;
@@ -172,7 +213,8 @@ export default {
                 type: this.type,
                 description: this.description,
                 status: this.status,
-                interview_questions: this.interview_array
+                interview_questions: this.interview_array,
+                job_qualification: this.qualification_array
             }
 
             router.post(`/editjob/${jobid}`, data, {
@@ -191,6 +233,7 @@ export default {
     },
     mounted(){
         this.retrieveinterview();
+        this.retrieveQualification();
     }
 }
 </script>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobListController;
 use App\Http\Controllers\FrontEndController;
+use App\Http\Controllers\ApplicationController;
 
 Route::get('/', [FrontEndController::class, 'Index']);
 Route::get('/register/account', [FrontEndController::class, 'RegisterPage']);
@@ -12,12 +13,14 @@ Route::get('/login/account', [FrontEndController::class, 'LoginPage'])->name('lo
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/dashboard', [FrontEndController::class, 'UserDashboard'])->name('userdashboard');
     Route::get('/user/jobs', [FrontEndController::class, 'UserJobs']);
-    Route::get('/user/jobs/details', [FrontEndController::class, 'UserJobsDetails']);
-    Route::get('/user/jobs/interview', [FrontEndController::class, 'UserJobsInterview']);
+    Route::get('/job/details/{jobdata}', [FrontEndController::class, 'UserJobsDetails']);
+    Route::get('/job/interview/{jobdata}', [FrontEndController::class, 'UserJobsInterview']);
     Route::get('/user/applicationstats', [FrontEndController::class, 'UserApplicationStats']);
     Route::get('/user/view/application', [FrontEndController::class, 'UserViewApplication']);
     Route::get('/user/profile', [FrontEndController::class, 'UserProfile']);
 
+    // actions
+    Route::post('/submitapplication', [ApplicationController::class, 'Application']);
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

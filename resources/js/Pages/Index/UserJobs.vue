@@ -1,5 +1,5 @@
 <template>
-    <div class="container-xxl bg-color">
+    <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
             <UserNavigationVue />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
@@ -15,33 +15,34 @@
                                 <div class="text-start">
                                     <div class="position-relative">
                                         <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
-                                        <input type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
+                                        <input v-model="search_title" type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
                                     </div>
                                 </div>
                                 <div class="text-start">
-                                    <a href="#" class="fw-normal"> Full-time</a>
-                                    <a href="#" class="fw-normal mx-3"> Part-time</a>
+                                    <a @click="get_type('')" class="fw-normal mx-3" style="cursor: pointer;"> All</a>
+                                    <a @click="get_type('Full-time')" class="fw-normal" style="cursor: pointer;"> Full-time</a>
+                                    <a @click="get_type('Part-time')" class="fw-normal mx-3" style="cursor: pointer;"> Part-time</a>
                                 </div>
                             </div>
                         </div>
 
-                        <template v-for="(getcount, indx) in testcount" :key="indx">
+                        <template v-for="(getjob, indx) in job_filter" :key="indx">
                             <div class="col-lg-4 col-md-6 mt-4">
                                 <div class="bg-white py-3 px-3 rounded border shadow-sm">
-                                    <div class="text-end" >
-                                        <p class="fw-semibold text-primary d-inline-block py-1 px-3 rounded-4 mb-0" style=" background-color: #EAEFFF;">San Fernando</p>
+                                    <div class="text-end mb-2" >
+                                        <p class="fw-semibold text-primary d-inline-block py-1 px-3 rounded-4 mb-0" style=" background-color: #EAEFFF; font-size: 14px;">{{ getjob.location }}</p>
                                     </div>
                                     <div class="text-start">
-                                        <p class="fw-normal text-primary mb-1">Full-time</p>
-                                        <h5 class="fw-semibold">Fastfood Attendant</h5>
-                                        <p class="fw-normal text-secondary">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis </p>
-                                        <h6 class="fw-semibold mb-0">₱11, 687.00</h6>
+                                        <p class="fw-normal text-primary mb-1">{{ getjob.type }}</p>
+                                        <h5 class="fw-semibold">{{ getjob.job_title }}</h5>
+                                        <p class="fw-normal text-secondary">{{ getjob.description }}</p>
+                                        <h6 class="fw-semibold mb-0">₱ {{ getjob.salary }}</h6>
                                         <p class="fw-light text-secondary mb-0">Monthly Salary</p>
                                     </div>
                                     <div class="text-end dropdown dropstart">
                                         <i class="bi bi-three-dots text-primary fs-5 " data-bs-toggle="dropdown" style="cursor: pointer;"></i>
                                         <ul class="dropdown-menu dropdown-menu-dark ">
-                                            <li><a class="dropdown-item  " href="#">See Details</a></li>
+                                            <li><inertiaLink :href="`/job/details/${getjob.id}`" class="dropdown-item" >See Details</inertiaLink></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -58,16 +59,30 @@
 
 <script>
 import UserNavigationVue from '../Components/UserNavigation/UserNavigation.vue'
-
+import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'UserJobs',
-    components: {UserNavigationVue},
+    components: {UserNavigationVue, inertiaLink},
+    props: {job_available:Array},
     data(){
         return{
-            testcount: [
-                {test: ''},{test: ''},{test: ''},{test: ''},{test: ''},{test: ''},{test: ''},{test: ''},{test: ''},
-            ]
+            search_title: '',
+            search_type: ''
         }
+    },
+    methods:{
+        get_type(val){
+            this.search_type = val
+        }
+    },
+    computed:{
+        job_filter(){
+            return this.job_available.filter(filterjob => {
+                const matchesTitle = filterjob.job_title.toLowerCase().includes(this.search_title.toLowerCase())
+                const matchesType = this.search_type === '' || filterjob.type === this.search_type;
+                return matchesTitle && matchesType;
+            });
+        },
     }
 }
 </script>

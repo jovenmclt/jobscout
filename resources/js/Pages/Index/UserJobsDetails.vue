@@ -13,25 +13,27 @@
                         </div>
                         <div class="col-lg-5 mt-3">
                             <div class="text-center mt-5">
-                                <h3 class="fw-semibold">Kitchen Manager</h3>
-                                <button class="btn btn-primary w-50">Apply Now</button>
+                                <h3 class="fw-semibold">{{ jobtitle }}</h3>
+                                <inertiaLink :href="`/job/interview/${jobid}`">
+                                    <button class="btn btn-primary w-50">Apply Now</button>
+                                </inertiaLink>
                             </div>
                         </div>
                         <div class="col-lg-6 mt-3">
                             <div class="d-flex justify-content-between bg-white rounded shadow-sm border py-3 px-3">
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Job Position</p>
-                                    <h6 class="fw-semibold">Kitchen Manager</h6>
+                                    <h6 class="fw-semibold">{{ jobtitle }}</h6>
                                     <br>
                                     <p class="fw-normal mb-0">Salary</p>
-                                    <h6 class="fw-semibold">₱18,000</h6>
+                                    <h6 class="fw-semibold">₱ {{ salary }}</h6>
                                 </div>
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Branch</p>
-                                    <h6 class="fw-semibold">San Fernando, Pampanga</h6>
+                                    <h6 class="fw-semibold">{{ location }}</h6>
                                     <br>
                                     <p class="fw-normal mb-0">Type</p>
-                                    <h6 class="fw-semibold">Full-time</h6>
+                                    <h6 class="fw-semibold">{{ type }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -49,11 +51,16 @@
                                     <h6 class="fw-semibold">Job Desciption & Qualifications</h6>
                                 </div>
                                 <div class="text-start mt-3">
-                                    <p class="fw-normal text-secondary">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, alias. Nesciunt commodi quos placeat quaerat numquam repellat facilis ut ex corrupti aut, sed quam consectetur ipsum provident corporis odit quia? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate soluta animi incidunt rem eos minima molestiae, quos facere laborum reprehenderit, corrupti voluptate consequatur nobis repudiandae eveniet delectus odit nesciunt! Soluta! Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam impedit vero dolore molestiae quasi minima sit, eaque est obcaecati, aperiam facere enim iste, reprehenderit non eius. Nisi suscipit corrupti voluptatibus! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo tempora incidunt iste officiis culpa nobis dolorum quam ab, repellat officia ratione sint consequatur qui, aliquid et ex dolorem id fugiat.</p>
+                                    <p class="fw-normal text-dark">{{ description }}</p>
+                                    <ul v-for="(getquali, index) in job_qualification" :key="index">
+                                        <li>
+                                            <p class="fw-normal text-dark mb-0">{{ getquali.qualification }}</p>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="text-end mt-3">
-                                <button class="btn btn-outline-secondary px-4">Cancel</button>
+                            <div class="text-end mt-3 mx-3">
+                                <button @click="btnCancel" class="btn btn-outline-secondary px-4">Cancel</button>
                             </div>
                         </div>
 
@@ -68,9 +75,27 @@
 
 <script>
 import UserNavigation from '../Components/UserNavigation/UserNavigation.vue';
+import {router} from '@inertiajs/vue3'
+import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'UserJobDetails',
-    components: {UserNavigation}
+    components: {UserNavigation, inertiaLink},
+    props: {job_details:Object, job_qualification:Array},
+    data(){
+        return{
+            jobid: this.job_details ? this.job_details.id : '',
+            jobtitle: this.job_details ? this.job_details.job_title : '',
+            salary: this.job_details ? this.job_details.salary : '',
+            location: this.job_details ? this.job_details.location : '',
+            type: this.job_details ? this.job_details.type : '',
+            description: this.job_details ? this.job_details.description : ''
+        }
+    },
+    methods: {
+        btnCancel(){
+            router.visit('/user/jobs');
+        }
+    }
 }
 </script>
 
