@@ -16,7 +16,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/job/details/{jobdata}', [FrontEndController::class, 'UserJobsDetails']);
     Route::get('/job/interview/{jobdata}', [FrontEndController::class, 'UserJobsInterview']);
     Route::get('/user/applicationstats', [FrontEndController::class, 'UserApplicationStats']);
-    Route::get('/user/view/application', [FrontEndController::class, 'UserViewApplication']);
+    Route::get('/view/application/{jobdata}', [FrontEndController::class, 'UserViewApplication']);
     Route::get('/user/profile', [FrontEndController::class, 'UserProfile']);
 
     // actions

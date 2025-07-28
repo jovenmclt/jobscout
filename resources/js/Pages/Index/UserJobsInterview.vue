@@ -54,7 +54,7 @@
                         <div class="col-lg-12 ">
                             <template v-for="(getinterview, index) in interview_array" :key="index">
                                 <div class="bg-white rounded shadow-sm border py-3 px-3 mt-3">
-                                    <p class="fw-normal border-bottom py-2">Can you tell us about your experience in the food or dessert industry?</p>
+                                    <p class="fw-normal border-bottom py-2">{{ getinterview.question }}</p>
                                     <textarea v-model="getinterview.answer" class="form-control shadow-none" placeholder="Answer. . ."  style="height: 130px" ></textarea>
                                     <p class="fw-normal text-danger mb-0 mt-2 ms-2" v-if="errors[`interview.${index}.answer`]">Please answer question {{ index + 1 }}</p>
                                 </div>

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Interview_questions;
 class Interview_answers extends Model
 {
     //
@@ -13,4 +13,8 @@ class Interview_answers extends Model
         'question_id',
         'answer'
     ];
+
+    public function jobquestion(){
+        return $this->belongsTo(Interview_questions::class, 'question_id');
+    }
 }

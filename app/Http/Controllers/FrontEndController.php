@@ -8,6 +8,7 @@ use App\Models\Job_list;
 use App\Models\Interview_questions;
 use App\Models\job_qualification;
 use App\Models\Job_application;
+use App\Models\Interview_answers;
 use Illuminate\Support\Facades\Auth;
 
 class FrontEndController extends Controller
@@ -138,11 +139,36 @@ class FrontEndController extends Controller
     }
 
     public function UserApplicationStats(){
-        return Inertia::render('Index/UserApplicationStats');
+
+        $get_authid = Auth::id();
+        $get_totalapplied = Job_application::where('user_id', $get_authid)->count();
+        $get_passed = Job_application::where('user_id', $get_authid)->where('status', 'Passed')->count();
+        $get_rejected = Job_application::where('user_id', $get_authid)->where('status', 'Rejected')->count();
+
+        $get_application_job = Job_application::where('user_id', $get_authid)->with('jobapplied')->get();
+
+        return Inertia::render('Index/UserApplicationStats', [
+            'application_job' => $get_application_job,
+            'totalapplied' => $get_totalapplied,
+            'totalpassed' => $get_passed,
+            'totalrejected' => $get_rejected
+        ]);
     }
 
-    public function UserViewApplication(){
-        return Inertia::render('Index/UserViewApplication');
+    public function UserViewApplication(Job_list $jobdata){
+
+        $auth_id = Auth::id();
+        $job_qualification = Job_qualification::where('jobid', $jobdata->id)->get();
+
+        $applicant = Job_application::where('user_id', $auth_id)->where('job_id', $jobdata->id)->first();
+        $applicant_interview = Interview_answers::where('application_id', $applicant->id)->with('jobquestion')->get();
+
+        return Inertia::render('Index/UserViewApplication', [
+            'job_details' => $jobdata,
+            'job_qualification' => $job_qualification,
+            'applicant' => $applicant,
+            'applicant_interview' => $applicant_interview
+        ]);
     }
 
     public function UserProfile(){

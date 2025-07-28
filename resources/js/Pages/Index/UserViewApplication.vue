@@ -16,24 +16,26 @@
                             <div class="d-flex justify-content-between flex-md-nowrap flex-wrap gap-3 bg-white py-4 px-lg-5 px-3 rounded shadow-sm border">
                                  <div class="text-start">
                                     <p class="fw-normal mb-0">Job Position</p>
-                                    <h6 class="fw-semibold">Kitchen Manager</h6>
+                                    <h6 class="fw-semibold">{{ jobtitle }}</h6>
                                     <br>
                                     <p class="fw-normal mb-0">Salary</p>
-                                    <h6 class="fw-semibold">₱18,000</h6>
+                                    <h6 class="fw-semibold">₱ {{ salary }}</h6>
                                 </div>
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Branch</p>
-                                    <h6 class="fw-semibold">San Fernando, Pampanga</h6>
+                                    <h6 class="fw-semibold">{{ location }}</h6>
                                     <br>
                                     <p class="fw-normal mb-0">Type</p>
-                                    <h6 class="fw-semibold">Full-time</h6>
+                                    <h6 class="fw-semibold">{{ type }}</h6>
                                 </div>
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Status</p>
-                                    <h6 class="fw-semibold py-1 rounded text-center" style="background-color: #FDECCE; color: #C47E09; font-size: 12px;"> Processing</h6>
+                                    <h6 v-if="applicant_status == 'Processing'" class="fw-semibold py-1 rounded text-center" style="background-color: #FDECCE; color: #C47E09; font-size: 12px;"> Processing</h6>
+                                    <h6 v-else-if="applicant_status == 'Passed'" class="fw-semibold py-1 rounded text-center" style="background-color: #F2FDF5; color: #16A34A; font-size: 12px;"> Passed</h6>
+                                    <h6 v-else class="fw-semibold py-1 rounded text-center" style="background-color: #FEF2F2; color: #DC2626; font-size: 12px;"> Rejected</h6>
                                     <br>
                                     <p class="fw-normal mb-0">Date Applied</p>
-                                    <h6 class="fw-semibold py-1 rounded text-center" style="background-color: #F2FDF5; color: #16A34A; font-size: 12px;"> Nov 20, 2024</h6>
+                                    <h6 class="fw-semibold py-1 rounded text-center" style="background-color: #F2FDF5; color: #16A34A; font-size: 12px;">{{ new Date(applicant_dateapplied).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +56,12 @@
                                     <h6 class="fw-semibold">Job Desciption & Qualifications</h6>
                                 </div>
                                 <div class="text-start mt-3">
-                                    <p class="fw-normal text-secondary">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, alias. Nesciunt commodi quos placeat quaerat numquam repellat facilis ut ex corrupti aut, sed quam consectetur ipsum provident corporis odit quia? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate soluta animi incidunt rem eos minima molestiae, quos facere laborum reprehenderit, corrupti voluptate consequatur nobis repudiandae eveniet delectus odit nesciunt! Soluta! Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam impedit vero dolore molestiae quasi minima sit, eaque est obcaecati, aperiam facere enim iste, reprehenderit non eius. Nisi suscipit corrupti voluptatibus! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo tempora incidunt iste officiis culpa nobis dolorum quam ab, repellat officia ratione sint consequatur qui, aliquid et ex dolorem id fugiat.</p>
+                                    <p class="fw-normal text-secondary">{{ description }}</p>
+                                    <ul v-for="(getquali, index) in job_qualification" :key="index">
+                                        <li>
+                                            <p class="fw-normal text-dark mb-0">{{ getquali.qualification }}</p>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -71,13 +78,13 @@
                              <h6 class="fw-semibold ms-1">Job Interview & Answers</h6>
                         </div>
                         <div class="col-lg-12">
-                            <template v-for="(test, index) in testcount" :key="index">
+                            <template v-for="(interview, index) in applicant_interview" :key="index">
                                 <div class="bg-white py-3 px-3 rounded shadow-sm border mt-3">
                                     <div class="text-start">
-                                        <p class="fw-normal border-bottom py-2">Can you tell us about your experience in the food or dessert industry?</p>
+                                        <p class="fw-normal border-bottom py-2">{{ interview.jobquestion?.question }}</p>
                                     </div>
                                     <div class="text-start mt-3">
-                                        <p class="fw-normal text-secondary">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, alias. Nesciunt commodi quos placeat quaerat numquam repellat facilis ut ex corrupti aut, sed quam consectetur ipsum provident corporis odit quia? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate soluta animi incidunt rem eos minima molestiae, quos facere laborum reprehenderit, corrupti voluptate consequatur nobis repudiandae eveniet delectus odit nesciunt! Soluta! Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam impedit vero dolore molestiae quasi minima sit, eaque est obcaecati, aperiam facere enim iste, reprehenderit non eius. Nisi suscipit corrupti voluptatibus! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo tempora incidunt iste officiis culpa nobis dolorum quam ab, repellat officia ratione sint consequatur qui, aliquid et ex dolorem id fugiat.</p>
+                                        <p class="fw-normal text-secondary">{{ interview.answer }}</p>
                                     </div>
                                 </div>
                             </template>
@@ -96,11 +103,19 @@ import UserNavigationVue from '../Components/UserNavigation/UserNavigation.vue'
 export default {
     name: 'UserViewApplication',
     components: {UserNavigationVue},
+    props: {job_details:Object, job_qualification:Object, applicant:Object, applicant_interview:Array},
     data(){
         return{
-            testcount: [
-                {test: ''}, {test: ''}, {test: ''}, {test: ''},
-            ]
+            jobid: this.job_details ? this.job_details.id : '',
+            jobtitle: this.job_details ? this.job_details.job_title : '',
+            salary: this.job_details ? this.job_details.salary : '',
+            location: this.job_details ? this.job_details.location : '',
+            type: this.job_details ? this.job_details.type : '',
+            description: this.job_details ? this.job_details.description : '',
+
+            applicant_status: this.applicant ? this.applicant.status : '',
+            applicant_dateapplied: this.applicant ? this.applicant.created_at : '',
+
         }
     }
 }

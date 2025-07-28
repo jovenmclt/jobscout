@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Job_list;
 use App\Models\Interview_questions;
 use App\Models\job_qualification;
+use App\Models\job_application;
+use App\Models\Interview_answers;
 class JobListController extends Controller
 {
     //
@@ -108,8 +110,13 @@ class JobListController extends Controller
 
     public function DeleteJob(Job_list $jobdeleteID){
 
+        $get_questionId = Interview_questions::where('job_id', $jobdeleteID->id)->pluck('id');
+
+        Interview_answers::whereIn('question_id', $get_questionId)->delete();
+        Job_application::where('job_id', $jobdeleteID->id)->delete();
         Interview_questions::where('job_id', $jobdeleteID->id)->delete();
         job_qualification::where('jobid', $jobdeleteID->id)->delete();
+
         $jobdeleteID->delete();
 
         return redirect()->route('jobpage');

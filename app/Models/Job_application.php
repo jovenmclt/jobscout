@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Job_list;
 class Job_application extends Model
 {
     //
@@ -15,4 +15,9 @@ class Job_application extends Model
         'resume_path',
         'status'
     ];
+
+
+    public function jobapplied(){
+        return $this->belongsTo(Job_list::class, 'job_id');
+    }
 }

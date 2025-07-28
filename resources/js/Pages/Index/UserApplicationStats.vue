@@ -16,23 +16,23 @@
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
                                     <p class="fw-normal text-secondary mb-2">Total Jobs Applied</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <h3 class="fw-semibold">{{ totalapplied }}</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 mt-3">
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2 text-warning">Approved Applications</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <p class="fw-normal text-secondary mb-2 text-success">Passed Applications</p>
+                                    <h3 class="fw-semibold">{{ totalpassed }}</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 mt-3">
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2 text-success">Rejected Applications</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <p class="fw-normal text-secondary mb-2 text-danger">Rejected Applications</p>
+                                    <h3 class="fw-semibold">{{ totalrejected }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -83,42 +83,37 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Waiter</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-Time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">May 20, 2025</td>
-
+                                            <tr v-for="(getapplication, index) in application_job" :key="index">
 
                                                 <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    {{ getapplication.jobapplied?.job_title }}
+                                                </td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    ₱ {{ getapplication.jobapplied?.salary }}
+                                                </td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    {{ getapplication.jobapplied?.location }}
+                                                </td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    {{ getapplication.jobapplied?.type }}
+                                                </td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ new Date(getapplication.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</td>
+
+
+                                                <td v-if="getapplication.status == 'Passed'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
                                                     <i class="bi bi-check-circle-fill py-1 px-2 rounded-5" style="background-color: #F2FDF5; color: #16A34A;"> Passed</i>
                                                 </td>
-                                                <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">Open</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Waiter</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-Time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">May 20, 2025</td>
-
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td v-else-if="getapplication.status == 'Processing'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
                                                     <i class="bi bi-hourglass-split py-1 px-2 rounded-5" style="background-color: #FDECCE; color: #C47E09;"> Processing</i>
                                                 </td>
-                                                 <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">Open</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Waiter</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-Time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">May 20, 2025</td>
-
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td v-else class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
                                                     <i class="bi bi-x-circle-fill py-1 px-2 rounded-5" style="background-color: #FEF2F2; color: #DC2626;"> Rejected</i>
                                                 </td>
-                                                 <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">Open</td>
+                                                <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    <inertiaLink :href="`/view/application/${getapplication.jobapplied?.id}`" class="text-decoration-none">
+                                                        Open
+                                                    </inertiaLink>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -141,10 +136,11 @@
 
 <script>
 import UserNavigationVue from '../Components/UserNavigation/UserNavigation.vue'
-
+import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'UserApplicationStats',
-    components:{UserNavigationVue}
+    components:{UserNavigationVue, inertiaLink},
+    props: {application_job:Array, totalapplied:Number, totalpassed:Number, totalrejected:Number}
 }
 </script>
 
