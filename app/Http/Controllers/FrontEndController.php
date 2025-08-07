@@ -101,7 +101,23 @@ class FrontEndController extends Controller
     // User
 
     public function UserDashboard(){
-        return Inertia::render('Index/UserDashboard');
+
+        $get_auth = Auth::user();
+
+        $get_totalapplied = Job_application::where('user_id', $get_auth->id)->count();
+        $get_passed = Job_application::where('user_id', $get_auth->id)->where('status', 'Passed')->count();
+        $get_rejected = Job_application::where('user_id', $get_auth->id)->where('status', 'Rejected')->count();
+
+        $get_application_job = Job_application::where('user_id', $get_auth->id)->with('jobapplied')
+                            ->simplePaginate(10);
+
+        return Inertia::render('Index/UserDashboard',[
+            'user_data' => $get_auth,
+            'Job_passed' => $get_passed,
+            'job_rejected' => $get_rejected,
+            'job_applied' => $get_totalapplied,
+            'application_job' => $get_application_job
+        ]);
     }
 
     public function UserJobs(){
@@ -145,7 +161,8 @@ class FrontEndController extends Controller
         $get_passed = Job_application::where('user_id', $get_authid)->where('status', 'Passed')->count();
         $get_rejected = Job_application::where('user_id', $get_authid)->where('status', 'Rejected')->count();
 
-        $get_application_job = Job_application::where('user_id', $get_authid)->with('jobapplied')->get();
+        $get_application_job = Job_application::where('user_id', $get_authid)->with('jobapplied')
+                            ->simplePaginate(10);
 
         return Inertia::render('Index/UserApplicationStats', [
             'application_job' => $get_application_job,
@@ -172,7 +189,12 @@ class FrontEndController extends Controller
     }
 
     public function UserProfile(){
-        return Inertia::render('Index/UserProfile');
+
+        $get_userinfo = Auth::user();
+
+        return Inertia::render('Index/UserProfile', [
+            'userinfo' => $get_userinfo
+        ]);
     }
 }
 

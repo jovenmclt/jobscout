@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="adminnavbar">
             <ul class="navbar-nav flex-md-column ms-md-3">
                 <li class="navbar-item ">
-                    <inertiaLink href="/user/dashboard" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-6 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-house fs-5"></i> Dashboard</inertiaLink>
+                    <inertiaLink href="/user/dashboard" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-house fs-5"></i> Dashboard</inertiaLink>
                 </li>
                 <a  data-bs-toggle="collapse" href="#collapseExample" class="mt-4 text-decoration-none fw-noemal fs-6 text-secondary d-flex justify-content-between px-lg-3 px-2">
                     <span>Career</span>
@@ -31,13 +31,13 @@
                 </a>
                 <div class="collapse show" id="collapseExample">
                     <li class="navbar-item mt-3">
-                        <inertiaLink href="/user/jobs" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-6 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-briefcase fs-5"></i> Jobs</inertiaLink>
+                        <inertiaLink href="/user/jobs" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-briefcase fs-5"></i> Jobs</inertiaLink>
                     </li>
                     <li class="navbar-item mt-3">
-                        <inertiaLink href="/user/applicationstats" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-6 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-file-earmark-bar-graph fs-5"></i> Application Stats</inertiaLink>
+                        <inertiaLink href="/user/applicationstats" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-file-earmark-bar-graph fs-5"></i> Application Stats</inertiaLink>
                     </li>
                     <li class="navbar-item mt-3">
-                        <inertiaLink href="/user/profile" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-6 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-person-circle fs-5"></i> Profile</inertiaLink>
+                        <inertiaLink href="/user/profile" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-person-circle fs-5"></i> Profile</inertiaLink>
                     </li>
                 </div>
             </ul>

@@ -12,25 +12,26 @@
 
                         <div class="col-lg-5 mt-3">
                             <div class="text-center mt-3 position-relative">
-                                <img src="../Components/Assets/profile.png" width="100" alt="">
-                                <h5 class="fw-semibold">John Doe</h5>
+                                <img v-if="!userinfo.profile_picture" src="../Components/Assets/profile.png" width="100" alt="">
+                                <img v-else :src="`/storage/${userinfo.profile_picture}`" width="80" height="80" class="rounded-5" alt="">
+                                <h5 class="fw-semibold">{{ userinfo?.name }}</h5>
                             </div>
                         </div>
                         <div class="col-lg-6 mt-3">
                             <div class="d-flex justify-content-between bg-white rounded shadow-sm boder py-3 px-3 ">
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Location</p>
-                                    <h6 class="fw-semibold">San Fernando Pampanga</h6>
+                                    <h6 class="fw-semibold">{{ userinfo?.location ?? '---' }}</h6>
                                     <br>
                                     <p class="fw-normal mb-0">Educational Attainment</p>
-                                    <h6 class="fw-semibold">Bachelor of Hotel and Restaurant Management</h6>
+                                    <h6 class="fw-semibold">{{ userinfo?.education   ?? '---' }}</h6>
                                 </div>
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Age</p>
-                                    <h6 class="fw-semibold">22</h6>
+                                    <h6 class="fw-semibold">{{ userinfo?.age ?? '---' }}</h6>
                                     <br>
                                     <p class="fw-normal mb-0">Gender</p>
-                                    <h6 class="fw-semibold">Female</h6>
+                                    <h6 class="fw-semibold">{{ userinfo?.gender ?? '---' }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -50,17 +51,17 @@
                                     <h6 class="fw-semibold">About</h6>
                                 </div>
                                 <div class="text-start mt-3">
-                                    <p class="fw-normal text-secondary">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, alias. Nesciunt commodi quos placeat quaerat numquam repellat facilis ut ex corrupti aut, sed quam consectetur ipsum provident corporis odit quia? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate soluta animi incidunt rem eos minima molestiae, quos facere laborum reprehenderit, corrupti voluptate consequatur nobis repudiandae eveniet delectus odit nesciunt! Soluta! Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam impedit vero dolore molestiae quasi minima sit, eaque est obcaecati, aperiam facere enim iste, reprehenderit non eius. Nisi suscipit corrupti voluptatibus! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo tempora incidunt iste officiis culpa nobis dolorum quam ab, repellat officia ratione sint consequatur qui, aliquid et ex dolorem id fugiat.</p>
+                                    <p class="fw-normal text-secondary">{{ userinfo?.about ?? '---' }}</p>
                                 </div>
                             </div>
                             <br>
                             <div class="d-flex justify-content-between gap-3 flex-md-nowrap flex-wrap">
-                                <div class="bg-white py-3 px-3 rounded shadow-sm border">
+                                <div class="bg-white py-3 px-3 rounded shadow-sm border w-100">
                                     <div class="text-start border-bottom">
                                         <h6 class="fw-semibold">Experience</h6>
                                     </div>
                                     <div class="text-start mt-3">
-                                        <p class="fw-normal text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, facere. Ex dolorem consectetur voluptatibus reprehenderit error ratione optio soluta unde ipsam vero, minus non odio itaque, possimus cum labore rerum?</p>
+                                        <p class="fw-normal text-secondary">{{ userinfo?.experience ?? '---' }}</p>
                                     </div>
                                 </div>
                                 <div class="bg-white py-3 px-3 rounded shadow-sm border w-100">
@@ -81,7 +82,7 @@
                     </div>
                 </section>
             </main>
-            <EditProfile v-if="showeditprofile" @closeedit="btnshowedit" />
+            <EditProfile v-if="showeditprofile" @closeedit="btnshowedit" :userinfo="userinfo" />
         </div>
     </div>
 </template>
@@ -93,6 +94,7 @@ import UserNavigationVue from '../Components/UserNavigation/UserNavigation.vue'
 export default {
     name: 'UserProfile',
     components: {UserNavigationVue, EditProfile},
+    props: {userinfo:Object},
     data(){
         return{
             showeditprofile: false

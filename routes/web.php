@@ -21,6 +21,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     // actions
     Route::post('/submitapplication', [ApplicationController::class, 'Application']);
+    Route::post('/updateprofile', [AuthController::class, 'updateuser']);
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {

@@ -51,4 +51,42 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
+
+
+    // update user profile
+    public function updateuser(Request $request){
+
+        $curr_user = Auth::user();
+
+        $cv_path = $curr_user->cv_path;
+        $resume_path = $curr_user->resume_path;
+        $profile_path = $curr_user->profile_picture;
+
+        if ($request->hasFile('resume_path')) {
+            $resume_path = $request->file('resume_path')->store('images', 'public');
+        }
+
+        if ($request->hasFile('cv_path')) {
+            $cv_path = $request->file('cv_path')->store('images', 'public');
+        }
+
+        if ($request->hasFile('profile')) {
+            $profile_path = $request->file('profile')->store('images', 'public');
+        }
+
+        $curr_user->update([
+            'name' => $request->name,
+            'profile_picture' => $profile_path,
+            'location' => $request->location,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'about' => $request->about,
+            'education' => $request->education,
+            'cv_path' => $cv_path,
+            'resume_path' => $resume_path,
+            'experience' => $request->experience
+        ]);
+
+    }
+
 }

@@ -83,7 +83,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(getapplication, index) in application_job" :key="index">
+                                            <tr v-for="(getapplication, index) in application_job.data" :key="index">
 
                                                 <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
                                                     {{ getapplication.jobapplied?.job_title }}
@@ -118,7 +118,15 @@
                                         </tbody>
                                     </table>
                                     <div class="text-end">
-                                        <button class="btn btn-outline-secondary px-4" style="font-size: 13px;">Next</button>
+                                        <div class="d-flex justify-content-end mt-3 gap-2 flex-wrap">
+                                            <inertiaLink v-if="application_job.prev_page_url" :href="application_job.prev_page_url" class="fw-noramal py-1 text-decoration-none rounded">
+                                                <button class="btn btn-outline-secondary py-1" style="font-size: 13px;">Previous</button>
+                                            </inertiaLink>
+                                            <inertiaLink v-if="application_job.next_page_url" :href="application_job.next_page_url" class="fw-noramal py-1 text-decoration-none rounded">
+                                                <button class="btn btn-outline-secondary py-1 px-3" style="font-size: 13px;">Next</button>
+                                            </inertiaLink>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +148,7 @@ import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'UserApplicationStats',
     components:{UserNavigationVue, inertiaLink},
-    props: {application_job:Array, totalapplied:Number, totalpassed:Number, totalrejected:Number}
+    props: {application_job:Object, totalapplied:Number, totalpassed:Number, totalrejected:Number},
 }
 </script>
 
