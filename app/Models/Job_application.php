@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use App\Models\Job_list;
+use Illuminate\Database\Eloquent\Model;
+
 class Job_application extends Model
 {
     //
@@ -19,5 +21,9 @@ class Job_application extends Model
 
     public function jobapplied(){
         return $this->belongsTo(Job_list::class, 'job_id');
+    }
+
+     public function userapplied(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

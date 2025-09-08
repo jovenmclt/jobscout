@@ -66,10 +66,13 @@
                                 </div>
                                 <div class="bg-white py-3 px-3 rounded shadow-sm border w-100">
                                     <label for="cv" class="form-label" style="font-size: 14px;">Curriculum Vitae (CV)<span class="text-danger">*</span></label>
-                                    <input type="file" class="form-control shadow-none">
+                                    <p @click="btnshowcv" class="fw-normal text-primary" style="cursor: pointer;">{{ userinfo?.name }} - Curriculum Vitae</p>
+                                    <usercurriculumvitaeVue v-if="showcv" :userinfo="userinfo" @closepreview="btnshowcv"/>
+
 
                                     <label for="cv" class="form-label mt-2" style="font-size: 14px;">Resume<span class="text-danger">*</span></label>
-                                    <input type="file" class="form-control shadow-none">
+                                    <p @click="btnshowresume" class="fw-normal text-primary" style="cursor: pointer;">{{ userinfo?.name }} - Resume</p>
+                                    <userresumeVue v-if="showresume" :userinfo="userinfo" @closepreviewresume="btnshowresume"/>
                                 </div>
                             </div>
                             <div class="text-end mt-3">
@@ -90,20 +93,30 @@
 <script>
 import EditProfile from '../Components/UserProfileEdit/EditProfile.vue';
 import UserNavigationVue from '../Components/UserNavigation/UserNavigation.vue'
+import usercurriculumvitaeVue from '../Components/popup_pages/usercurriculumvitae.vue';
+import userresumeVue from '../Components/popup_pages/userresume.vue';
 
 export default {
     name: 'UserProfile',
-    components: {UserNavigationVue, EditProfile},
+    components: {UserNavigationVue, EditProfile, usercurriculumvitaeVue, userresumeVue},
     props: {userinfo:Object},
     data(){
         return{
-            showeditprofile: false
+            showeditprofile: false,
+            showcv: false,
+            showresume: false,
         }
     },
     methods:{
         btnshowedit(){
             this.showeditprofile = !this.showeditprofile
-        }
+        },
+        btnshowcv(){
+            this.showcv = !this.showcv
+        },
+        btnshowresume(){
+            this.showresume = !this.showresume
+        },
     }
 }
 </script>

@@ -100,14 +100,17 @@
                                                 <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ new Date(getapplication.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</td>
 
 
-                                                <td v-if="getapplication.status == 'Passed'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
-                                                    <i class="bi bi-check-circle-fill py-1 px-2 rounded-5" style="background-color: #F2FDF5; color: #16A34A;"> Passed</i>
+                                                <td v-if="getapplication.status == 'Hired'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    <i class="bi bi-check-circle-fill py-1 px-2 rounded-5" style="background-color: #F2FDF5; color: #16A34A;"> Hired</i>
                                                 </td>
                                                 <td v-else-if="getapplication.status == 'Processing'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
                                                     <i class="bi bi-hourglass-split py-1 px-2 rounded-5" style="background-color: #FDECCE; color: #C47E09;"> Processing</i>
                                                 </td>
-                                                <td v-else class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td v-else-if="getapplication.status == 'Rejected'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
                                                     <i class="bi bi-x-circle-fill py-1 px-2 rounded-5" style="background-color: #FEF2F2; color: #DC2626;"> Rejected</i>
+                                                </td>
+                                                <td v-else class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    <i class="bi bi-lock-fill py-1 px-2 rounded-5" style="background-color: #DFDEDC; color: #4E4E4E;"> Cancelled</i>
                                                 </td>
                                                 <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">
                                                     <inertiaLink :href="`/view/application/${getapplication.jobapplied?.id}`" class="text-decoration-none">

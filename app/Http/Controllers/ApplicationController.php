@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Job_application;
 use App\Models\Interview_answers;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Employees_table;
+use App\Models\Payroll_table;
+use App\Models\Job_list;
 class ApplicationController extends Controller
 {
     //
@@ -43,6 +45,51 @@ class ApplicationController extends Controller
                 'question_id' => $interview['question_id'],
                 'answer' => $interview['answer']
             ]);
+        }
+
+        return back();
+
+    }
+
+    public function ResultApplication(Request $request, Job_application $id){
+
+        $id->update([
+            'status' => $request->result
+        ]);
+
+        if($id->status == 'Hired'){
+
+            $get_userid = $id->user_id;
+            $get_jobid = $id->job_id;
+            $application_id = $id->id;
+
+            $get_jobinfo = Job_list::where('id', $get_jobid)
+                        ->first();
+
+            $new_employee = Employees_table::create([
+                'userid' => $get_userid,
+                'jobid' => $get_jobid,
+                'application_id' => $application_id,
+                'position' => $get_jobinfo->job_title,
+                'employment_type' => $get_jobinfo->type,
+                'salary' => $get_jobinfo->salary,
+                'status' => 'active',
+                'hired_date' => date('Y-m-d')
+            ]);
+
+            Payroll_table::create([
+                'employee_id' => $new_employee->id,
+                'amount' => $new_employee->salary,
+                'payment_date' => date('Y-m-d'),
+                'status' => 'pending',
+                'employee_status' => $new_employee->status
+            ]);
+
+            Job_application::where('user_id', $get_userid)
+                    ->where('status', 'Processing')
+                    ->where('id', '!=', $id->id)
+                    ->update([ 'status' => 'Cancelled' ]);
+                    
         }
 
         return back();

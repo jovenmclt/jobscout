@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Models\Job_list;
-use App\Models\Interview_questions;
-use App\Models\job_qualification;
+use Illuminate\Http\Request;
 use App\Models\Job_application;
 use App\Models\Interview_answers;
+use App\Models\job_qualification;
+use App\Models\Interview_questions;
 use Illuminate\Support\Facades\Auth;
 
 class FrontEndController extends Controller
@@ -74,11 +75,49 @@ class FrontEndController extends Controller
     }
 
     public function AdminApplication(){
-        return Inertia::render('Index/AdminApplication');
+
+        $get_userid = User::all()->pluck('id');
+
+        $get_application = Job_application::where('status', '!=', 'Cancelled')
+                        ->whereIn('user_id', $get_userid)
+                        ->with('jobapplied', 'userapplied')
+                        ->simplePaginate(10);
+
+        $get_totalapplicants = Job_application::all()
+                        ->count();
+
+        $get_processing = Job_application::where('status', 'Processing')
+                        ->count();
+
+        $get_passed = Job_application::where('status', 'Hired')
+                        ->count();
+
+        $get_rejected = Job_application::where('status', 'Rejected')
+                        ->count();
+
+        return Inertia::render('Index/AdminApplication', [
+            'application_list' => $get_application,
+            'total_application' => $get_totalapplicants,
+            'processing_application' => $get_processing,
+            'passed_application' => $get_passed,
+            'rejected_application' => $get_rejected
+        ]);
     }
 
-    public function AdminViewApp(){
-        return Inertia::render('Index/AdminViewApplication');
+    public function AdminViewApp($id){
+
+        $application_info = Job_application::where('id', $id)
+                ->with('userapplied', 'jobapplied')
+                ->first();
+
+        $interview_info = Interview_answers::where('application_id', $id)
+                ->with('jobquestion')
+                ->get();
+
+        return Inertia::render('Index/AdminViewApplication', [
+            'application_info' => $application_info,
+            'interview_info' => $interview_info
+        ]);
     }
 
     public function AdminMembers(){
@@ -105,7 +144,7 @@ class FrontEndController extends Controller
         $get_auth = Auth::user();
 
         $get_totalapplied = Job_application::where('user_id', $get_auth->id)->count();
-        $get_passed = Job_application::where('user_id', $get_auth->id)->where('status', 'Passed')->count();
+        $get_passed = Job_application::where('user_id', $get_auth->id)->where('status', 'Hired')->count();
         $get_rejected = Job_application::where('user_id', $get_auth->id)->where('status', 'Rejected')->count();
 
         $get_application_job = Job_application::where('user_id', $get_auth->id)->with('jobapplied')
@@ -123,7 +162,8 @@ class FrontEndController extends Controller
     public function UserJobs(){
 
         $userid = Auth::id();
-        $appliedJobIds = Job_application::where('user_id', $userid)->pluck('job_id');
+        $appliedJobIds = Job_application::where('user_id', $userid)
+                    ->pluck('job_id');
 
         $get_availjob = Job_list::where('status', true)
                     ->whereNotIn('id', $appliedJobIds)
@@ -158,7 +198,7 @@ class FrontEndController extends Controller
 
         $get_authid = Auth::id();
         $get_totalapplied = Job_application::where('user_id', $get_authid)->count();
-        $get_passed = Job_application::where('user_id', $get_authid)->where('status', 'Passed')->count();
+        $get_passed = Job_application::where('user_id', $get_authid)->where('status', 'Hired')->count();
         $get_rejected = Job_application::where('user_id', $get_authid)->where('status', 'Rejected')->count();
 
         $get_application_job = Job_application::where('user_id', $get_authid)->with('jobapplied')

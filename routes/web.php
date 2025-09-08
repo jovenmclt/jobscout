@@ -30,7 +30,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/jobs/create', [FrontEndController::class, 'AdminCreateJob']);
     Route::get('/admin/jobs/edit/{jobdata}', [FrontEndController::class, 'AdminEditJob']);
     Route::get('/admin/application', [FrontEndController::class, 'AdminApplication']);
-    Route::get('/admin/application/view', [FrontEndController::class, 'AdminViewApp']);
+    Route::get('/admin/application/view/{id}', [FrontEndController::class, 'AdminViewApp']);
     Route::get('/admin/members', [FrontEndController::class, 'AdminMembers']);
     Route::get('/admin/members/create', [FrontEndController::class, 'AdminCreateMember']);
     Route::get('/admin/members/edit', [FrontEndController::class, 'AdminEditMember']);
@@ -40,6 +40,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/createnewjob', [JobListController::class, 'CreateNewJob']);
     Route::post('/editjob/{jobupdateID}', [JobListController::class, 'EditJob']);
     Route::post('/deletejob/{jobdeleteID}', [JobListController::class, 'DeleteJob']);
+    Route::post('/store/jobresult/{id}', [ApplicationController::class, 'ResultApplication']);
 });
 
 Route::post('/registeraccount', [AuthController::class, 'RegisterAccount']);

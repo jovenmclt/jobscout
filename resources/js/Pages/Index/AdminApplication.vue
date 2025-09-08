@@ -1,5 +1,5 @@
 <template>
-    <div class="container-xxl bg-color">
+    <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
             <AdminNavigationVue />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
@@ -16,7 +16,7 @@
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
                                     <p class="fw-normal text-secondary mb-2">Total Applicants</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <h3 class="fw-semibold">{{ total_application }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -24,15 +24,15 @@
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
                                     <p class="fw-normal text-secondary mb-2 text-warning">Processing</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <h3 class="fw-semibold">{{ processing_application }}</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-4 mt-3">
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2 text-success">Passed</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <p class="fw-normal text-secondary mb-2 text-success">Hired</p>
+                                    <h3 class="fw-semibold">{{ passed_application }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
                                     <p class="fw-normal text-secondary mb-2 text-danger">Rejected</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <h3 class="fw-semibold">{{ rejected_application }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                     <div class="d-flex justify-content-end mb-3">
                                         <div class="position-relative">
                                             <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
-                                            <input type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
+                                            <input v-model="searchname" type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
                                         </div>
                                     </div>
                                     <table class="table">
@@ -96,50 +96,44 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Lisette Balley</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Waiter</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-Time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">May 20, 2025</td>
+                                            <tr v-for="(getlist, index) in list_filter" :key="index">
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.userapplied?.name ?? '--' }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.jobapplied?.job_title ?? '--' }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱{{ getlist.jobapplied?.salary ?? '--' }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.jobapplied?.location ?? '--' }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.jobapplied?.type ?? '--' }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ new Date(getlist.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</td>
 
 
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
-                                                    <i class="bi bi-check-circle-fill py-1 px-2 rounded-5" style="background-color: #F2FDF5; color: #16A34A;"> Passed</i>
+                                                <td v-if="getlist.status == 'Hired'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    <i class="bi bi-check-circle-fill py-1 px-2 rounded-5" style="background-color: #F2FDF5; color: #16A34A;"> Hired</i>
                                                 </td>
-                                                <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">Open</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Lisette Balley</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Waiter</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-Time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">May 20, 2025</td>
-
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td v-else-if="getlist.status == 'Processing'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
                                                     <i class="bi bi-hourglass-split py-1 px-2 rounded-5" style="background-color: #FDECCE; color: #C47E09;"> Processing</i>
                                                 </td>
-                                                 <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">Open</td>
-                                            </tr>
-                                            <tr>
-                                               <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Lisette Balley</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Waiter</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-Time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">May 20, 2025</td>
-
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td v-else-if="getlist.status == 'Rejected'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
                                                     <i class="bi bi-x-circle-fill py-1 px-2 rounded-5" style="background-color: #FEF2F2; color: #DC2626;"> Rejected</i>
                                                 </td>
-                                                 <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">Open</td>
+                                                <td v-else class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    <i class="bi bi-lock-fill py-1 px-2 rounded-5" style="background-color: #DFDEDC; color: #4E4E4E;"> Cancelled</i>
+                                                </td>
+                                                <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">
+                                                    <inertiaLink :href="`/admin/application/view/${getlist.id}`">
+                                                        Open
+                                                    </inertiaLink>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <div class="text-end">
-                                        <button class="btn btn-outline-secondary px-4" style="font-size: 13px;">Next</button>
+                                       <div class="d-flex justify-content-end mt-3 gap-2 flex-wrap">
+                                            <inertiaLink v-if="application_list.prev_page_url" :href="application_list.prev_page_url" preserve-state class="fw-noramal py-1 text-decoration-none rounded">
+                                                <button class="btn btn-outline-secondary py-1" style="font-size: 13px;">Previous</button>
+                                            </inertiaLink>
+                                            <inertiaLink v-if="application_list.next_page_url" :href="application_list.next_page_url" preserve-scroll class="fw-noramal py-1 text-decoration-none rounded">
+                                                <button class="btn btn-outline-secondary py-1 px-3" style="font-size: 13px;">Next</button>
+                                            </inertiaLink>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -157,10 +151,25 @@
 
 <script>
 import AdminNavigationVue from '../Components/AdminNavigation/AdminNavigation.vue'
-
+import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'AdminApplication',
-    components: {AdminNavigationVue}
+    components: {AdminNavigationVue, inertiaLink},
+    props: {application_list:Object, total_application:Number, processing_application:Number, passed_application:Number, rejected_application:Number},
+    data(){
+        return{
+            searchname: ''
+        }
+    },
+    computed:{
+        list_filter(){
+            return this.application_list.data.filter(filterdata => {
+                const matchname = filterdata.userapplied.name.toLowerCase().includes(this.searchname.toLowerCase())
+                return matchname;
+            });
+        },
+    },
+
 }
 </script>
 
