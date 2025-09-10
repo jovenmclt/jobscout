@@ -41,7 +41,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-10">
                             <div class="text-center">
-                                <h1 class="fw-semibold display-1">Discover your future <br class="d-lg-block d-none"> with  <span class="fw-bold" style="color: #5A81FA;">Sweet Treats PH</span> </h1>
+                                <h1 class="fw-semibold display-1">Discover your future <br class="d-lg-block d-none"> with  <span class="fw-bold" style="color: #5A81FA;">Sweet Treats PHs</span> </h1>
                                 <h4 class="fw-normal mb-5 mt-4">Explore a dynamic work environment that fosters growth, creativity, and <br class="d-lg-block d-none"> teamwork with Sweet Treats PH</h4>
                                 <inertiaLink href="/register/account">
                                     <button class="btn btn-secondary rounded-5 px-lg-5 py-lg-3 fs-6">Get Started <i class="bi bi-arrow-right"></i></button>
