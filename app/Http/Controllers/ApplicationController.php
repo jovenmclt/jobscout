@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Job_application;
 use App\Models\Interview_answers;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Employees_table;
+use App\Models\Members_table;
 use App\Models\Payroll_table;
 use App\Models\Job_list;
 class ApplicationController extends Controller
@@ -66,7 +66,7 @@ class ApplicationController extends Controller
             $get_jobinfo = Job_list::where('id', $get_jobid)
                         ->first();
 
-            $new_employee = Employees_table::create([
+            $new_employee = Members_table::create([
                 'userid' => $get_userid,
                 'jobid' => $get_jobid,
                 'application_id' => $application_id,
@@ -89,7 +89,7 @@ class ApplicationController extends Controller
                     ->where('status', 'Processing')
                     ->where('id', '!=', $id->id)
                     ->update([ 'status' => 'Cancelled' ]);
-                    
+
         }
 
         return back();

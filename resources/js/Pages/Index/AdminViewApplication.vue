@@ -56,12 +56,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-start">
-                        <div class="text-start mt-4">
+                    <div class="row justify-content-start px-3">
+                        <div class=" text-start mt-4">
+                            <p class="fw-normal mb-3">
+                                Resume :  <span @click="btnshowresume" class="text-primary"  style="font-size: 14px; cursor: pointer;">view {{ application_info?.userapplied?.name ?? '---' }} resume</span>
+                            </p>
                             <p class="fw-normal mb-0">
-                                Resume : <span @click="btnshowresume" class="text-primary"  style="font-size: 14px; cursor: pointer;"> {{ application_info?.resume_path ?? '---'}} </span>
+                                Curriculum vitae : <span @click="btnshowcv" class="text-primary"  style="font-size: 14px; cursor: pointer;">view {{ application_info?.userapplied?.name ?? '---' }} CV</span>
                             </p>
                             <userresumeVue v-if="showresume" :userinfo="application_info" @closepreviewresume="btnshowresume"/>
+                            <usercurriculumvitaeVue v-if="showcv" :userinfo="application_info" @closepreview="btnshowcv"/>
                         </div>
                     </div>
                 </section>
@@ -108,15 +112,16 @@
 import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
 import Applicationresult from '../Components/popup_pages/applicationresult.vue';
 import userresumeVue from '../Components/popup_pages/userresume.vue';
-
 import {router} from '@inertiajs/vue3'
+import usercurriculumvitaeVue from '../Components/popup_pages/usercurriculumvitae.vue';
 export default {
     name: 'AdminViewApplication',
-    components: {AdminNavigation, userresumeVue, Applicationresult},
+    components: {AdminNavigation, userresumeVue, Applicationresult, usercurriculumvitaeVue},
     props: {application_info:Object, interview_info:Array},
     data(){
         return{
            showresume: false,
+           showcv: false,
            showpopup: false,
 
            passresult: ''
@@ -129,6 +134,9 @@ export default {
         },
         btnshowresume(){
             this.showresume = !this.showresume
+        },
+        btnshowcv(){
+            this.showcv = !this.showcv
         },
         btnclose(){
             router.visit('/admin/application');

@@ -1,5 +1,5 @@
 <template>
-    <div class="container-xxl bg-color">
+    <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
             <AdminNavigationVue />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
@@ -16,15 +16,38 @@
                                 </inertiaLink>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-5">
+                        <div class="col-lg-3 col-md-4 col-6">
                             <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
                                 <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2">Total Members</p>
+                                    <p class="fw-normal text-primary mb-2">Total Members</p>
                                     <h3 class="fw-semibold">191</h3>
                                 </div>
                             </div>
                         </div>
-
+                        <div class="col-lg-3 col-md-4 col-6">
+                            <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
+                                <div class="text-start">
+                                    <p class="fw-normal text-success mb-2">Active</p>
+                                    <h3 class="fw-semibold">191</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-6">
+                            <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
+                                <div class="text-start">
+                                    <p class="fw-normal text-danger mb-2">Terminated</p>
+                                    <h3 class="fw-semibold">191</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-6">
+                            <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
+                                <div class="text-start">
+                                    <p class="fw-normal text-secondary mb-2">Resigned</p>
+                                    <h3 class="fw-semibold">191</h3>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -37,61 +60,36 @@
 
                         <div class="col-lg-12">
                              <div class="bg-white py-3 px-3 shadow-sm rounded border">
-                                <div class="table-responsive">
-                                    <div class="text-start border-bottom mb-3">
-                                        <h6 class="fw-semibold">Applicants list</h6>
+                                 <ul class="nav nav-tabs bg-transparent">
+                                    <li class="nav-item bg-transparent">
+                                        <a class="nav-link text-dark active " data-bs-toggle="tab" href="#All" >ALL</a>
+                                    </li>
+                                    <li class="nav-item bg-transparent">
+                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Active">Active</a>
+                                    </li>
+                                    <li class="nav-item bg-transparent">
+                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Terminated">Terminated</a>
+                                    </li>
+                                    <li class="nav-item bg-transparent">
+                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Resigned">Resigned</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-4 bg-transparent">
+                                    <div class="tab-pane show fade bg-transparent active" id="All">
+                                        <members_alltableVue />
                                     </div>
-                                    <div class="d-flex justify-content-end mb-3">
-                                        <div class="position-relative">
-                                            <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
-                                            <input type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
-                                        </div>
+                                    <div class="tab-pane show fade bg-transparent" id="Active">
+                                        <Members_activetable />
                                     </div>
-                                    <table class="table">
-                                        <thead class="border-top" style="background-color: #FAFAFA !important;">
-                                            <tr>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Full Name <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Job <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Salary <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Branch <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Type <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Date Joined<i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-
-                                                <th scope="col"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Lisette Balley</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Waiter</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-Time</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">May 20, 2025</td>
-
-                                                <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">Open</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="text-end">
-                                        <button class="btn btn-outline-secondary px-4" style="font-size: 13px;">Next</button>
+                                    <div class="tab-pane show fade bg-transparent" id="Terminated">
+                                        <Members_terminatedtable />
+                                    </div>
+                                    <div class="tab-pane show fade bg-transparent" id="Resigned">
+                                        <Members_resignedtable />
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
 
 
@@ -105,9 +103,14 @@
 <script>
 import AdminNavigationVue from '../Components/AdminNavigation/AdminNavigation.vue'
 import {Link as inertiaLink} from '@inertiajs/vue3'
+import members_alltableVue from '../Components/AdminTable/members_alltable.vue'
+import Members_activetable from '../Components/AdminTable/members_activetable.vue'
+import Members_terminatedtable from '../Components/AdminTable/members_terminatedtable.vue'
+import Members_resignedtable from '../Components/AdminTable/members_resignedtable.vue'
+
 export default {
     name: 'AdminMembers',
-    components: {AdminNavigationVue, inertiaLink}
+    components: {AdminNavigationVue, inertiaLink, members_alltableVue, Members_activetable, Members_terminatedtable, Members_resignedtable}
 }
 </script>
 
@@ -123,12 +126,5 @@ section{
     overflow-wrap: break-word;
 }
 
-thead th {
-    background-color: #FAFAFA !important;
-    white-space: nowrap;
-}
 
-tbody td{
-    white-space: nowrap;
-}
 </style>
