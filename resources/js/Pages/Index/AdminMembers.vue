@@ -60,7 +60,7 @@
 
                         <div class="col-lg-12">
                              <div class="bg-white py-3 px-3 shadow-sm rounded border">
-                                 <ul class="nav nav-tabs bg-transparent">
+                                <ul class="nav nav-tabs bg-transparent">
                                     <li class="nav-item bg-transparent">
                                         <a class="nav-link text-dark active " data-bs-toggle="tab" href="#All" >ALL</a>
                                     </li>

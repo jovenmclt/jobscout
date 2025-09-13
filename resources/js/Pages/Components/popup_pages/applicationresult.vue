@@ -2,11 +2,24 @@
     <section id="popup" class="section-css">
         <div class="row justify-content-center w-100" style="max-width: 1000px;">
 
-            <div class="col-md-7">
+            <div v-if="countdown > 0"  class="col-md-5">
+                <div class="text-center">
+                    <lord-icon
+                        src="https://cdn.lordicon.com/yudxjmzy.json"
+                        trigger="loop"
+                        state="loop-spin"
+                        colors="primary:#1663c7,secondary:#30c9e8,tertiary:#104891"
+                        style="width:100px;height:100px">
+                    </lord-icon>
+                </div>
+            </div>
+
+            <div v-else class="col-md-7">
 
                 <div v-if="passresult == `Hired`" class="bg-white rounded shadow fade-in">
 
-                    <div class="text-end bg-primary py-3 px-3 ">
+                    <div class="d-flex justify-content-between gap-4 bg-primary py-3 px-3 ">
+                        <h6 class="fw-semibold mb-0 text-white">Hired</h6>
                         <i @click="btnclose" class="bi bi-x-lg text-white" style="cursor: pointer;"></i>
                     </div>
                     <div class="text-start py-3 px-3">
@@ -15,11 +28,13 @@
                     <div class="text-end pt-3 pb-2 ">
                         <button @click="btnclose" class="btn btn-secondary px-3 mx-3" style="font-size: 13px;">Close</button>
                     </div>
+
                 </div>
 
                 <div v-else class="bg-white rounded shadow fade-in">
 
-                    <div class="text-end bg-danger py-3 px-3 ">
+                    <div class="d-flex justify-content-between gap-4 bg-danger py-3 px-3 ">
+                        <h6 class="fw-semibold mb-0 text-white">Rejected</h6>
                         <i @click="btnclose" class="bi bi-x-lg text-white" style="cursor: pointer;"></i>
                     </div>
                     <div class="text-start py-3 px-3">
@@ -28,8 +43,9 @@
                     <div class="text-end pt-3 pb-2 ">
                         <button @click="btnclose" class="btn btn-secondary px-3 mx-3" style="font-size: 13px;">Close</button>
                     </div>
+
                 </div>
-                
+
             </div>
 
         </div>
@@ -41,11 +57,28 @@ import {router} from '@inertiajs/vue3'
 export default {
     name: 'applicationresult',
     props: {passresult:String},
+    data(){
+        return{
+            countdown: 4
+        }
+    },
     methods: {
         btnclose(){
             router.visit('/admin/application');
         },
+    },
+    mounted() {
+        const timer = setInterval(() => {
+
+            if (this.countdown > 0) {
+                this.countdown--;
+            } else {
+                clearInterval(timer)
+            }
+
+        }, 1000)
     }
+
 }
 </script>
 
@@ -63,7 +96,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(108, 108, 107, 0.5);
+    background-color: rgba(131, 131, 129, 0.5);
     z-index: 2;
     overflow-wrap: break-word;
 }

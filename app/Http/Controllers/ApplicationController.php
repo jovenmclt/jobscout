@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Members_table;
 use App\Models\Payroll_table;
 use App\Models\Job_list;
+use App\Models\Conversation_table;
+use App\Models\Message_table;
 class ApplicationController extends Controller
 {
     //
@@ -57,19 +59,15 @@ class ApplicationController extends Controller
             'status' => $request->result
         ]);
 
-        if($id->status == 'Hired'){
-
-            $get_userid = $id->user_id;
-            $get_jobid = $id->job_id;
-            $application_id = $id->id;
-
-            $get_jobinfo = Job_list::where('id', $get_jobid)
+        $get_jobinfo = Job_list::where('id', $id->job_id)
                         ->first();
 
-            $new_employee = Members_table::create([
-                'userid' => $get_userid,
-                'jobid' => $get_jobid,
-                'application_id' => $application_id,
+        if($id->status == 'Hired'){
+
+            $new_member = Members_table::create([
+                'userid' => $id->user_id,
+                'jobid' => $id->job_id,
+                'application_id' => $id->id,
                 'position' => $get_jobinfo->job_title,
                 'employment_type' => $get_jobinfo->type,
                 'salary' => $get_jobinfo->salary,
@@ -77,20 +75,34 @@ class ApplicationController extends Controller
                 'hired_date' => date('Y-m-d')
             ]);
 
-            Payroll_table::create([
-                'employee_id' => $new_employee->id,
-                'amount' => $new_employee->salary,
-                'payment_date' => date('Y-m-d'),
-                'status' => 'pending',
-                'employee_status' => $new_employee->status
-            ]);
-
-            Job_application::where('user_id', $get_userid)
+            Job_application::where('user_id', $id->user_id)
                     ->where('status', 'Processing')
                     ->where('id', '!=', $id->id)
                     ->update([ 'status' => 'Cancelled' ]);
 
         }
+
+
+        $adminId = Auth::id();
+
+        $checkconversation = Conversation_table::where('member_id', $id->user_id)
+                            ->first();
+
+        if(!$checkconversation){
+
+            $checkconversation = Conversation_table::create([
+                'admin_id' => $adminId,
+                'member_id' => $id->user_id
+            ]);
+
+        }
+
+        Message_table::create([
+            'conversation_id' => $checkconversation->id,
+            'sender_id' => $adminId,
+            'message' => "Here is the result of your application for the position of {$get_jobinfo->job_title}: {$id->status}",
+            'is_read' => 0
+        ]);
 
         return back();
 

@@ -57,90 +57,36 @@
 
                         <div class="col-lg-12">
                              <div class="bg-white py-3 px-3 shadow-sm rounded border">
-                                <div class="table-responsive">
-                                    <div class="text-start border-bottom mb-3">
-                                        <h6 class="fw-semibold">Applicants list</h6>
+                                <ul class="nav nav-tabs bg-transparent">
+                                    <li class="nav-item bg-transparent">
+                                        <a class="nav-link text-dark active " data-bs-toggle="tab" href="#All" >ALL</a>
+                                    </li>
+                                    <li class="nav-item bg-transparent">
+                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Processing">Processing</a>
+                                    </li>
+                                    <li class="nav-item bg-transparent">
+                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Hired">Hired</a>
+                                    </li>
+                                    <li class="nav-item bg-transparent">
+                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Rejected">Rejected</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-4 bg-transparent">
+                                    <div class="tab-pane show fade bg-transparent active" id="All">
+                                        <application_alltableVue :application_list="application_list"/>
                                     </div>
-                                    <div class="d-flex justify-content-end mb-3">
-                                        <div class="position-relative">
-                                            <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
-                                            <input v-model="searchname" type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
-                                        </div>
+                                    <div class="tab-pane show fade bg-transparent" id="Processing">
+                                        <Application_processingtable :application_list="application_list"/>
                                     </div>
-                                    <table class="table">
-                                        <thead class="border-top" style="background-color: #FAFAFA !important;">
-                                            <tr>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Applicant <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Job <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Salary <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Branch <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Type <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Date Applied<i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-
-                                                <th scope="col">
-                                                    <h6 class="fw-semibold mb-0" style="font-size: 14px;">Status <i class="bi bi-chevron-up"></i></h6>
-                                                </th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(getlist, index) in list_filter" :key="index">
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.userapplied?.name ?? '--' }}</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.jobapplied?.job_title ?? '--' }}</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱{{ getlist.jobapplied?.salary ?? '--' }}</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.jobapplied?.location ?? '--' }}</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.jobapplied?.type ?? '--' }}</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ new Date(getlist.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</td>
-
-
-                                                <td v-if="getlist.status == 'Hired'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
-                                                    <i class="bi bi-check-circle-fill py-1 px-2 rounded-5" style="background-color: #F2FDF5; color: #16A34A;"> Hired</i>
-                                                </td>
-                                                <td v-else-if="getlist.status == 'Processing'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
-                                                    <i class="bi bi-hourglass-split py-1 px-2 rounded-5" style="background-color: #FDECCE; color: #C47E09;"> Processing</i>
-                                                </td>
-                                                <td v-else-if="getlist.status == 'Rejected'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
-                                                    <i class="bi bi-x-circle-fill py-1 px-2 rounded-5" style="background-color: #FEF2F2; color: #DC2626;"> Rejected</i>
-                                                </td>
-                                                <td v-else class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
-                                                    <i class="bi bi-lock-fill py-1 px-2 rounded-5" style="background-color: #DFDEDC; color: #4E4E4E;"> Cancelled</i>
-                                                </td>
-                                                <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">
-                                                    <inertiaLink :href="`/admin/application/view/${getlist.id}`">
-                                                        Open
-                                                    </inertiaLink>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="text-end">
-                                       <div class="d-flex justify-content-end mt-3 gap-2 flex-wrap">
-                                            <inertiaLink v-if="application_list.prev_page_url" :href="application_list.prev_page_url" preserve-state class="fw-noramal py-1 text-decoration-none rounded">
-                                                <button class="btn btn-outline-secondary py-1" style="font-size: 13px;">Previous</button>
-                                            </inertiaLink>
-                                            <inertiaLink v-if="application_list.next_page_url" :href="application_list.next_page_url" preserve-scroll class="fw-noramal py-1 text-decoration-none rounded">
-                                                <button class="btn btn-outline-secondary py-1 px-3" style="font-size: 13px;">Next</button>
-                                            </inertiaLink>
-                                        </div>
+                                    <div class="tab-pane show fade bg-transparent" id="Hired">
+                                        <Application_hiredtable :application_list="application_list"/>
+                                    </div>
+                                    <div class="tab-pane show fade bg-transparent" id="Rejected">
+                                        <application_rejectedtableVue :application_list="application_list" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
 
                     </div>
                 </section>
@@ -152,23 +98,15 @@
 <script>
 import AdminNavigationVue from '../Components/AdminNavigation/AdminNavigation.vue'
 import {Link as inertiaLink} from '@inertiajs/vue3'
+import application_alltableVue from '../Components/AdminTable/application_alltable.vue'
+import Application_processingtable from '../Components/AdminTable/application_processingtable.vue'
+import Application_hiredtable from '../Components/AdminTable/application_hiredtable.vue'
+import application_rejectedtableVue from '../Components/AdminTable/application_rejectedtable.vue'
+
 export default {
     name: 'AdminApplication',
-    components: {AdminNavigationVue, inertiaLink},
+    components: {AdminNavigationVue, inertiaLink, application_alltableVue, Application_processingtable, Application_hiredtable, application_rejectedtableVue},
     props: {application_list:Object, total_application:Number, processing_application:Number, passed_application:Number, rejected_application:Number},
-    data(){
-        return{
-            searchname: ''
-        }
-    },
-    computed:{
-        list_filter(){
-            return this.application_list.data.filter(filterdata => {
-                const matchname = filterdata.userapplied.name.toLowerCase().includes(this.searchname.toLowerCase())
-                return matchname;
-            });
-        },
-    },
 
 }
 </script>

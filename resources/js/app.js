@@ -3,6 +3,14 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import { defineElement } from '@lordicon/element'
+import lottie from 'lottie-web'
+
+// Register Lordicon globally
+defineElement(lottie)
+
+
 createInertiaApp({
   resolve: name => {
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })

@@ -122,7 +122,7 @@ class FrontEndController extends Controller
 
     public function AdminMembers(){
 
-        
+
         return Inertia::render('Index/AdminMembers');
     }
 
