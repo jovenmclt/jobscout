@@ -1,16 +1,16 @@
 <template>
     <div class="d-flex justify-content-between mb-3">
             <div class="text-start mb-3 mt-2">
-                <h6 class="fw-normal text-secondary">All List</h6>
+                <h6 class="fw-normal text-secondary">List of Members</h6>
             </div>
             <div class="position-relative">
                 <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
-                <input type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary"
+                <input v-model="searchname" type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary"
                     style="padding-left: 30px; height: 35px;">
             </div>
-        </div>
+    </div>
     <div class="table-responsive">
-        <table class="table">
+        <table class="table table-hover">
             <thead class="border-top" style="background-color: #FAFAFA !important;">
                 <tr>
                     <th scope="col">
@@ -32,35 +32,85 @@
                         <h6 class="fw-semibold mb-0" style="font-size: 14px;">Type <i class="bi bi-chevron-up"></i></h6>
                     </th>
                     <th scope="col">
-                        <h6 class="fw-semibold mb-0" style="font-size: 14px;">Date Joined<i
-                                class="bi bi-chevron-up"></i></h6>
+                        <h6 class="fw-semibold mb-0" style="font-size: 14px;">Account <i class="bi bi-chevron-up"></i></h6>
                     </th>
+                    <th scope="col">
+                        <h6 class="fw-semibold mb-0" style="font-size: 14px;">Date Hired<i class="bi bi-chevron-up"></i></h6>
+                    </th>
+
 
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Lisette Balley</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Waiter</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱11,687</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Apalit, Pampanga</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">Part-Time</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">May 20, 2025</td>
-
-                    <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">Open</td>
+                <tr v-for="(getinfo, index ) in filterdata" :key="index">
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getinfo?.userinfo?.name ?? '---' }}</td>
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getinfo?.jobinfo?.job_title ?? '---' }}</td>
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">₱{{ formatSalary(getinfo?.jobinfo?.salary ?? '---') }}</td>
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getinfo?.jobinfo?.location ?? '---' }}</td>
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getinfo?.jobinfo?.type ?? '---' }}</td>
+                    <td v-if="getinfo.status == '1'" class="fw-normal py-3 " style="font-size: 14px; padding-top: 11px;">
+                        <div class="py-1 px-3 rounded-5 text-center d-inline-block" style="background-color: #F2FDF5; color: #16A34A;">
+                            Active
+                        </div>
+                    </td>
+                     <td v-else class="fw-normal py-3 " style="font-size: 14px; padding-top: 11px;">
+                        <div class="py-1 px-3 rounded-5 text-center d-inline-block" style="background-color: #FEF2F2; color: #DC2626;">
+                            Disabled
+                        </div>
+                    </td>
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getinfo?.hired_date ?? '---'}}</td>
+                    <td class="fw-semibold text-primary" style="font-size: 14px; padding-top: 11px;">
+                        <inertiaLink :href="`/admin/members/view/${getinfo.id}`">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/lzsupfwm.json"
+                                trigger="loop"
+                                delay="1500"
+                                style="width:30px;height:30px">
+                            </lord-icon>
+                        </inertiaLink>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="text-end mt-3">
-        <button class="btn btn-outline-secondary px-4" style="font-size: 13px;">Next</button>
+        <div class="d-flex justify-content-end mt-3 gap-2 flex-wrap">
+            <inertiaLink v-if="all_members.prev_page_url" :href="all_members.prev_page_url" preserve-state preserve-scroll class="fw-noramal py-1 text-decoration-none rounded">
+                <button class="btn btn-outline-secondary py-1" style="font-size: 13px;">Previous</button>
+            </inertiaLink>
+            <inertiaLink v-if="all_members.next_page_url" :href="all_members.next_page_url" preserve-state preserve-scroll class="fw-noramal py-1 text-decoration-none rounded">
+                <button class="btn btn-outline-secondary py-1 px-3" style="font-size: 13px;">Next</button>
+            </inertiaLink>
+        </div>
     </div>
 </template>
 
 <script>
+import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
-
+    name: 'members_alltable',
+    components: {inertiaLink},
+    props: {all_members:Object},
+    data(){
+        return{
+            searchname: ''
+        }
+    },
+    methods:{
+        formatSalary(value) {
+            if (value == null || value === '') return '---';
+            return Number(value).toLocaleString();
+        },
+    },
+    computed:{
+        filterdata(){
+            return this.all_members.data.filter(filtered => {
+                const searchname = filtered.userinfo.name.toLowerCase().includes(this.searchname.toLowerCase())
+                return searchname
+            });
+        }
+    },
 }
 </script>
 

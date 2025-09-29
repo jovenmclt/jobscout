@@ -68,6 +68,7 @@
 
                     </div>
                 </section>
+                <Applyfailed v-if="!check_userinfo" />
             </main>
         </div>
     </div>
@@ -77,10 +78,12 @@
 import UserNavigation from '../Components/UserNavigation/UserNavigation.vue';
 import {router} from '@inertiajs/vue3'
 import {Link as inertiaLink} from '@inertiajs/vue3'
+import Applyfailed from '../Components/popup_pages/applyfailed.vue';
+
 export default {
     name: 'UserJobDetails',
-    components: {UserNavigation, inertiaLink},
-    props: {job_details:Object, job_qualification:Array},
+    components: {UserNavigation, inertiaLink, Applyfailed},
+    props: {job_details:Object, job_qualification:Array, check_userinfo:Boolean},
     data(){
         return{
             jobid: this.job_details ? this.job_details.id : '',

@@ -1,5 +1,5 @@
 <template>
-    <div class="container-xxl bg-color">
+    <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
             <AdminNavigation />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
@@ -19,7 +19,7 @@
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
                                 <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2">Total Jobs</p>
+                                    <p class="fw-normal text-primary mb-2">Total Jobs</p>
                                     <h3 class="fw-semibold">{{ job_count }}</h3>
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
                                 <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2">Available </p>
+                                    <p class="fw-normal text-success mb-2">Available </p>
                                     <h3 class="fw-semibold">{{ job_avail }}</h3>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
                                 <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2">Not available</p>
+                                    <p class="fw-normal text-danger mb-2">Not available</p>
                                     <h3 class="fw-semibold">{{ job_unavail }}</h3>
                                 </div>
                             </div>
@@ -50,17 +50,18 @@
 
                         <div class="col-lg-12">
                             <div class="bg-white py-3 px-3 shadow-sm rounded border">
+                                <div class="text-start border-bottom mb-3">
+                                    <h6 class="fw-semibold">Jobs list</h6>
+                                </div>
+                                <div class="d-flex justify-content-end mb-3">
+                                    <div class="position-relative">
+                                        <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
+                                        <input v-model="searchname" type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
+                                    </div>
+                                </div>
                                 <div class="table-responsive">
-                                    <div class="text-start border-bottom mb-3">
-                                        <h6 class="fw-semibold">Jobs list</h6>
-                                    </div>
-                                    <div class="d-flex justify-content-end mb-3">
-                                        <div class="position-relative">
-                                            <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
-                                            <input type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
-                                        </div>
-                                    </div>
-                                    <table class="table">
+
+                                    <table class="table table-hover">
                                         <thead class="border-top" style="background-color: #FAFAFA !important;">
                                             <tr>
                                                 <th scope="col">
@@ -82,25 +83,27 @@
                                                     <h6 class="fw-semibold mb-0" style="font-size: 14px;">Created at <i class="bi bi-chevron-up"></i></h6>
                                                 </th>
                                                 <th scope="col"></th>
-                                                <th scope="col"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(getjob, index) in job_list.data" :key="index">
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getjob.job_title }}</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱{{ getjob.salary }}</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getjob.location }}</td>
-                                                <td v-if="getjob.status" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-check-circle-fill text-success"></i></td>
-                                                <td v-else class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;"><i class="bi bi-x-circle-fill text-danger"></i></td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getjob.type }}</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ new Date(getjob.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                            <tr v-for="(getjob, index) in filterdata" :key="index">
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getjob.job_title }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">₱{{ getjob.salary }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getjob.location }}</td>
+                                                <td v-if="getjob.status" class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                                <td v-else class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getjob.type }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ new Date(getjob.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</td>
+                                                <td class="fw-normal " style="font-size: 14px; padding-top: 11px;">
                                                     <inertiaLink :href="`/admin/jobs/edit/${getjob.id}`">
-                                                        <i class="bi bi-pencil-square text-primary fw-semibold"> Edit</i>
+                                                        <lord-icon
+                                                            src="https://cdn.lordicon.com/vwzukuhn.json"
+                                                            trigger="loop"
+                                                            delay="1500"
+                                                            colors="primary:#242424,secondary:#848484,tertiary:#b4b4b4,quaternary:#ffc738"
+                                                            style="width:30px;height:30px">
+                                                        </lord-icon>
                                                     </inertiaLink>
-                                                </td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
-                                                    <i @click="btnDeleteJob(getjob.id)" class="bi bi-trash3 text-danger fw-semibold" style="cursor: pointer;"> Delete</i>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -121,6 +124,7 @@
 
                     </div>
                 </section>
+
             </main>
         </div>
     </div>
@@ -130,18 +134,28 @@
 import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
 import {Link as inertiaLink} from '@inertiajs/vue3'
 import {router} from '@inertiajs/vue3'
+
+
 export default {
     name: 'AdminJobs',
-    components: {AdminNavigation, inertiaLink},
+    components: {AdminNavigation, inertiaLink, },
     props: {job_list:Object, job_count:Number, job_avail:Number, job_unavail:Number},
-    methods:{
-        btnDeleteJob(jobid){
-            const confirmDelete = confirm("Do you really want to delete this job?");
-            if(confirmDelete){
-                router.post(`/deletejob/${jobid}`);
-            }
+    data(){
+        return{
+            searchname: '',
 
-        },
+        }
+    },
+    methods:{
+
+    },
+    computed:{
+        filterdata(){
+            return this.job_list.data.filter(data => {
+                const jobtitle = data.job_title.toLowerCase().includes(this.searchname.toLowerCase());
+                return jobtitle;
+            });
+        }
     }
 }
 </script>

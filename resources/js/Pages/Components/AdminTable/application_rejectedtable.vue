@@ -1,6 +1,5 @@
 <template>
-    <div class="table-responsive">
-        <div class="d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-end mb-3">
             <div class="position-relative">
                 <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
                 <input v-model="searchname" type="text" placeholder="Search"
@@ -8,7 +7,9 @@
                     style="padding-left: 30px; height: 35px;">
             </div>
         </div>
-        <table class="table">
+    <div class="table-responsive">
+
+        <table class="table table-hover">
             <thead class="border-top" style="background-color: #FAFAFA !important;">
                 <tr>
                     <th scope="col">
@@ -43,44 +44,49 @@
             </thead>
             <tbody>
                 <tr v-for="(getlist, index) in list_filter" :key="index">
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.userapplied?.name
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getlist.userapplied?.name
                         ?? '--' }}</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{
                         getlist.jobapplied?.job_title ?? '--' }}</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">₱{{
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">₱{{
                         getlist.jobapplied?.salary ?? '--' }}</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{
                         getlist.jobapplied?.location ?? '--' }}</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ getlist.jobapplied?.type
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ getlist.jobapplied?.type
                         ?? '--' }}</td>
-                    <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ new
+                    <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ new
                         Date(getlist.created_at).toLocaleDateString('en-US', {
                             year: 'numeric', month: 'long', day:
                                 'numeric'
                         }) }}</td>
 
                     <td v-if="getlist.status == 'Hired'" class="fw-normal py-3"
-                        style="font-size: 12px; padding-top: 11px;">
+                        style="font-size: 14px; padding-top: 11px;">
                         <i class="bi bi-check-circle-fill py-1 px-2 rounded-5"
                             style="background-color: #F2FDF5; color: #16A34A;"> Hired</i>
                     </td>
                     <td v-else-if="getlist.status == 'Processing'" class="fw-normal py-3"
-                        style="font-size: 12px; padding-top: 11px;">
+                        style="font-size: 14px; padding-top: 11px;">
                         <i class="bi bi-hourglass-split py-1 px-2 rounded-5"
                             style="background-color: #FDECCE; color: #C47E09;"> Processing</i>
                     </td>
                     <td v-else-if="getlist.status == 'Rejected'" class="fw-normal py-3"
-                        style="font-size: 12px; padding-top: 11px;">
+                        style="font-size: 14px; padding-top: 11px;">
                         <i class="bi bi-x-circle-fill py-1 px-2 rounded-5"
                             style="background-color: #FEF2F2; color: #DC2626;"> Rejected</i>
                     </td>
-                    <td v-else class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                    <td v-else class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">
                         <i class="bi bi-lock-fill py-1 px-2 rounded-5"
                             style="background-color: #DFDEDC; color: #4E4E4E;"> Cancelled</i>
                     </td>
-                    <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">
+                    <td class="fw-semibold text-primary " style="font-size: 14px; padding-top: 11px;">
                         <inertiaLink :href="`/admin/application/view/${getlist.id}`">
-                            Open
+                            <lord-icon
+                                src="https://cdn.lordicon.com/lzsupfwm.json"
+                                trigger="loop"
+                                delay="1500"
+                                style="width:30px;height:30px">
+                            </lord-icon>
                         </inertiaLink>
                     </td>
                 </tr>
@@ -88,12 +94,12 @@
         </table>
         <div class="text-end">
             <div class="d-flex justify-content-end mt-3 gap-2 flex-wrap">
-                <inertiaLink v-if="application_list.prev_page_url" :href="application_list.prev_page_url" preserve-state
+                <inertiaLink v-if="application_list.prev_page_url" :href="application_list.prev_page_url" preserve-state preserve-scroll
                     class="fw-noramal py-1 text-decoration-none rounded">
                     <button class="btn btn-outline-secondary py-1" style="font-size: 13px;">Previous</button>
                 </inertiaLink>
                 <inertiaLink v-if="application_list.next_page_url" :href="application_list.next_page_url"
-                    preserve-state class="fw-noramal py-1 text-decoration-none rounded">
+                    preserve-state preserve-scroll class="fw-noramal py-1 text-decoration-none rounded">
                     <button class="btn btn-outline-secondary py-1 px-3" style="font-size: 13px;">Next</button>
                 </inertiaLink>
             </div>
@@ -120,7 +126,7 @@ export default {
             });
         },
     },
-    
+
 }
 </script>
 

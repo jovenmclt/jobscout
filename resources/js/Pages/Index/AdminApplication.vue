@@ -15,7 +15,7 @@
                         <div class="col-lg-3 col-md-4 mt-3">
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2">Total Applicants</p>
+                                    <p class="fw-normal text-primary mb-2">Total Applicants</p>
                                     <h3 class="fw-semibold">{{ total_application }}</h3>
                                 </div>
                             </div>

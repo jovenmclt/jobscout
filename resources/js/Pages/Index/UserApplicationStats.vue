@@ -1,5 +1,5 @@
 <template>
-    <div class="container-xxl bg-color">
+    <div class="container-xxl min-vh-100 ">
         <div class="row pe-xl-3">
             <UserNavigationVue />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 mt-3">
-                            <div class="bg-white py-3 px-3 rounded shadow-sm border">
+                            <div class=" py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
                                     <p class="fw-normal text-secondary mb-2 text-success">Passed Applications</p>
                                     <h3 class="fw-semibold">{{ totalpassed }}</h3>

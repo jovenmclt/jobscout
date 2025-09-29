@@ -9,12 +9,9 @@
 
 
                         <div class="text-start mt-3">
-                            <span class="fw-normal text-secondary">Job > Edit</span>
+                            <span class="fw-normal text-secondary">Job > edit</span>
                             <br>
-                            <div class="d-flex justify-content-between gap-3">
-                                <h4 class="fw-semibold mt-2">Edit Job</h4>
-                                <button @click="btnDeleteJob" class="btn btn-danger px-3 rounded">Delete</button>
-                            </div>
+                            <h4 class="fw-semibold mt-2">Edit Job</h4>
                         </div>
                         <div class="col-lg-7 mt-3">
                             <div class="bg-white py-3 px-3 shadow-sm border rounded">
@@ -198,12 +195,6 @@ export default {
 
             }
         },
-        btnDeleteJob(){
-            const confirmDelete = confirm("Do you really want to delete this job?");
-            if(confirmDelete){
-                router.post(`/deletejob/${this.jobid}`);
-            }
-        },
         BtnSaveChanges(){
             const jobid = this.jobid;
             const data = {
@@ -218,6 +209,8 @@ export default {
             }
 
             router.post(`/editjob/${jobid}`, data, {
+                preserveState: true,
+                preserveScroll: true,
                 onSuccess:() => {
                     console.log('Job edited successfully!');
                     this.showpopup = !this.showpopup

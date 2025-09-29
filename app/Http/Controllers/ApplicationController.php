@@ -71,7 +71,7 @@ class ApplicationController extends Controller
                 'position' => $get_jobinfo->job_title,
                 'employment_type' => $get_jobinfo->type,
                 'salary' => $get_jobinfo->salary,
-                'status' => 'active',
+                'status' => '1',
                 'hired_date' => date('Y-m-d')
             ]);
 
@@ -101,7 +101,7 @@ class ApplicationController extends Controller
             'conversation_id' => $checkconversation->id,
             'sender_id' => $adminId,
             'message' => "Here is the result of your application for the position of {$get_jobinfo->job_title}: {$id->status}",
-            'is_read' => 0
+            'is_read' => 1
         ]);
 
         return back();

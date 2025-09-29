@@ -119,6 +119,6 @@ class JobListController extends Controller
 
         $jobdeleteID->delete();
 
-        return redirect()->route('jobpage');
+        return back();
     }
 }

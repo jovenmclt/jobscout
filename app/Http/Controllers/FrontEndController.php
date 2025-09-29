@@ -11,7 +11,7 @@ use App\Models\Interview_answers;
 use App\Models\job_qualification;
 use App\Models\Interview_questions;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Members_table;
 class FrontEndController extends Controller
 {
     // Landing Page
@@ -31,7 +31,33 @@ class FrontEndController extends Controller
     // Admin
 
     public function AdminDashboard(){
-        return Inertia::render('Index/AdminDashboard');
+
+        $curryear = date('Y');
+
+        $get_members = Members_table::where('status', true)->whereYear('created_at', $curryear)->get();
+        $get_applicant = Job_application::whereYear('created_at', $curryear)->get();
+
+        $get_jobcount = Job_list::where('status', true)->count();
+        $get_applicantcount = $get_applicant->count();
+        $get_memberscount = $get_members->count();
+
+
+        $get_processingapplication = Job_application::where('status', 'Processing')
+                                ->with('userapplied', 'jobapplied')
+                                ->simplePaginate(10);
+        //dd($get_applicant);
+
+        $get_admininfo = Auth::user();
+
+        return Inertia::render('Index/AdminDashboard',[
+            'jobcount' => $get_jobcount,
+            'memberscount' => $get_memberscount,
+            'applicantcount' => $get_applicantcount,
+            'applicant' => $get_applicant,
+            'members' => $get_members,
+            'processing_applicants' => $get_processingapplication,
+            'admin_info' => $get_admininfo
+        ]);
     }
 
     public function AdminJobs(){
@@ -122,21 +148,66 @@ class FrontEndController extends Controller
 
     public function AdminMembers(){
 
+        $get_members = Members_table::with('userinfo', 'jobinfo')->simplePaginate(10);
 
-        return Inertia::render('Index/AdminMembers');
+        $total_members = $get_members->count();
+
+        $total_active = Members_table::where('status', '1')->count();
+
+        $total_disabled = Members_table::where('status', '0')->count();
+
+       // dd($total_disabled);
+
+        return Inertia::render('Index/AdminMembers', [
+            'all_members' => $get_members,
+            'total_member' => $total_members,
+            'total_active' => $total_active,
+            'total_disabled' => $total_disabled
+        ]);
     }
 
     public function AdminCreateMember(){
-        return Inertia::render('Index/AdminCreateMember');
+        $get_joblist = Job_list::all();
+
+        return Inertia::render('Index/AdminCreateMember', [
+            'Job_list' => $get_joblist,
+        ]);
     }
 
-    public function AdminEditMember(){
-        return Inertia::render('Index/AdminEditMember');
+    public function AdminViewMember($id){
+
+        $get_userinfo = Members_table::where('id', $id)->with('userinfo', 'jobinfo', 'application')->first();
+
+        $get_userid = $get_userinfo->userid;
+
+        $get_applicationshistory = Job_application::where('user_id', $get_userid)->with('userapplied', 'jobapplied')->get();
+
+        //dd($get_userapplications);
+
+
+        return Inertia::render('Index/AdminViewMember', [
+            'membersinfo' => $get_userinfo,
+            'applicationhistory' => $get_applicationshistory
+        ]);
     }
 
-    public function AdminViewMember(){
-        return Inertia::render('Index/AdminViewMember');
+    public function AdminEditMember($id){
+
+        $get_membersinfo = Members_table::where('id', $id)
+                    ->with('userinfo', 'jobinfo')
+                    ->first();
+
+        //dd($get_membersinfo);
+
+        $get_joblist = Job_list::all();
+
+        return Inertia::render('Index/AdminEditMember', [
+            'Job_list' => $get_joblist,
+            'members_info' => $get_membersinfo
+        ]);
     }
+
+
 
 
     // User
@@ -164,25 +235,43 @@ class FrontEndController extends Controller
     public function UserJobs(){
 
         $userid = Auth::id();
+
         $appliedJobIds = Job_application::where('user_id', $userid)
                     ->pluck('job_id');
 
+        $check_usermember = Members_table::where('userid', $userid)
+                        ->exists();
+        //dd($check_usermember);
         $get_availjob = Job_list::where('status', true)
                     ->whereNotIn('id', $appliedJobIds)
                     ->get();
 
         return Inertia::render('Index/UserJobs', [
-            'job_available' => $get_availjob
+            'job_available' => $get_availjob,
+            'check_usermember' => $check_usermember
         ]);
     }
 
     public function UserJobsDetails(Job_list $jobdata){
 
+        $auth_id = Auth::id();
+
+        $check_userinfo = User::where('id', $auth_id)
+                        ->whereNotNull('experience')->where('experience', '!=', '')
+                        ->whereNotNull('about')->where('about', '!=', '')
+                        ->whereNotNull('gender')->where('gender', '!=', '')
+                        ->whereNotNull('education')->where('education', '!=', '')
+                        ->whereNotNull('age')->where('age', '!=', '')
+                        ->whereNotNull('location')->where('location', '!=', '')
+                        ->exists();
+
+        //dd($check_userinfo);
         $get_qualification = Job_qualification::where('jobid', $jobdata->id)->get();
 
         return Inertia::render('Index/UserJobsDetails', [
             'job_details' => $jobdata,
-            'job_qualification' => $get_qualification
+            'job_qualification' => $get_qualification,
+            'check_userinfo' => $check_userinfo
         ]);
     }
 

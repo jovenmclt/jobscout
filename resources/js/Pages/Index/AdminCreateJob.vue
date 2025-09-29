@@ -177,6 +177,8 @@ export default {
                 job_qualification: this.qualification_array
             }
             router.post('/createnewjob', data, {
+                preserveScroll: true,
+                preserveState: true,
                 onSuccess: () => {
                     console.log('Job created successfully!');
                     this.showpopup = !this.showpopup

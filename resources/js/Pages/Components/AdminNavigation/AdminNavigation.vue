@@ -21,25 +21,19 @@
             <span class="fw-bold fs-3">Scout</span>
         </a>
         <div class="collapse navbar-collapse" id="adminnavbar">
-            <ul class="navbar-nav flex-md-column ms-md-3">
+            <ul class="navbar-nav flex-md-column ms-xl-3 ms-1">
                 <li class="navbar-item ">
-                    <inertiaLink href="/admin/dashboard" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-house"></i> Dashboard</inertiaLink>
+                    <inertiaLink href="/admin/dashboard" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-house"></i> Dashboard</inertiaLink>
                 </li>
-                <a  data-bs-toggle="collapse" href="#collapseExample" class="mt-4 text-decoration-none fw-noemal fs-6 text-secondary d-flex justify-content-between px-lg-3 px-2">
-                    <span>Career</span>
-                    <img src="../Assets/arrow-down.png" alt="" width="15" height="18" class="mt-1">
-                </a>
-                <div class="collapse show" id="collapseExample">
-                    <li class="navbar-item mt-3">
-                        <inertiaLink href="/admin/jobs" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-briefcase"></i> Jobs</inertiaLink>
-                    </li>
-                    <li class="navbar-item mt-3">
-                        <inertiaLink href="/admin/application" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-file-earmark-person"></i> Application</inertiaLink>
-                    </li>
-                    <li class="navbar-item mt-3">
-                        <inertiaLink href="/admin/members" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-people"></i> Members</inertiaLink>
-                    </li>
-                </div>
+                <li class="navbar-item mt-3">
+                    <inertiaLink href="/admin/jobs" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-briefcase"></i> Jobs</inertiaLink>
+                </li>
+                <li class="navbar-item mt-3">
+                    <inertiaLink href="/admin/application" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-file-earmark-person"></i> Application</inertiaLink>
+                </li>
+                <li class="navbar-item mt-3">
+                    <inertiaLink href="/admin/members" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-people"></i> Members</inertiaLink>
+                </li>
             </ul>
         </div>
     </nav>

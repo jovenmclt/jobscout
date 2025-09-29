@@ -1,5 +1,5 @@
 <template>
-    <div class="container-xxl bg-color">
+    <div class="container-xxl ">
         <div class="row pe-xl-3 ">
             <UserNavigationVue />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
@@ -9,22 +9,21 @@
 
 
 
-
                         <div class="col-lg-5 mt-3">
                             <div class="text-center mt-3 position-relative">
                                 <img v-if="!userinfo.profile_picture" src="../Components/Assets/profile.png" width="100" alt="">
-                                <img v-else :src="`/storage/${userinfo.profile_picture}`" width="80" height="80" class="rounded-5" alt="">
-                                <h5 class="fw-semibold">{{ userinfo?.name }}</h5>
+                                <img v-else :src="`/storage/${userinfo.profile_picture}`" class="w-100" style="max-width: 120px; max-height: 120px;"  alt="">
+                                <h5 class="fw-semibold mt-2">{{ userinfo?.name ?? '---'  }}</h5>
                             </div>
                         </div>
                         <div class="col-lg-6 mt-3">
-                            <div class="d-flex justify-content-between bg-white rounded shadow-sm boder py-3 px-3 ">
+                            <div class="d-flex justify-content-between bg-white rounded shadow-sm border py-3 px-3 ">
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Location</p>
                                     <h6 class="fw-semibold">{{ userinfo?.location ?? '---' }}</h6>
                                     <br>
                                     <p class="fw-normal mb-0">Educational Attainment</p>
-                                    <h6 class="fw-semibold">{{ userinfo?.education   ?? '---' }}</h6>
+                                    <h6 class="fw-semibold">{{ userinfo?.education ?? '---' }}</h6>
                                 </div>
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Age</p>
@@ -35,8 +34,6 @@
                                 </div>
                             </div>
                         </div>
-
-
 
 
                     </div>
@@ -85,7 +82,7 @@
                     </div>
                 </section>
             </main>
-            <EditProfile v-if="showeditprofile" @closeedit="btnshowedit" :userinfo="userinfo" />
+            <EditProfile v-if="showeditprofile" :userinfo="userinfo" :errors="errors" />
         </div>
     </div>
 </template>
@@ -95,11 +92,10 @@ import EditProfile from '../Components/UserProfileEdit/EditProfile.vue';
 import UserNavigationVue from '../Components/UserNavigation/UserNavigation.vue'
 import usercurriculumvitaeVue from '../Components/popup_pages/usercurriculumvitae.vue';
 import userresumeVue from '../Components/popup_pages/userresume.vue';
-
 export default {
     name: 'UserProfile',
     components: {UserNavigationVue, EditProfile, usercurriculumvitaeVue, userresumeVue},
-    props: {userinfo:Object},
+    props: {userinfo:Object, errors:Object},
     data(){
         return{
             showeditprofile: false,

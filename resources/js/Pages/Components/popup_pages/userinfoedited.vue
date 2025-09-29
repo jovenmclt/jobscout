@@ -7,14 +7,14 @@
                 <div class="bg-white rounded shadow fade-in">
 
                     <div class="d-flex justify-content-between gap-4 bg-primary py-3 px-3 ">
-                        <h6 class="fw-semibold mb-0 text-white">Created</h6>
-                        <i @click="btnvisitjobs" class="bi bi-x-lg text-white" style="cursor: pointer;"></i>
+                        <h6 class="fw-semibold mb-0 text-white">Edited</h6>
+                        <i @click="closepopup" class="bi bi-x-lg text-white" style="cursor: pointer;"></i>
                     </div>
                     <div class="text-start py-3 px-3">
-                        <p class="fw-normal mb-0" style="font-size: 15px;"> <i class="bi bi-check-circle-fill text-success"></i> Job created successfully!</p>
+                        <p class="fw-normal mb-0" style="font-size: 15px;"> <i class="bi bi-check-circle-fill text-success"></i> Changes applied successfully!</p>
                     </div>
-                    <div class="text-end pt-3 pb-2 ">
-                        <button @click="btnvisitjobs" class="btn btn-secondary px-3 mx-3" style="font-size: 13px;">Close</button>
+                    <div class="text-end pt-3 pb-3 ">
+                        <button @click="closepopup" class="btn btn-secondary px-3 mx-3" style="font-size: 13px;">Close</button>
                     </div>
 
                 </div>
@@ -28,15 +28,15 @@
 <script>
 import {router} from '@inertiajs/vue3'
 export default {
-    name: 'jobedited',
+    name: 'updateuserinfo',
     data(){
         return{
-           
+
         }
     },
     methods:{
-        btnvisitjobs(){
-            router.visit('/admin/jobs');
+        closepopup(){
+           window.location.reload();
         }
     },
 

@@ -18,6 +18,17 @@ class Members_table extends Model
         'salary',
         'status',
         'hired_date',
-        'termination_date',
     ];
+
+    public function userinfo(){
+        return $this->belongsTo(User::class, 'userid');
+    }
+
+    public function jobinfo(){
+        return $this->belongsTo(Job_list::class, 'jobid');
+    }
+
+    public function application(){
+        return $this->belongsTo(Job_application::class, 'application_id');
+    }
 }

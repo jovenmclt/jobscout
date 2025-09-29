@@ -2,23 +2,11 @@
     <section id="popup" class="section-css">
         <div class="row justify-content-center w-100" style="max-width: 1000px;">
 
-            <div v-if="countdown > 0"  class="col-md-5">
-                <div class="text-center">
-                    <lord-icon
-                        src="https://cdn.lordicon.com/yudxjmzy.json"
-                        trigger="loop"
-                        state="loop-spin"
-                        colors="primary:#1663c7,secondary:#30c9e8,tertiary:#104891"
-                        style="width:100px;height:100px">
-                    </lord-icon>
-                </div>
-            </div>
-
-            <div v-else class="col-md-7">
+            <div class="col-md-7">
 
                 <div v-if="passresult == `Hired`" class="bg-white rounded shadow fade-in">
 
-                    <div class="d-flex justify-content-between gap-4 bg-primary py-3 px-3 ">
+                    <div class="d-flex justify-content-between gap-4 bg-success py-3 px-3 ">
                         <h6 class="fw-semibold mb-0 text-white">Hired</h6>
                         <i @click="btnclose" class="bi bi-x-lg text-white" style="cursor: pointer;"></i>
                     </div>
@@ -59,7 +47,7 @@ export default {
     props: {passresult:String},
     data(){
         return{
-            countdown: 4
+            
         }
     },
     methods: {
@@ -67,18 +55,6 @@ export default {
             router.visit('/admin/application');
         },
     },
-    mounted() {
-        const timer = setInterval(() => {
-
-            if (this.countdown > 0) {
-                this.countdown--;
-            } else {
-                clearInterval(timer)
-            }
-
-        }, 1000)
-    }
-
 }
 </script>
 

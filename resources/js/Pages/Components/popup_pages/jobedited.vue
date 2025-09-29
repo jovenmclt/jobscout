@@ -1,14 +1,20 @@
 <template>
     <section id="popup_jobcreated" class="popup-css px-3 py-3">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center w-100" style="max-width: 1000px;">
 
 
-            <div class="col-auto">
-                <div class="bg-white py-4 px-4 rounded shadow ">
-                    <div class="text-center">
-                        <img src="../Assets/edited-icon.png" width="130" alt="">
-                        <p class="fw-normal mt-3">Your changes to the job post have been saved. <br> The updated job details are now live and visible to users.</p>
-                        <button @click="btnvisitjobs" class="btn btn-primary px-4">Continue</button>
+            <div class="col-md-7">
+                <div class="bg-white rounded shadow fade-in">
+
+                    <div class="d-flex justify-content-between gap-4 bg-primary py-3 px-3 ">
+                        <h6 class="fw-semibold mb-0 text-white">Edited</h6>
+                        <i @click="btnvisitjobs" class="bi bi-x-lg text-white" style="cursor: pointer;"></i>
+                    </div>
+                    <div class="text-start py-3 px-3">
+                        <p class="fw-normal mb-0" style="font-size: 15px;"> <i class="bi bi-check-circle-fill text-success"></i> Changes applied successfully!</p>
+                    </div>
+                    <div class="text-end pt-3 pb-3 ">
+                        <button @click="btnvisitjobs" class="btn btn-secondary px-3 mx-3" style="font-size: 13px;">Close</button>
                     </div>
 
                 </div>
@@ -23,11 +29,17 @@
 import {router} from '@inertiajs/vue3'
 export default {
     name: 'jobedited',
+    data(){
+        return{
+
+        }
+    },
     methods:{
         btnvisitjobs(){
             router.visit('/admin/jobs');
         }
-    }
+    },
+
 }
 </script>
 
@@ -47,5 +59,21 @@ export default {
     font-family: "Poppins", sans-serif;
     overflow-wrap: break-word;
     background-color: rgba(82, 83, 85, 0.5);
+}
+
+.fade-in{
+    animation: fadeinanimation 0.5s ease-in-out;
+}
+
+@keyframes fadeinanimation {
+    0%{
+        opacity: 0%;
+    }
+    50%{
+        opacity: 50%;
+    }
+    100%{
+        opacity: 100%;
+    }
 }
 </style>

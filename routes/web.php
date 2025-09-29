@@ -33,14 +33,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/application/view/{id}', [FrontEndController::class, 'AdminViewApp']);
     Route::get('/admin/members', [FrontEndController::class, 'AdminMembers']);
     Route::get('/admin/members/create', [FrontEndController::class, 'AdminCreateMember']);
-    Route::get('/admin/members/edit', [FrontEndController::class, 'AdminEditMember']);
-    Route::get('/admin/members/view', [FrontEndController::class, 'AdminViewMember']);
+    Route::get('/admin/members/edit/{id}', [FrontEndController::class, 'AdminEditMember']);
+    Route::get('/admin/members/view/{id}', [FrontEndController::class, 'AdminViewMember']);
 
     // actions
     Route::post('/createnewjob', [JobListController::class, 'CreateNewJob']);
     Route::post('/editjob/{jobupdateID}', [JobListController::class, 'EditJob']);
     Route::post('/deletejob/{jobdeleteID}', [JobListController::class, 'DeleteJob']);
     Route::post('/store/jobresult/{id}', [ApplicationController::class, 'ResultApplication']);
+    Route::post('/editmemberjob/{id}', [AuthController::class, 'EditMemberJob']);
+    Route::post('/editmemberinfo/{id}', [AuthController::class, 'EditMemberinfo']);
+    Route::post('/disabledmember/{id}', [AuthController::class, 'DisabledMember']);
+    Route::post('/activatedmember/{id}', [AuthController::class, 'ActivatedMember']);
+    Route::post('/createnewmember', [AuthController::class, 'CreateMember']);
 });
 
 Route::post('/registeraccount', [AuthController::class, 'RegisterAccount']);

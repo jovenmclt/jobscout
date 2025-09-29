@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-between mb-3">
             <div class="text-start mb-3 mt-2">
-                <h6 class="fw-normal text-secondary">List of Active Members</h6>
+                <h6 class="fw-normal text-secondary">List of Disabled Members</h6>
             </div>
             <div class="position-relative">
                 <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
@@ -76,7 +76,7 @@
 <script>
 import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
-    name: 'members_activetable',
+    name: 'members_disabledtable',
     components: {inertiaLink},
     props: {all_members:Object},
     data(){
@@ -92,7 +92,7 @@ export default {
     },
     computed:{
         filterdata(){
-            return this.all_members.data.filter(activedata => activedata.status == '1').filter(filtered => {
+            return this.all_members.data.filter(activedata => activedata.status == '0').filter(filtered => {
                 const searchname = filtered.userinfo.name.toLowerCase().includes(this.searchname.toLowerCase())
                 return searchname
             });

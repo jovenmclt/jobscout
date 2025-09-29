@@ -21,25 +21,19 @@
             <span class="fw-bold fs-3">Scout</span>
         </a>
         <div class="collapse navbar-collapse" id="adminnavbar">
-            <ul class="navbar-nav flex-md-column ms-md-3">
+            <ul class="navbar-nav flex-md-column ms-xl-3 ms-1">
                 <li class="navbar-item ">
-                    <inertiaLink href="/user/dashboard" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-house fs-5"></i> Dashboard</inertiaLink>
+                    <inertiaLink href="/user/dashboard" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-house fs-5"></i> Dashboard</inertiaLink>
                 </li>
-                <a  data-bs-toggle="collapse" href="#collapseExample" class="mt-4 text-decoration-none fw-noemal fs-6 text-secondary d-flex justify-content-between px-lg-3 px-2">
-                    <span>Career</span>
-                    <img src="../Assets/arrow-down.png" alt="" width="15" height="18" class="mt-1">
-                </a>
-                <div class="collapse show" id="collapseExample">
-                    <li class="navbar-item mt-3">
-                        <inertiaLink href="/user/jobs" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-briefcase fs-5"></i> Jobs</inertiaLink>
-                    </li>
-                    <li class="navbar-item mt-3">
-                        <inertiaLink href="/user/applicationstats" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-file-earmark-bar-graph fs-5"></i> Application Stats</inertiaLink>
-                    </li>
-                    <li class="navbar-item mt-3">
-                        <inertiaLink href="/user/profile" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-secondary nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-person-circle fs-5"></i> Profile</inertiaLink>
-                    </li>
-                </div>
+                <li class="navbar-item mt-3">
+                    <inertiaLink href="/user/jobs" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-briefcase fs-5"></i> Jobs</inertiaLink>
+                </li>
+                <li class="navbar-item mt-3">
+                    <inertiaLink href="/user/applicationstats" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-file-earmark-bar-graph fs-5"></i> Application</inertiaLink>
+                </li>
+                <li class="navbar-item mt-3">
+                    <inertiaLink href="/user/profile" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-person-circle fs-5"></i> Profile</inertiaLink>
+                </li>
             </ul>
         </div>
     </nav>
@@ -65,11 +59,21 @@ export default {
     #navigationbar{
         position: fixed;
         top: 70px;
+        left: 0;
     }
     #navtop{
         position: fixed;
         top: 0;
+        left: 0;
     }
 }
+
+@media (max-width: 767.98px) {
+    #navigationbar {
+        background-color: white !important;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+    }
+}
+
 
 </style>

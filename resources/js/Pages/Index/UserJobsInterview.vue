@@ -1,5 +1,5 @@
 <template>
-    <div class="container-xxl bg-color">
+    <div class="container-xxl ">
         <div class="row pe-xl-3">
             <UserNavigationVue />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">

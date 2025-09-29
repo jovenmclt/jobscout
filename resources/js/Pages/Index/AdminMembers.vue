@@ -20,31 +20,23 @@
                             <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
                                 <div class="text-start">
                                     <p class="fw-normal text-primary mb-2">Total Members</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <h3 class="fw-semibold">{{total_member}}</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
                             <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
                                 <div class="text-start">
-                                    <p class="fw-normal text-success mb-2">Active</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <p class="fw-normal text-success mb-2">Active Members</p>
+                                    <h3 class="fw-semibold">{{total_active}}</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-4 col-6">
                             <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
                                 <div class="text-start">
-                                    <p class="fw-normal text-danger mb-2">Terminated</p>
-                                    <h3 class="fw-semibold">191</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6">
-                            <div class="bg-white py-3 px-3 border rounded shadow-sm mt-3">
-                                <div class="text-start">
-                                    <p class="fw-normal text-secondary mb-2">Resigned</p>
-                                    <h3 class="fw-semibold">191</h3>
+                                    <p class="fw-normal text-danger mb-2">Disabled Members</p>
+                                    <h3 class="fw-semibold">{{total_disabled}}</h3>
                                 </div>
                             </div>
                         </div>
@@ -68,25 +60,21 @@
                                         <a class="nav-link text-dark" data-bs-toggle="tab" href="#Active">Active</a>
                                     </li>
                                     <li class="nav-item bg-transparent">
-                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Terminated">Terminated</a>
+                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Disabled">Disabled</a>
                                     </li>
-                                    <li class="nav-item bg-transparent">
-                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Resigned">Resigned</a>
-                                    </li>
+
                                 </ul>
                                 <div class="tab-content mt-4 bg-transparent">
                                     <div class="tab-pane show fade bg-transparent active" id="All">
-                                        <members_alltableVue />
+                                        <members_alltableVue :all_members="all_members"/>
                                     </div>
                                     <div class="tab-pane show fade bg-transparent" id="Active">
-                                        <Members_activetable />
+                                        <Members_activetable :all_members="all_members"/>
                                     </div>
-                                    <div class="tab-pane show fade bg-transparent" id="Terminated">
-                                        <Members_terminatedtable />
+                                    <div class="tab-pane show fade bg-transparent" id="Disabled">
+                                        <Members_disabledtable :all_members="all_members"/>
                                     </div>
-                                    <div class="tab-pane show fade bg-transparent" id="Resigned">
-                                        <Members_resignedtable />
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -105,12 +93,13 @@ import AdminNavigationVue from '../Components/AdminNavigation/AdminNavigation.vu
 import {Link as inertiaLink} from '@inertiajs/vue3'
 import members_alltableVue from '../Components/AdminTable/members_alltable.vue'
 import Members_activetable from '../Components/AdminTable/members_activetable.vue'
-import Members_terminatedtable from '../Components/AdminTable/members_terminatedtable.vue'
-import Members_resignedtable from '../Components/AdminTable/members_resignedtable.vue'
+import Members_disabledtable from '../Components/AdminTable/members_disabledtable.vue'
+
 
 export default {
     name: 'AdminMembers',
-    components: {AdminNavigationVue, inertiaLink, members_alltableVue, Members_activetable, Members_terminatedtable, Members_resignedtable}
+    props: {all_members:Object, total_member:Number, total_active:Number, total_disabled:Number},
+    components: {AdminNavigationVue, inertiaLink, members_alltableVue, Members_activetable, Members_disabledtable}
 }
 </script>
 
