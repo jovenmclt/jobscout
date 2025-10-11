@@ -47,16 +47,17 @@
 
                         <div class="col-lg-12">
                              <div class="bg-white py-3 px-3 shadow-sm rounded border">
-                                <div class="table-responsive">
-                                    <div class="text-start border-bottom mb-3">
+                                <div class="text-start border-bottom mb-3">
                                         <h6 class="fw-semibold">Applicants list</h6>
                                     </div>
                                     <div class="d-flex justify-content-end mb-3">
                                         <div class="position-relative">
                                             <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
-                                            <input type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
+                                            <input v-model="searchjob" type="text" placeholder="Search" class="form-control rounded shadow-none outline-secondary" style="padding-left: 30px; height: 35px;">
                                         </div>
                                     </div>
+                                <div class="table-responsive">
+
                                     <table class="table">
                                         <thead class="border-top" style="background-color: #FAFAFA !important;">
                                             <tr>
@@ -83,38 +84,43 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(getapplication, index) in application_job.data" :key="index">
+                                            <tr v-for="(getapplication, index) in filterapplication" :key="index">
 
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">
                                                     {{ getapplication.jobapplied?.job_title }}
                                                 </td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">
                                                     ₱ {{ getapplication.jobapplied?.salary }}
                                                 </td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">
                                                     {{ getapplication.jobapplied?.location }}
                                                 </td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">
                                                     {{ getapplication.jobapplied?.type }}
                                                 </td>
-                                                <td class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">{{ new Date(getapplication.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</td>
+                                                <td class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">{{ new Date(getapplication.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</td>
 
 
-                                                <td v-if="getapplication.status == 'Hired'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td v-if="getapplication.status == 'Hired'" class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">
                                                     <i class="bi bi-check-circle-fill py-1 px-2 rounded-5" style="background-color: #F2FDF5; color: #16A34A;"> Hired</i>
                                                 </td>
-                                                <td v-else-if="getapplication.status == 'Processing'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td v-else-if="getapplication.status == 'Processing'" class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">
                                                     <i class="bi bi-hourglass-split py-1 px-2 rounded-5" style="background-color: #FDECCE; color: #C47E09;"> Processing</i>
                                                 </td>
-                                                <td v-else-if="getapplication.status == 'Rejected'" class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td v-else-if="getapplication.status == 'Rejected'" class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">
                                                     <i class="bi bi-x-circle-fill py-1 px-2 rounded-5" style="background-color: #FEF2F2; color: #DC2626;"> Rejected</i>
                                                 </td>
-                                                <td v-else class="fw-normal py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td v-else class="fw-normal py-3" style="font-size: 14px; padding-top: 11px;">
                                                     <i class="bi bi-lock-fill py-1 px-2 rounded-5" style="background-color: #DFDEDC; color: #4E4E4E;"> Cancelled</i>
                                                 </td>
-                                                <td class="fw-semibold text-primary py-3" style="font-size: 12px; padding-top: 11px;">
+                                                <td class="fw-semibold text-primary" style="font-size: 14px; padding-top: 11px;">
                                                     <inertiaLink :href="`/view/application/${getapplication.jobapplied?.id}`" class="text-decoration-none">
-                                                        Open
+                                                        <lord-icon
+                                                            src="https://cdn.lordicon.com/lzsupfwm.json"
+                                                            trigger="loop"
+                                                            delay="1500"
+                                                            style="width:30px;height:30px">
+                                                        </lord-icon>
                                                     </inertiaLink>
                                                 </td>
                                             </tr>
@@ -152,6 +158,20 @@ export default {
     name: 'UserApplicationStats',
     components:{UserNavigationVue, inertiaLink},
     props: {application_job:Object, totalapplied:Number, totalpassed:Number, totalrejected:Number},
+    data(){
+        return{
+            searchjob: ''
+        }
+    },
+    computed:{
+        filterapplication(){
+            return this.application_job.data.filter((data) => {
+                const filter_search = data.jobapplied.job_title.toLowerCase().includes(this.searchjob.toLowerCase());
+
+                return filter_search
+            });
+        }
+    },
 }
 </script>
 
@@ -170,9 +190,11 @@ section{
 thead th {
     background-color: #FAFAFA !important;
     white-space: nowrap;
+    font-family: "Poppins", sans-serif;
 }
 
-tbody td{
+tbody td {
     white-space: nowrap;
+    font-family: "Poppins", sans-serif;
 }
 </style>

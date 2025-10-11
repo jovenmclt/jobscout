@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <nav id="navigationbar" class="navbar col-lg-2 col-md-3 col-12 navbar-expand-md px-md-0 px-4" style="max-height: 340px;">
+    <nav id="navigationbar" class="navbar col-lg-2 col-md-3 col-12 navbar-expand-md px-md-0 px-4 " style="max-height: 500px;">
         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#adminnavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,8 +20,8 @@
             <span class="fw-bold fs-3" style="color: #5A81FA;">Job</span>
             <span class="fw-bold fs-3">Scout</span>
         </a>
-        <div class="collapse navbar-collapse" id="adminnavbar">
-            <ul class="navbar-nav flex-md-column ms-xl-3 ms-1">
+        <div class="collapse navbar-collapse " id="adminnavbar">
+            <ul class="navbar-nav flex-md-column ms-xl-3 ms-1 ">
                 <li class="navbar-item ">
                     <inertiaLink href="/user/dashboard" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-house fs-5"></i> Dashboard</inertiaLink>
                 </li>
@@ -33,6 +33,9 @@
                 </li>
                 <li class="navbar-item mt-3">
                     <inertiaLink href="/user/profile" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-person-circle fs-5"></i> Profile</inertiaLink>
+                </li>
+                <li class="navbar-item mt-3 ">
+                    <inertiaLink href="/user/message" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-chat-dots"></i> Message</inertiaLink>
                 </li>
             </ul>
         </div>
@@ -72,6 +75,7 @@ export default {
     #navigationbar {
         background-color: white !important;
         box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+
     }
 }
 

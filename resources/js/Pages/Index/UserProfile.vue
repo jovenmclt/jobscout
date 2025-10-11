@@ -9,14 +9,14 @@
 
 
 
-                        <div class="col-lg-5 mt-3">
+                        <div class="col-lg-3 mt-3">
                             <div class="text-center mt-3 position-relative">
                                 <img v-if="!userinfo.profile_picture" src="../Components/Assets/profile.png" width="100" alt="">
-                                <img v-else :src="`/storage/${userinfo.profile_picture}`" class="w-100" style="max-width: 120px; max-height: 120px;"  alt="">
+                                <img v-else :src="`/storage/${userinfo.profile_picture}`" class="w-100 " style="max-width: 120px; max-height: 120px;"  alt="">
                                 <h5 class="fw-semibold mt-2">{{ userinfo?.name ?? '---'  }}</h5>
                             </div>
                         </div>
-                        <div class="col-lg-6 mt-3">
+                        <div class="col-lg-5 mt-3">
                             <div class="d-flex justify-content-between bg-white rounded shadow-sm border py-3 px-3 ">
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Location</p>
@@ -34,7 +34,24 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="col-lg-4 mt-3">
+                            <div class="d-flex justify-content-between bg-white rounded shadow-sm border py-3 px-3 ">
+                                <div class="text-start">
+                                    <p class="fw-normal mb-0">Date Hired</p>
+                                    <h6 class="fw-semibold">{{ memberinfo?.hired_date ?? '---'}}</h6>
+                                    <br>
+                                    <p class="fw-normal mb-0">Position</p>
+                                    <h6 class="fw-semibold">{{ memberinfo?.position ?? '---' }}</h6>
+                                </div>
+                                <div class="text-start">
+                                    <p class="fw-normal mb-0">Salary</p>
+                                    <h6 class="fw-semibold">{{ memberinfo?.salary ?? '---' }} </h6>
+                                    <br>
+                                    <p class="fw-normal mb-0">Type</p>
+                                    <h6 class="fw-semibold">{{ memberinfo?.employment_type ?? '---' }}</h6>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </section>
@@ -42,12 +59,12 @@
                     <div class="row justify-content-center">
 
 
-                        <div class="col-lg-11">
+                        <div class="col-lg-12">
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start border-bottom">
                                     <h6 class="fw-semibold">About</h6>
                                 </div>
-                                <div class="text-start mt-3">
+                                <div class="text-start mt-3" style="max-height: 120px; overflow-y: auto;">
                                     <p class="fw-normal text-secondary">{{ userinfo?.about ?? '---' }}</p>
                                 </div>
                             </div>
@@ -57,7 +74,7 @@
                                     <div class="text-start border-bottom">
                                         <h6 class="fw-semibold">Experience</h6>
                                     </div>
-                                    <div class="text-start mt-3">
+                                    <div class="text-start mt-3" style="max-height: 120px; overflow-y: auto;">
                                         <p class="fw-normal text-secondary">{{ userinfo?.experience ?? '---' }}</p>
                                     </div>
                                 </div>
@@ -95,7 +112,7 @@ import userresumeVue from '../Components/popup_pages/userresume.vue';
 export default {
     name: 'UserProfile',
     components: {UserNavigationVue, EditProfile, usercurriculumvitaeVue, userresumeVue},
-    props: {userinfo:Object, errors:Object},
+    props: {userinfo:Object, errors:Object, memberinfo:Object},
     data(){
         return{
             showeditprofile: false,

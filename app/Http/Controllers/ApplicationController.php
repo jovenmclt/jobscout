@@ -20,8 +20,8 @@ class ApplicationController extends Controller
         $validateRequest = $request->validate([
             'interview.*.answer' => 'required|string',
             'interview.*.question_id' => 'required',
-            'resume_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'cv_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'resume_path' => 'required||mimes:pdf|max:5120',
+            'cv_path' => 'required|mimes:pdf|max:5120',
             'job_id' => 'required',
         ]);
 
@@ -29,8 +29,8 @@ class ApplicationController extends Controller
         $jobid = $validateRequest['job_id'];
 
         if ($request->hasFile('resume_path') && $request->hasFile('cv_path')) {
-            $resume = $request->file('resume_path')->store('images', 'public');
-            $cv = $request->file('cv_path')->store('images', 'public');
+            $resume = $request->file('resume_path')->store('jobscoutfiles', 'public');
+            $cv = $request->file('cv_path')->store('jobscoutfiles', 'public');
         }
 
         $user_application = Job_application::create([

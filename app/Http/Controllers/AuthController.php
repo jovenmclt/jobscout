@@ -28,7 +28,8 @@ class AuthController extends Controller
             'name' => $ValidateRequest['fullname'],
             'email' => $ValidateRequest['email'],
             'password' => Hash::make($ValidateRequest['password']),
-            'role' => 'user'
+            'role' => 'user',
+            'status' => '1'
         ]);
 
         return redirect()->route('login');
@@ -36,19 +37,12 @@ class AuthController extends Controller
 
     public function LoginAccount(LoginRequest $request){
 
-        $get_userid = User::select('id')->where('email', $request->email)->first();
+        $get_userid = User::select('status')->where('email', $request->email)->first();
 
         if($get_userid){
 
-            $check_member = Members_table::where('userid', $get_userid->id)->exists();
-
-            if($check_member){
-
-                $get_userstatus = Members_table::select('status')->where('userid', $get_userid->id)->first();
-
-                if(!$get_userstatus->status){
-                    return redirect()->back()->with('failedLogin', 'Your account has been disabled.');
-                }
+            if(!$get_userid->status){
+                return redirect()->back()->with('failedLogin', 'Your account has been disabled.');
             }
         }
 
@@ -61,6 +55,10 @@ class AuthController extends Controller
 
         $user_auth = Auth::user();
 
+        $user_auth->update([
+            'login' => 1
+        ]);
+
         if($user_auth->role == 'admin'){
             return redirect()->route('admindashboard');
         }else{
@@ -69,10 +67,15 @@ class AuthController extends Controller
     }
 
     public function LogoutAccount(){
+
+        $user_auth = Auth::user();
+        $user_auth->update([
+            'login' => 0
+        ]);
+
         Auth::logout();
         return redirect()->route('login');
     }
-
 
     //user
     public function updateuser(Request $request){
@@ -97,11 +100,11 @@ class AuthController extends Controller
         $profile_path = $curr_user->profile_picture;
 
         if ($request->hasFile('Resume')) {
-            $resume_path = $request->file('Resume')->store('resumes', 'public');
+            $resume_path = $request->file('Resume')->store('jobscoutfiles', 'public');
         }
 
         if ($request->hasFile('Cv')) {
-            $cv_path = $request->file('Cv')->store('cvs', 'public');
+            $cv_path = $request->file('Cv')->store('jobscoutfiles', 'public');
         }
 
         if ($request->hasFile('Profile')) {
@@ -122,7 +125,6 @@ class AuthController extends Controller
         ]);
 
     }
-
 
     //admin
     public function EditMemberJob(Request $request, Members_table $id){
@@ -174,20 +176,38 @@ class AuthController extends Controller
 
     }
 
-    public function DisabledMember(Members_table $id){
+    public function DisabledUser(User $id){
 
         $id->update([
             'status' => 0
         ]);
 
+        $member = Members_table::where('userid', $id->id)->first();
+
+        if($member){
+
+            $member->update([
+                'status' => 0
+            ]);
+
+        }
+
         return back();
     }
 
-    public function ActivatedMember(Members_table $id){
+    public function ActivatedUser(User $id){
 
         $id->update([
             'status' => 1
         ]);
+
+        $member = Members_table::where('userid', $id->id)->first();
+
+        if($member){
+            $member->update([
+                'status' => 1
+            ]);
+        }
 
         return back();
     }
@@ -245,7 +265,8 @@ class AuthController extends Controller
             'age' => $request->age,
             'education' => $request->education,
             'location' => $request->location,
-            'profile_path' => $profile
+            'profile_path' => $profile,
+            'status' => '1'
 
         ]);
 

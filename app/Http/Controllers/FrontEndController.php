@@ -12,6 +12,7 @@ use App\Models\job_qualification;
 use App\Models\Interview_questions;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Members_table;
+use App\Models\Conversation_table;
 class FrontEndController extends Controller
 {
     // Landing Page
@@ -207,6 +208,40 @@ class FrontEndController extends Controller
         ]);
     }
 
+    public function AdminConversation(){
+
+        $get_user = User::where('role', 'user')->get();
+
+        return  Inertia::render('Index/AdminConversation',[
+            'all_user' => $get_user
+        ]);
+    }
+
+    public function AdminMessage($id){
+
+        $get_message = Conversation_table::where('member_id', $id)->with('message')->get();
+
+        $adminId = Auth::id();
+        $user_info = User::where('id', $id)->first();
+
+        return Inertia::render('Index/AdminMessage',[
+            'message_history' => $get_message,
+            'adminid' => $adminId,
+            'user_info' => $user_info
+        ]);
+
+
+    }
+
+    public function AdminSettings(){
+
+        $get_user = User::where('role', 'user')->simplePaginate(10);
+
+        return  Inertia::render('Index/AdminSettings', [
+            'all_user' => $get_user
+        ]);
+    }
+
 
 
 
@@ -236,27 +271,13 @@ class FrontEndController extends Controller
 
         $userid = Auth::id();
 
-        $appliedJobIds = Job_application::where('user_id', $userid)
-                    ->pluck('job_id');
-
         $check_usermember = Members_table::where('userid', $userid)
                         ->exists();
-        //dd($check_usermember);
+
         $get_availjob = Job_list::where('status', true)
-                    ->whereNotIn('id', $appliedJobIds)
                     ->get();
 
-        return Inertia::render('Index/UserJobs', [
-            'job_available' => $get_availjob,
-            'check_usermember' => $check_usermember
-        ]);
-    }
-
-    public function UserJobsDetails(Job_list $jobdata){
-
-        $auth_id = Auth::id();
-
-        $check_userinfo = User::where('id', $auth_id)
+        $check_userinfo = User::where('id', $userid)
                         ->whereNotNull('experience')->where('experience', '!=', '')
                         ->whereNotNull('about')->where('about', '!=', '')
                         ->whereNotNull('gender')->where('gender', '!=', '')
@@ -264,6 +285,15 @@ class FrontEndController extends Controller
                         ->whereNotNull('age')->where('age', '!=', '')
                         ->whereNotNull('location')->where('location', '!=', '')
                         ->exists();
+        //dd($check_userinfo);
+        return Inertia::render('Index/UserJobs', [
+            'job_available' => $get_availjob,
+            'check_usermember' => $check_usermember,
+            'check_userinfo' => $check_userinfo
+        ]);
+    }
+
+    public function UserJobsDetails(Job_list $jobdata){
 
         //dd($check_userinfo);
         $get_qualification = Job_qualification::where('jobid', $jobdata->id)->get();
@@ -271,7 +301,6 @@ class FrontEndController extends Controller
         return Inertia::render('Index/UserJobsDetails', [
             'job_details' => $jobdata,
             'job_qualification' => $get_qualification,
-            'check_userinfo' => $check_userinfo
         ]);
     }
 
@@ -322,9 +351,26 @@ class FrontEndController extends Controller
     public function UserProfile(){
 
         $get_userinfo = Auth::user();
+        $get_memberinfo = Members_table::where('userid', $get_userinfo->id)
+                        ->first();
 
         return Inertia::render('Index/UserProfile', [
-            'userinfo' => $get_userinfo
+            'userinfo' => $get_userinfo,
+            'memberinfo' => $get_memberinfo
+        ]);
+    }
+
+    public function UserMessage(){
+
+        $user_id = Auth::id();
+
+        $get_message = Conversation_table::where('member_id', $user_id)->with('message')->get();
+
+        //dd($get_message);
+
+        return Inertia::render('Index/UserMessage',[
+            'message_history' => $get_message,
+            'userid' => $user_id
         ]);
     }
 }

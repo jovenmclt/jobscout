@@ -13,6 +13,7 @@ class Message_table extends Model
         'conversation_id',
         'sender_id',
         'message',
+        'files',
         'is_read'
     ];
 }

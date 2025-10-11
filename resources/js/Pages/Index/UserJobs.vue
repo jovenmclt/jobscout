@@ -28,16 +28,9 @@
                             </div>
                         </div>
 
-                        <div v-if="check_usermember" class="col-12 mt-4">
-                            <br><br><br><br><br>
-                            <div class="text-center">
-                                <h3 class="fw-semibold text-primary">You are already registered <br> as a member</h3>
-                            </div>
-                        </div>
-
-                        <template v-else v-for="(getjob, indx) in job_filter" :key="indx">
+                        <template v-for="(getjob, indx) in job_filter" :key="indx">
                             <div class="col-xl-4 col-lg-6 mt-4">
-                                <inertiaLink :href="`/job/details/${getjob.id}`" class="text-decoration-none ">
+                                <div @click="btnviewjob(getjob.id)" class="text-decoration-none " style="cursor: pointer;">
                                     <div class="bg-white py-3 px-3 rounded border shadow-sm jobhov">
                                         <div class="text-end mb-2" >
                                             <p class="fw-semibold text-primary d-inline-block py-1 px-3 rounded-4 mb-0" style=" background-color: #EAEFFF; font-size: 14px;">{{ getjob.location }}</p>
@@ -50,13 +43,15 @@
                                             <p class="fw-light text-secondary mb-0">Monthly Salary</p>
                                         </div>
                                     </div>
-                                </inertiaLink>
+                                </div>
                             </div>
                         </template>
 
 
                     </div>
                 </section>
+                <applyfailedVue v-if="showpopup_profile"/>
+                <alreadymemberVue v-if="showpopup_alreadymember" @closepopup="btnclosepopup"/>
             </main>
         </div>
     </div>
@@ -65,18 +60,51 @@
 <script>
 import UserNavigationVue from '../Components/UserNavigation/UserNavigation.vue'
 import {Link as inertiaLink} from '@inertiajs/vue3'
+import {router} from '@inertiajs/vue3'
+import applyfailedVue from '../Components/popup_pages/applyfailed.vue'
+import alreadymemberVue from '../Components/popup_pages/alreadymember.vue'
+
 export default {
     name: 'UserJobs',
-    components: {UserNavigationVue, inertiaLink},
-    props: {job_available:Array, check_usermember:Boolean},
+    components: {UserNavigationVue, inertiaLink, applyfailedVue, alreadymemberVue},
+    props: {job_available:Array, check_usermember:Boolean, check_userinfo: Boolean},
     data(){
         return{
             search_title: '',
             search_type: 'All',
+            showpopup_profile: false,
+            showpopup_alreadymember: false
         }
     },
     methods:{
+        btnviewjob(id){
 
+            let validate_error = true;
+
+            if(this.check_usermember){
+
+                this.showpopup_alreadymember = true;
+                validate_error = true
+
+            }else if(!this.check_userinfo){
+
+                this.showpopup_profile = true;
+                validate_error = true;
+
+            }else{
+                validate_error = false;
+            }
+
+            if(!validate_error){
+                router.get(`/job/details/${id}`);
+                this.showpopup_profile = false;
+                this.showpopup_alreadymember = false;
+            }
+
+        },
+        btnclosepopup(){
+            this.showpopup_alreadymember = false;
+        }
     },
     computed:{
         job_filter(){

@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <nav id="navigationbar" class="navbar col-lg-2 col-md-3 col-12 navbar-expand-md px-md-0 px-4" style="max-height: 340px;">
+    <nav id="navigationbar" class="navbar col-lg-2 col-md-3 col-12 navbar-expand-md px-md-0 px-4" style="max-height: 500px;">
         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#adminnavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,6 +33,12 @@
                 </li>
                 <li class="navbar-item mt-3">
                     <inertiaLink href="/admin/members" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-people"></i> Members</inertiaLink>
+                </li>
+                <li class="navbar-item mt-3 ">
+                    <inertiaLink href="/admin/conversation" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-chat-dots"></i> Message</inertiaLink>
+                </li>
+                <li class="navbar-item mt-3 ">
+                    <inertiaLink href="/admin/settings" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-gear"></i> Settings</inertiaLink>
                 </li>
             </ul>
         </div>

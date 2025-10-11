@@ -110,13 +110,6 @@
                                     <button @click="btnchangememberinfo" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
-                            <br>
-                            <div  v-if="members_info.status" class="text-center">
-                                <button @click="disabledmember" class="btn btn-danger">Disable Account</button>
-                            </div>
-                            <div v-else class="text-center">
-                                <button @click="activatedmember" class="btn btn-success">Activate Account</button>
-                            </div>
                         </div>
 
 
@@ -210,36 +203,6 @@ export default {
             }
 
         },
-        disabledmember(){
-            let proceed = confirm('Are you sure you want to save this changes?')
-
-            if(proceed){
-                router.post(`/disabledmember/${this.membersid}`, {}, {
-                    preserveScroll: true,
-                    onSuccess: () => {
-                        this.showpopupmessage = !this.showpopupmessage
-                    },
-                    onError: (error) => {
-                        console.log(error);
-                    }
-                });
-            }
-        },
-        activatedmember(){
-            let proceed = confirm('Are you sure you want to save this changes?')
-
-            if(proceed){
-                router.post(`/activatedmember/${this.membersid}`, {}, {
-                    preserveScroll: true,
-                    onSuccess: () => {
-                        this.showpopupmessage = !this.showpopupmessage
-                    },
-                    onError: (error) => {
-                        console.log(error);
-                    }
-                });
-            }
-        }
     },
     watch:{
         jobid(jobid){

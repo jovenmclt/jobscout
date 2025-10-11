@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobListController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\ApplicationController;
 
@@ -18,10 +19,12 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/applicationstats', [FrontEndController::class, 'UserApplicationStats']);
     Route::get('/view/application/{jobdata}', [FrontEndController::class, 'UserViewApplication']);
     Route::get('/user/profile', [FrontEndController::class, 'UserProfile']);
+    Route::get('/user/message', [FrontEndController::class, 'UserMessage']);
 
     // actions
     Route::post('/submitapplication', [ApplicationController::class, 'Application']);
     Route::post('/updateprofile', [AuthController::class, 'updateuser']);
+    Route::post('/userstoremessage', [MessageController::class, 'UserStoreMessage']);
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -35,6 +38,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/members/create', [FrontEndController::class, 'AdminCreateMember']);
     Route::get('/admin/members/edit/{id}', [FrontEndController::class, 'AdminEditMember']);
     Route::get('/admin/members/view/{id}', [FrontEndController::class, 'AdminViewMember']);
+    Route::get('/admin/conversation', [FrontEndController::class, 'AdminConversation']);
+    Route::get('/admin/settings', [FrontEndController::class, 'AdminSettings']);
 
     // actions
     Route::post('/createnewjob', [JobListController::class, 'CreateNewJob']);
@@ -43,9 +48,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/store/jobresult/{id}', [ApplicationController::class, 'ResultApplication']);
     Route::post('/editmemberjob/{id}', [AuthController::class, 'EditMemberJob']);
     Route::post('/editmemberinfo/{id}', [AuthController::class, 'EditMemberinfo']);
-    Route::post('/disabledmember/{id}', [AuthController::class, 'DisabledMember']);
-    Route::post('/activatedmember/{id}', [AuthController::class, 'ActivatedMember']);
+    Route::get('/disabledmember/{id}', [AuthController::class, 'DisabledUser']);
+    Route::get('/activatedmember/{id}', [AuthController::class, 'ActivatedUser']);
     Route::post('/createnewmember', [AuthController::class, 'CreateMember']);
+    Route::get('/openmessage/{id}', [FrontEndController::class, 'AdminMessage']);
+    Route::post('/adminstoremessage', [MessageController::class, 'AdminStoreMessage']);
 });
 
 Route::post('/registeraccount', [AuthController::class, 'RegisterAccount']);

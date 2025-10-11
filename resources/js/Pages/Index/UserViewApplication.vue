@@ -31,7 +31,7 @@
                                 <div class="text-start">
                                     <p class="fw-normal mb-0">Status</p>
                                     <h6 v-if="applicant_status == 'Processing'" class="fw-semibold py-1 rounded text-center" style="background-color: #FDECCE; color: #C47E09; font-size: 12px;"> Processing</h6>
-                                    <h6 v-else-if="applicant_status == 'Hired'" class="fw-semibold py-1 rounded text-center" style="background-color: #F2FDF5; color: #16A34A; font-size: 12px;"> Passed</h6>
+                                    <h6 v-else-if="applicant_status == 'Hired'" class="fw-semibold py-1 rounded text-center" style="background-color: #F2FDF5; color: #16A34A; font-size: 12px;"> Hired</h6>
                                     <h6 v-else-if="applicant_status == 'Rejected'" class="fw-semibold py-1 rounded text-center" style="background-color: #FEF2F2; color: #DC2626; font-size: 12px;"> Rejected</h6>
                                     <h6 v-else class="fw-semibold py-1 rounded text-center" style="background-color: #DFDEDC; color: #4E4E4E; font-size: 12px;"> Cancelled</h6>
                                     <br>

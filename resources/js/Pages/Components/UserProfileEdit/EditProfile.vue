@@ -22,9 +22,18 @@
                                         <i @click="removeprofileupload" class="bi bi-x-circle-fill text-danger" style="cursor: pointer;"></i>
                                     </div>
                                 </label>
-                                <label v-else for="profile" class="px-3 border rounded w-100" style="padding: 6px 0; cursor: pointer;">
+                                <label v-else for="profile" class="px-3 border rounded w-100" style="padding: 5px 0; cursor: pointer;">
                                     <div class="text-start ">
-                                        <i class="bi bi-cloud-upload-fill"> Choose File</i>
+                                        <lord-icon
+                                            class="pt-1"
+                                            src="https://cdn.lordicon.com/ucjqqgja.json"
+                                            trigger="loop"
+                                            delay="1000"
+                                            state="hover-upload-2"
+                                            colors="primary:#3080e8"
+                                            style="width:20px;height:20px">
+                                        </lord-icon>
+                                        <span> Choose PDF File</span>
                                     </div>
                                 </label>
                                 <input @change="uploadprofile" id="profile" type="file" class="form-control shadow-none" accept="image/*"  hidden>
@@ -77,9 +86,18 @@
                                         <i @click="removecvupload" class="bi bi-x-circle-fill text-danger" style="cursor: pointer;"></i>
                                     </div>
                                 </label>
-                                <label v-else for="cv" class="px-3 border rounded w-100" style="padding: 6px 0; cursor: pointer;">
+                                <label v-else for="cv" class="px-3 border rounded w-100" style="padding: 5px 0; cursor: pointer;">
                                     <div class="text-start ">
-                                        <i class="bi bi-cloud-upload-fill"> Choose PDF File</i>
+                                        <lord-icon
+                                            class="pt-1"
+                                            src="https://cdn.lordicon.com/ucjqqgja.json"
+                                            trigger="loop"
+                                            delay="1000"
+                                            state="hover-upload-2"
+                                            colors="primary:#3080e8"
+                                            style="width:20px;height:20px">
+                                        </lord-icon>
+                                        <span> Choose PDF File</span>
                                     </div>
                                 </label>
 
@@ -95,9 +113,18 @@
                                         <i @click="removeresumeupload" class="bi bi-x-circle-fill text-danger" style="cursor: pointer;"></i>
                                     </div>
                                 </label>
-                                <label v-else for="resume" class="px-3 border rounded w-100" style="padding: 6px 0; cursor: pointer;">
+                                <label v-else for="resume" class="px-3 border rounded w-100" style="padding: 5px 0; cursor: pointer;">
                                     <div class="text-start ">
-                                        <i class="bi bi-cloud-upload-fill"> Choose PDF File</i>
+                                        <lord-icon
+                                            class="pt-1"
+                                            src="https://cdn.lordicon.com/ucjqqgja.json"
+                                            trigger="loop"
+                                            delay="1000"
+                                            state="hover-upload-2"
+                                            colors="primary:#3080e8"
+                                            style="width:20px;height:20px">
+                                        </lord-icon>
+                                        <span> Choose PDF File</span>
                                     </div>
                                 </label>
 
@@ -110,8 +137,9 @@
                             <textarea v-model="experience" id="Experience" class="form-control shadow-none"  style="height: 100px" ></textarea>
                             <p class="fw-normal text-danger mb-0 mt-1" v-if="errors.Experience" style="font-size: 14px;">{{errors.Experience}}</p>
                         </div>
-                        <div class="text-end mt-3 mb-3">
-                            <button @click="btnsavechanges" class="btn btn-primary">Save changes</button>
+                        <div class="text-end mt-4 mb-2">
+                            <button @click="btnsavechanges" class="btn btn-success px-3" style="font-size: 14px;">Save changes</button>
+                            <button @click="btncloseedit" class="btn btn-secondary px-3 ms-2" style="font-size: 14px;">Cancel</button>
                         </div>
                     </div>
                 </div>

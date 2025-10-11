@@ -29,7 +29,9 @@ class User extends Authenticatable
         'age',
         'education',
         'location',
-        'profile_picture'
+        'profile_picture',
+        'login',
+        'status'
     ];
 
     /**

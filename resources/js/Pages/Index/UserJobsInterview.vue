@@ -34,14 +34,35 @@
                          <div class="col-lg-6 mt-3">
                             <div class="bg-white rounded shadow-sm border py-3 px-3">
 
-                                <label for="cv" class="form-label" style="font-size: 14px;">Curriculum Vitae (CV)<span class="text-danger">*</span></label>
-                                <input @change="uploadCv" type="file" class="form-control shadow-none">
+                                <label class="form-label" style="font-size: 14px;">Curriculum Vitae (CV)<span class="text-danger">*</span></label>
+                                <label v-if="cv_file" class="px-3 border rounded w-100" style="padding: 6px 0; ">
+                                    <div  class="d-flex justify-content-between">
+                                        <p class="fw-normal mb-0">{{ truncateFilename(cv_file.name) }}</p>
+                                        <i @click="removecvupload" class="bi bi-x-circle-fill text-danger" style="cursor: pointer;"></i>
+                                    </div>
+                                </label>
+                                <label v-else for="cv" class="px-3 border rounded w-100" style="padding: 6px 0; cursor: pointer;">
+                                    <div class="text-start ">
+                                        <i class="bi bi-cloud-upload-fill"> Choose PDF File</i>
+                                    </div>
+                                </label>
+                                <input @change="uploadCv" id="cv" type="file" class="form-control shadow-none" accept="application/pdf" hidden>
                                 <p class="fw-normal text-danger mb-0 mt-2" v-if="errors.cv_path">{{ errors.cv_path }}</p>
 
-                                <label for="cv" class="form-label mt-2" style="font-size: 14px;">Resume<span class="text-danger">*</span></label>
-                                <input @change="uploadResume" type="file" class="form-control shadow-none">
+                                <label  class="form-label mt-2" style="font-size: 14px;">Resume<span class="text-danger">*</span></label>
+                                <label v-if="resume_file" class="px-3 border rounded w-100" style="padding: 6px 0; ">
+                                    <div  class="d-flex justify-content-between">
+                                        <p class="fw-normal mb-0">{{ truncateFilename(resume_file.name) }}</p>
+                                        <i @click="removeresumeupload" class="bi bi-x-circle-fill text-danger" style="cursor: pointer;"></i>
+                                    </div>
+                                </label>
+                                <label v-else for="resume_file" class="px-3 border rounded w-100" style="padding: 6px 0; cursor: pointer;">
+                                    <div class="text-start ">
+                                        <i class="bi bi-cloud-upload-fill"> Choose PDF File</i>
+                                    </div>
+                                </label>
+                                <input @change="uploadResume" id="resume_file" type="file" class="form-control shadow-none" accept="application/pdf" hidden>
                                 <p class="fw-normal text-danger mb-0 mt-2" v-if="errors.resume_path">{{ errors.resume_path }}</p>
-
                             </div>
                         </div>
 
@@ -60,8 +81,8 @@
                                 </div>
                             </template>
                             <div class="text-end mt-3">
-                                <button @click="btnSubmitApplication" class="btn btn-primary rounded">Submit Answers</button>
-                                <button @click="btnCancel" class="btn btn-outline-secondary rounded px-3 mx-3">Cancel</button>
+                                <button @click="btnSubmitApplication" class="btn btn-success rounded px-3" style="font-size: 14px;">Submit Answers</button>
+                                <button @click="btnCancel" class="btn btn-outline-secondary rounded px-3 mx-3" style="font-size: 14px;">Cancel</button>
                             </div>
                         </div>
 
@@ -95,18 +116,39 @@ export default {
                 {question_id: '', question: '', answer: ''}
             ],
 
-            resume_file: null,
-            cv_file: null,
+            resume_file: '',
+            cv_file: '',
 
             show_popup: false
         }
     },
     methods: {
+        truncateFilename(name) {
+            if (!name) return '';
+            if (name.length <= 30) return name;
+            return name.substring(0, 30) + '...';
+        },
         uploadResume(event){
             this.resume_file = event.target.files[0];
         },
+        removeresumeupload(){
+            this.resume_file = null;
+            const input = document.getElementById("resume_file");
+            if (input) {
+                input.value = "";
+            }
+
+        },
         uploadCv(event){
             this.cv_file = event.target.files[0];
+        },
+        removecvupload(){
+            this.cv_file = null;
+            const input = document.getElementById("cv");
+            if (input) {
+                input.value = "";
+            }
+
         },
         retrieveInterview(){
             if(this.interview_question.length > 0){
