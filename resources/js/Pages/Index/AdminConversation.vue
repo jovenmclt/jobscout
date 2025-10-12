@@ -45,7 +45,7 @@
                                             <div class="dropstart">
                                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown" style="cursor: pointer;"></i>
                                                 <ul class="dropdown-menu mt-3">
-                                                    <li><inertiaLink class="dropdown-item" :href="`/openmessage/${getuser.id}`" style="font-size: 13px;"> Open message</inertiaLink></li>
+                                                    <li><inertiaLink class="dropdown-item" :href="`/openmessage/${getuser.id}`" style="font-size: 13px;"  @click="clearNotif(getuser.id)"> Open message</inertiaLink></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -63,12 +63,20 @@
                                              {{ getuser?.email ?? '---' }}
                                         </span>
 
-                                        <td v-if="getuser.login == '1'" class="fw-normal py-2"  style="font-size: 12px; ">
-                                            <div class=" text-center py-1 rounded-5 border border-success d-inline-block px-3" style="background-color: #F2FDF5; color: #16A34A;"> Active</div>
-                                        </td>
-                                        <td v-else class="fw-normal py-2"  style="font-size: 12px;">
-                                            <div class="text-center py-1 rounded-5 border border-secondary d-inline-block px-3" style="background-color: #DFDEDC; color: #4E4E4E;"> Offline</div>
-                                        </td>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-start">
+                                                <td v-if="getuser.login == '1'" class="fw-normal py-2"  style="font-size: 12px; ">
+                                                    <div class=" text-center py-1 rounded-5 border border-success d-inline-block px-3" style="background-color: #F2FDF5; color: #16A34A;"> Active</div>
+                                                </td>
+                                                <td v-else class="fw-normal py-2"  style="font-size: 12px;">
+                                                    <div class="text-center py-1 rounded-5 border border-secondary d-inline-block px-3" style="background-color: #DFDEDC; color: #4E4E4E;"> Offline</div>
+                                                </td>
+                                            </div>
+                                            <div class="text-start">
+                                                <p v-if="notif[getuser.id]" class="fw-normal mb-0 mt-3 text-primary" style="font-size: 12px;">New message</p>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -84,29 +92,38 @@
 
 <script>
 import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
-import {Link as inertiaLink} from '@inertiajs/vue3'
-import {router} from '@inertiajs/vue3'
-
+import { Link as inertiaLink } from '@inertiajs/vue3';
 
 export default {
     name: 'AdminConversation',
-    components: {AdminNavigation, inertiaLink,},
-    props: {all_user:Array},
-    data(){
-        return{
+    components: { AdminNavigation, inertiaLink },
+    props: { all_user: Array },
+    data() {
+        return {
             search_type: 'All',
-            search_user: ''
+            search_user: '',
+            notif: JSON.parse(localStorage.getItem('notification')) || {}  // ⬅️ Load saved notifications
         }
     },
-    methods:{
+    methods: {
         truncateFilename(name) {
             if (!name) return '';
             if (name.length <= 17) return name;
             return name.substring(0, 14) + '...';
         },
+        clearNotif(senderId) {
+            if (this.notif[senderId]) {
+                delete this.notif[senderId];
+                this.saveNotif();
+            }
+        },
+        saveNotif() {
+            localStorage.setItem('notification', JSON.stringify(this.notif)); // ✅ Save as object
+        }
+
     },
-    computed:{
-        filterdata(){
+    computed: {
+        filterdata() {
             return this.all_user.filter(data => {
                 const filtername = data.name.toLowerCase().includes(this.search_user.toLowerCase());
                 const status = this.search_type === 'All' || data.login == this.search_type;
@@ -114,11 +131,23 @@ export default {
             });
         }
     },
-    mounted(){
-        console.log(this.all_user);
+    mounted() {
+        // Listen for new message events
+        window.Echo.channel('chat')
+        .listen('MessageSent', (e) => {
+
+            if (!this.notif[e.sender_id]) {
+                this.notif = { ...this.notif, [e.sender_id]: true }; // ensure reactivity
+                this.saveNotif();
+            }
+
+
+        });
+
     }
 }
 </script>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=League+Spartan:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');

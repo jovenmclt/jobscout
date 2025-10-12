@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Events\MessageSent;
 use Illuminate\Http\Request;
+use App\Models\Message_table;
 use App\Models\Conversation_table;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Message_table;
+
 class MessageController extends Controller
 {
     //
@@ -35,13 +37,15 @@ class MessageController extends Controller
             }
         }
 
-        Message_table::create([
+        $message = Message_table::create([
             'conversation_id' => $conversation->id,
             'sender_id' => $userid,
             'message' => $request->message,
             'files' =>json_encode($file_storage),
             'is_read' => 1
         ]);
+
+        broadcast(new MessageSent($message))->toOthers();
 
         return back();
 
@@ -70,13 +74,15 @@ class MessageController extends Controller
             }
         }
 
-        Message_table::create([
+        $message = Message_table::create([
             'conversation_id' => $conversation->id,
             'sender_id' => $adminid,
             'message' => $request->message,
             'files' =>json_encode($file_storage),
             'is_read' => 1
         ]);
+
+        broadcast(new MessageSent($message))->toOthers();
 
         return back();
 

@@ -180,6 +180,13 @@ export default {
     mounted() {
         this.autoResize()
         this.scrollToBottom();
+
+        window.Echo.channel('chat')
+        .listen('MessageSent', (e) => {
+            const conversation = this.message_history[0] ?? { message: [] }
+            conversation.message.push(e)
+            this.message_history[0] = conversation
+        })
     },
     watch:{
         message_history:{

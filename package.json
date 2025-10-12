@@ -17,6 +17,8 @@
         "bootstrap": "^5.3.7",
         "bootstrap-icons": "^1.13.1",
         "chart.js": "^4.5.0",
-        "lottie-web": "^5.13.0"
+        "laravel-echo": "^2.2.4",
+        "lottie-web": "^5.13.0",
+        "pusher-js": "^8.4.0"
     }
 }
