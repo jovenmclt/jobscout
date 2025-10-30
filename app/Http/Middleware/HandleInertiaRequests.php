@@ -37,7 +37,10 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'flash' => [
-                'loginmessage' => fn () => $request->session()->get('failedLogin')
+                'loginmessage' => fn () => $request->session()->get('failedLogin'),
+                'failed_admin_oldpassword' => fn () => $request->session()->get('failed_admin_oldpassword'),
+                'email_found' => fn () => $request->session()->get('email_found'),
+                'email_not_found' => fn () => $request->session()->get('email_notfound'),
             ],
         ]);
     }

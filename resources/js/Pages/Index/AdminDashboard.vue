@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color">
         <div class="row pe-xl-3">
-            <AdminNavigation />
+            <AdminNavigation :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -191,7 +191,7 @@ import {router} from '@inertiajs/vue3'
 import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'AdminDashboard',
-    props: {jobcount:Number, memberscount:Number, applicantcount:Number, applicant:Array, members:Array, processing_applicants:Array, admin_info:Object},
+    props: {check_unread: Boolean, jobcount:Number, memberscount:Number, applicantcount:Number, applicant:Array, members:Array, processing_applicants:Array, admin_info:Object},
     components: {AdminNavigation,inertiaLink},
     data(){
         return{

@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
-            <AdminNavigationVue />
+            <AdminNavigationVue :check_unread="check_unread" />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -174,7 +174,7 @@ import Userresume from '../Components/popup_pages/userresume.vue';
 import usercurriculumvitaeVue from '../Components/popup_pages/usercurriculumvitae.vue';
 export default {
     name: 'AdminCreateMember',
-    props: {membersinfo:Object, applicationhistory:Array},
+    props: {membersinfo:Object, applicationhistory:Array, check_unread:Boolean},
     components: {AdminNavigationVue, inertiaLink, Userresume, usercurriculumvitaeVue},
     data(){
         return{

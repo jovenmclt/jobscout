@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl">
         <div class="row pe-xl-3">
-            <UserNavigationVue />
+            <UserNavigationVue :check_unread="check_unread" />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -89,22 +89,29 @@
                                     </div>
                                 </div>
                             </template>
+                            <br>
+                            <div v-if="applicant_status == `Processing`" class="text-end me-2">
+                                <button @click="btnCancelApplication" class="btn btn-danger px-3" style="font-size: 14px;">Cancel Application</button>
+                            </div>
                         </div>
 
                     </div>
                 </section>
+                
             </main>
         </div>
     </div>
 </template>
 
 <script>
+
 import UserNavigationVue from '../Components/UserNavigation/UserNavigation.vue'
 
+import {router} from '@inertiajs/vue3'
 export default {
     name: 'UserViewApplication',
-    components: {UserNavigationVue},
-    props: {job_details:Object, job_qualification:Object, applicant:Object, applicant_interview:Array},
+    components: {UserNavigationVue, },
+    props: {job_details:Object, job_qualification:Object, applicant:Object, applicant_interview:Array, check_unread:Boolean},
     data(){
         return{
             jobid: this.job_details ? this.job_details.id : '',
@@ -117,6 +124,24 @@ export default {
             applicant_status: this.applicant ? this.applicant.status : '',
             applicant_dateapplied: this.applicant ? this.applicant.created_at : '',
 
+            applicaton_id : this.applicant ? this.applicant.id : '',
+
+
+        }
+    },
+    methods:{
+        btnCancelApplication(){
+
+            const data = {
+                applicationid: this.applicaton_id
+            }
+
+            let proceed = confirm('Are you sure you want to cancel your application?');
+
+            if(proceed){
+
+                router.post('/canceluserapplication', data);
+            }
         }
     }
 }

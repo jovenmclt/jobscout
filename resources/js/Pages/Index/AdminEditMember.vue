@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
-            <AdminNavigationVue />
+            <AdminNavigationVue :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -129,7 +129,7 @@ import userinfoedited from '../Components/popup_pages/userinfoedited.vue'
 
 export default {
     name: 'AdminEditMember',
-    props: {Job_list:Array, members_info:Object, errors:Object},
+    props: {Job_list:Array, members_info:Object, errors:Object, check_unread:Boolean},
     components: {AdminNavigationVue, userinfoedited},
     data(){
         return{

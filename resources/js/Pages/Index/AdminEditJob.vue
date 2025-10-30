@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color">
         <div class="row pe-xl-3">
-            <AdminNavigation />
+            <AdminNavigation :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section">
@@ -124,7 +124,7 @@ import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name:'AdminEditJob',
     components: {AdminNavigation, jobeditedVue, inertiaLink},
-    props: {job_data:Object, job_interview:Array, errors:Object, job_qualification:Array},
+    props: {job_data:Object, job_interview:Array, errors:Object, job_qualification:Array, check_unread:Boolean},
     data(){
         return{
             jobid: this.job_data ? this.job_data.id : '',

@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
-            <AdminNavigation :check_unread="check_unread"/>
+            <UserNavigationVue :check_unread="check_unread" />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -9,7 +9,7 @@
 
 
                         <div class="text-start mt-3">
-                            <h4 class="fw-semibold">Account & Settings</h4>
+                            <h4 class="fw-semibold">Account Settings</h4>
 
                         </div>
 
@@ -52,45 +52,6 @@
 
                     </div>
                 </section>
-                <section id="section2">
-                    <div class="row justify-content-start">
-
-                        <div class="col-lg-12 ">
-                            <div class="bg-white py-3 px-3 shadow-sm rounded border">
-                                <div class="text-start mt-2 mb-4">
-                                    <h5 class="fw-normal " style="font-size: 15px;"><i class="bi bi-info-circle-fill text-primary"></i> <i> User accounts may be disabled by an admin when necessary for security or policy reasons.</i></h5>
-                                </div>
-                                <ul class="nav nav-tabs bg-transparent">
-                                    <li class="nav-item bg-transparent">
-                                        <a class="nav-link text-dark active " data-bs-toggle="tab" href="#All" >ALL</a>
-                                    </li>
-                                    <li class="nav-item bg-transparent">
-                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Active">Active</a>
-                                    </li>
-                                    <li class="nav-item bg-transparent">
-                                        <a class="nav-link text-dark" data-bs-toggle="tab" href="#Disabled">Disabled</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content mt-4 bg-transparent">
-                                    <div class="tab-pane show fade bg-transparent active" id="All">
-                                        <settings_alltableVue :all_user="all_user"/>
-                                    </div>
-                                    <div class="tab-pane show fade bg-transparent" id="Active">
-                                        <settings_activetableVue :all_user="all_user"/>
-                                    </div>
-                                    <div class="tab-pane show fade bg-transparent" id="Disabled">
-                                        <settings_disableaccountVue :all_user="all_user" />
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="text-center mt-4">
-                                <button @click="btnLogoutAccount" class="btn btn-danger px-3" style="font-size: 14px;"><i class="bi bi-box-arrow-left"> </i> Logout</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
                 <updateaccountVue v-if="showpopup" />
             </main>
         </div>
@@ -98,22 +59,17 @@
 </template>
 
 <script>
-import AdminNavigation from '../Components/AdminNavigation/AdminNavigation.vue';
 import {Link as inertiaLink} from '@inertiajs/vue3'
 import {router} from '@inertiajs/vue3'
-import settings_alltableVue from '../Components/AdminTable/settings_alltable.vue';
-import settings_activetableVue from '../Components/AdminTable/settings_activetable.vue';
-import settings_disableaccountVue from '../Components/AdminTable/settings_disableaccount.vue';
+import UserNavigationVue from '../Components/UserNavigation/UserNavigation.vue'
 import updateaccountVue from '../Components/popup_pages/updateaccount.vue';
 export default {
     name: 'AdminConversation',
-    components: {AdminNavigation, inertiaLink, settings_alltableVue, settings_activetableVue, settings_disableaccountVue, updateaccountVue},
-    props: {all_user:Object, check_unread:Boolean, flash:Object, errors:Object, admin_info:Object},
+    components: {inertiaLink, UserNavigationVue, updateaccountVue},
+    props: {check_unread:Boolean, errors:Object, userinfo:Object, flash:Object,},
     data(){
         return{
-            search_type: 'All',
-            search_user: '',
-            email: this.admin_info ? this.admin_info.email  : '',
+            email: this.userinfo ? this.userinfo.email  : '',
             oldpassword: '',
             newpassword: '',
             confirmpassword: '',
@@ -137,7 +93,7 @@ export default {
 
             }else{
 
-                router.post('/adminchangepassword' , data, {
+                router.post('/updateuseraccount' , data, {
                     preserveScroll: true,
                     onSuccess: (page) => {
                         const flash = page.props.flash;
@@ -149,7 +105,6 @@ export default {
 
                 this.mismatchpassword = '';
             }
-
         },
         btnLogoutAccount(){
             router.post('/logoutaccount');

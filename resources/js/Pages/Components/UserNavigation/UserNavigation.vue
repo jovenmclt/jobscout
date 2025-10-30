@@ -35,7 +35,22 @@
                     <inertiaLink href="/user/profile" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-person-circle fs-5"></i> Profile</inertiaLink>
                 </li>
                 <li class="navbar-item mt-3 ">
-                    <inertiaLink href="/user/message" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-chat-dots"></i> Message</inertiaLink>
+                    <inertiaLink href="/user/message" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-chat-dots"></i> Message
+
+                        <sup><span class="text-primary" v-if="check_unread">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/ahxaipjb.json"
+                                trigger="loop"
+                                delay="1500"
+                                colors="primary:#16a9c7"
+                                style="width:20px;height:20px">
+                            </lord-icon>
+                        </span></sup>
+
+                    </inertiaLink>
+                </li>
+                <li class="navbar-item mt-3 ">
+                    <inertiaLink href="/user/settings" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-gear"></i> Settings</inertiaLink>
                 </li>
             </ul>
         </div>
@@ -46,7 +61,8 @@
 import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'UserNavigation',
-    components: {inertiaLink}
+    components: {inertiaLink},
+    props: {check_unread:Boolean}
 }
 </script>
 

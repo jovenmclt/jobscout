@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl">
         <div class="row pe-xl-3">
-            <UserNavigation />
+            <UserNavigation :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -68,7 +68,7 @@
 
                     </div>
                 </section>
-               
+
             </main>
         </div>
     </div>
@@ -83,7 +83,7 @@ import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'UserJobDetails',
     components: {UserNavigation, inertiaLink, },
-    props: {job_details:Object, job_qualification:Array},
+    props: {job_details:Object, job_qualification:Array, check_unread:Boolean},
     data(){
         return{
             jobid: this.job_details ? this.job_details.id : '',

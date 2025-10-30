@@ -13,14 +13,20 @@
                                     <input v-model="email" id="Email" type="text" class="form-control shadow-none rounded-5 w-100 ">
 
                                     <label for="Password" class="form-label mt-3">Password:</label>
-                                    <input v-model="password" id="Password" type="password" class="form-control shadow-none rounded-5 w-100">
+                                    <input v-model="password" id="Password" :type="showpassword ? 'text' : 'password'" class="form-control shadow-none rounded-5 w-100">
 
                                     <p class="fw-normal mb-0 mt-2 ms-2 text-danger" v-if="$page.props.flash.loginmessage">{{ $page.props.flash.loginmessage }}</p>
 
-                                    <div class="mt-3 ms-1">
-                                        <input type="checkbox" class="form-check-input shadow-none">
-                                        <span class="fw-normal"> Remember me.</span>
+                                    <div class="d-flex justify-content-between gap-3 mt-2">
+                                        <div class="text-start">
+                                            <inertiaLink href="/forgotpassword" style="font-size: 14px;">Forgot Password?</inertiaLink>
+                                        </div>
+                                        <div class="text-end ms-1">
+                                            <input v-model="showpassword" type="checkbox" class="form-check-input shadow-none">
+                                            <span class="fw-normal" style="font-size: 14px;"> Show Password</span>
+                                        </div>
                                     </div>
+
                                     <br>
                                     <button class="btn btn-primary w-100">Log in</button>
                                 </form>
@@ -52,7 +58,8 @@ export default {
     data(){
         return{
             email: '',
-            password: ''
+            password: '',
+            showpassword: false
         }
     },
     methods: {

@@ -35,15 +35,20 @@
                     <inertiaLink href="/admin/members" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-people"></i> Members</inertiaLink>
                 </li>
                 <li class="navbar-item mt-3 ">
-                    <inertiaLink href="/admin/conversation" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-chat-dots"></i> Message<sup><span class="text-primary" v-if="hasNotif">
-                        <lord-icon
-                            src="https://cdn.lordicon.com/ahxaipjb.json"
-                            trigger="loop"
-                            delay="1500"
-                            colors="primary:#16a9c7"
-                            style="width:20px;height:20px">
-                        </lord-icon>
-                    </span></sup></inertiaLink>
+                    <inertiaLink href="/admin/conversation" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-chat-dots"></i> Message
+                        <sup><span class="text-primary" v-if="check_unread">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/ahxaipjb.json"
+                                trigger="loop"
+                                delay="1500"
+                                colors="primary:#16a9c7"
+                                style="width:20px;height:20px">
+                            </lord-icon>
+                        </span></sup>
+                    </inertiaLink>
+                </li>
+                <li class="navbar-item mt-3">
+                    <inertiaLink href="/admin/analytics" class="navbar-link admin-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 px-2"><i class="bi bi-graph-up-arrow"></i> Analytics</inertiaLink>
                 </li>
                 <li class="navbar-item mt-3 ">
                     <inertiaLink href="/admin/settings" class="navbar-link User-nav-hov text-decoration-none fw-normal fs-5 text-dark nav-link rounded-2 px-lg-3 "><i class="bi bi-gear"></i> Settings</inertiaLink>
@@ -58,33 +63,12 @@ import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'AdminNavigation',
     components: {inertiaLink},
+    props: {check_unread:Boolean},
     data(){
         return{
-            notif: JSON.parse(localStorage.getItem('notification')) || {}
-        }
-    },
-    computed: {
-        hasNotif() {
-            return Object.keys(this.notif).length > 0;
-        }
-    },
-    mounted() {
-        // 🔁 Listen to localStorage changes (from other components)
-        window.addEventListener('storage', (event) => {
-            if (event.key === 'notification') {
-                this.notif = JSON.parse(event.newValue || '{}');
-            }
-        });
 
-        // 🔥 Optional: also listen to real-time broadcast (so you can react even if localStorage doesn't update yet)
-        if (window.Echo) {
-            window.Echo.channel('chat')
-                .listen('MessageSent', (e) => {
-                    this.notif = { ...this.notif, [e.sender_id]: true };
-                    localStorage.setItem('notification', JSON.stringify(this.notif));
-                });
         }
-    }
+    },
 
 }
 </script>

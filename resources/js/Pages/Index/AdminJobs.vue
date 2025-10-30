@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
-            <AdminNavigation />
+            <AdminNavigation :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -139,7 +139,7 @@ import {router} from '@inertiajs/vue3'
 export default {
     name: 'AdminJobs',
     components: {AdminNavigation, inertiaLink, },
-    props: {job_list:Object, job_count:Number, job_avail:Number, job_unavail:Number},
+    props: {job_list:Object, job_count:Number, job_avail:Number, job_unavail:Number, check_unread:Boolean},
     data(){
         return{
             searchname: '',

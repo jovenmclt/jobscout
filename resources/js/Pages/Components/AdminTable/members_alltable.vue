@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-between mb-3">
             <div class="text-start mb-3 mt-2">
-                <h6 class="fw-normal text-secondary">List of Members</h6>
+                <h6 class="fw-normal text-secondary">List of all Members</h6>
             </div>
             <div class="position-relative">
                 <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>

@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl ">
         <div class="row pe-xl-3">
-            <UserNavigation />
+            <UserNavigation :check_unread="check_unread" />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -163,7 +163,7 @@ import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'UserDashboard',
     components: {UserNavigation, inertiaLink},
-    props: {user_data:Object, job_applied:Number, Job_passed:Number, job_rejected:Number, application_job:Object},
+    props: {user_data:Object, job_applied:Number, Job_passed:Number, job_rejected:Number, application_job:Object, check_unread:Boolean},
     methods:{
         btnlogout(){
             router.post('/logoutaccount');

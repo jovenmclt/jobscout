@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl ">
         <div class="row pe-xl-3 ">
-            <UserNavigationVue />
+            <UserNavigationVue :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -112,7 +112,7 @@ import userresumeVue from '../Components/popup_pages/userresume.vue';
 export default {
     name: 'UserProfile',
     components: {UserNavigationVue, EditProfile, usercurriculumvitaeVue, userresumeVue},
-    props: {userinfo:Object, errors:Object, memberinfo:Object},
+    props: {userinfo:Object, errors:Object, memberinfo:Object, check_unread:Boolean},
     data(){
         return{
             showeditprofile: false,

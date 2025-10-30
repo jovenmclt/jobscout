@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
-            <AdminNavigationVue />
+            <AdminNavigationVue :check_unread="check_unread" />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -98,7 +98,7 @@ import Members_disabledtable from '../Components/AdminTable/members_disabledtabl
 
 export default {
     name: 'AdminMembers',
-    props: {all_members:Object, total_member:Number, total_active:Number, total_disabled:Number},
+    props: {all_members:Object, total_member:Number, total_active:Number, total_disabled:Number, check_unread:Boolean},
     components: {AdminNavigationVue, inertiaLink, members_alltableVue, Members_activetable, Members_disabledtable}
 }
 </script>

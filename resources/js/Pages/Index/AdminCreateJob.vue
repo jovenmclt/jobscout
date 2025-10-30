@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color">
         <div class="row pe-xl-3">
-            <AdminNavigation />
+            <AdminNavigation :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section">
@@ -129,7 +129,7 @@ import jobcreatedVue from '../Components/popup_pages/jobcreated.vue';
 export default {
     name:'AdminCreateJob',
     components: {AdminNavigation, jobcreatedVue},
-    props:{ errors:Object },
+    props:{ errors:Object, check_unread:Boolean },
     data(){
         return{
             jobtitle: '',

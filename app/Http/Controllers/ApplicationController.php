@@ -53,6 +53,14 @@ class ApplicationController extends Controller
 
     }
 
+    public function CancelApplication(Request $request){
+
+        Job_application::where('id', $request->applicationid)->delete();
+
+        return redirect()->route('applicationstats');
+
+    }
+
     public function ResultApplication(Request $request, Job_application $id){
 
         $id->update([

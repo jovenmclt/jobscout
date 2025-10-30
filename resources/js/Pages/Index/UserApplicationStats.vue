@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl min-vh-100 ">
         <div class="row pe-xl-3">
-            <UserNavigationVue />
+            <UserNavigationVue :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -157,7 +157,7 @@ import {Link as inertiaLink} from '@inertiajs/vue3'
 export default {
     name: 'UserApplicationStats',
     components:{UserNavigationVue, inertiaLink},
-    props: {application_job:Object, totalapplied:Number, totalpassed:Number, totalrejected:Number},
+    props: {application_job:Object, totalapplied:Number, totalpassed:Number, totalrejected:Number, check_unread:Boolean},
     data(){
         return{
             searchjob: ''

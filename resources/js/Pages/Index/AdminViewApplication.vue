@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
-            <AdminNavigation />
+            <AdminNavigation :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -124,7 +124,7 @@ import usercurriculumvitaeVue from '../Components/popup_pages/usercurriculumvita
 export default {
     name: 'AdminViewApplication',
     components: {AdminNavigation, userresumeVue, Applicationresult, usercurriculumvitaeVue},
-    props: {application_info:Object, interview_info:Array},
+    props: {application_info:Object, interview_info:Array, check_unread:Boolean},
     data(){
         return{
            showresume: false,
@@ -169,7 +169,7 @@ export default {
             });
         }
     },
-    
+
 
 }
 </script>

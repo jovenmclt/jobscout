@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Job_list;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Members_table;
+use App\Models\Message_table;
+use App\Models\Job_application;
+use App\Models\Conversation_table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Models\Members_table;
-use App\Models\Job_list;
-use App\Models\Message_table;
-use App\Models\Conversation_table;
-use App\Models\Job_application;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+
 class AuthController extends Controller
 {
     //
@@ -48,7 +53,7 @@ class AuthController extends Controller
 
 
         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->back()->with('failedLogin', 'Invalid username or password.');
+            return redirect()->back()->with('failedLogin', 'Invalid email or password.');
         }
 
         $request->session()->regenerate();
@@ -75,6 +80,58 @@ class AuthController extends Controller
 
         Auth::logout();
         return redirect()->route('login');
+    }
+
+    public function ForgotPassword(){
+        return Inertia::render('Index/ForgotPassword');
+    }
+
+    public function VerifyEmail(Request $request) {
+
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::ResetLinkSent
+            ? back()->with(['email_found' => __($status)])
+            : back()->with(['email_notfound' => __($status)]);
+
+    }
+
+    public function ResetPasswordForm(Request $request){
+
+        return Inertia::render('Index/ResetPasswordForm', [
+            'email' => $request->email,
+            'token' => $request->route('token')
+        ]);
+
+    }
+
+    public function ResetPasswordHandler(Request $request){
+
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return redirect()->route('login');
+
     }
 
     //user
@@ -124,6 +181,26 @@ class AuthController extends Controller
             'experience' => $request->Experience
         ]);
 
+    }
+
+    public function UpdateUserAccount(Request $request){
+
+        $request->validate([
+            'oldpassword' => 'required',
+            'newpassword' => 'required|string|min:8',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->oldpassword, $user->password)) {
+            return redirect()->back()->with(['failed_admin_oldpassword' => 'The old password is incorrect.']);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->newpassword)
+        ]);
+
+        return back();
     }
 
     //admin
@@ -314,6 +391,26 @@ class AuthController extends Controller
             'sender_id' => $adminId,
             'message' => "Here is the result of your application for the position of {$get_jobinfo->job_title}: {$newuser_application->status}",
             'is_read' => 1
+        ]);
+
+        return back();
+    }
+
+    public function UpdateAdminAccount(Request $request){
+
+        $request->validate([
+            'oldpassword' => 'required',
+            'newpassword' => 'required|string|min:8',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->oldpassword, $user->password)) {
+            return redirect()->back()->with(['failed_admin_oldpassword' => 'The old password is incorrect.']);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->newpassword)
         ]);
 
         return back();

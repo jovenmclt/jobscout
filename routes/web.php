@@ -16,15 +16,19 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/jobs', [FrontEndController::class, 'UserJobs']);
     Route::get('/job/details/{jobdata}', [FrontEndController::class, 'UserJobsDetails']);
     Route::get('/job/interview/{jobdata}', [FrontEndController::class, 'UserJobsInterview']);
-    Route::get('/user/applicationstats', [FrontEndController::class, 'UserApplicationStats']);
+    Route::get('/user/applicationstats', [FrontEndController::class, 'UserApplicationStats'])->name('applicationstats');
     Route::get('/view/application/{jobdata}', [FrontEndController::class, 'UserViewApplication']);
     Route::get('/user/profile', [FrontEndController::class, 'UserProfile']);
     Route::get('/user/message', [FrontEndController::class, 'UserMessage']);
+    Route::get('/user/settings', [FrontEndController::class, 'UserSettings']);
 
     // actions
     Route::post('/submitapplication', [ApplicationController::class, 'Application']);
+    Route::post('/canceluserapplication', [ApplicationController::class, 'CancelApplication']);
     Route::post('/updateprofile', [AuthController::class, 'updateuser']);
     Route::post('/userstoremessage', [MessageController::class, 'UserStoreMessage']);
+    Route::post('/updateuseraccount', [AuthController::class, 'UpdateUserAccount']);
+
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -39,6 +43,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/members/edit/{id}', [FrontEndController::class, 'AdminEditMember']);
     Route::get('/admin/members/view/{id}', [FrontEndController::class, 'AdminViewMember']);
     Route::get('/admin/conversation', [FrontEndController::class, 'AdminConversation']);
+    Route::get('/admin/analytics', [FrontEndController::class, 'AdminAnalytics']);
     Route::get('/admin/settings', [FrontEndController::class, 'AdminSettings']);
 
     // actions
@@ -53,8 +58,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/createnewmember', [AuthController::class, 'CreateMember']);
     Route::get('/openmessage/{id}', [FrontEndController::class, 'AdminMessage']);
     Route::post('/adminstoremessage', [MessageController::class, 'AdminStoreMessage']);
+    Route::post('/adminchangepassword', [AuthController::class, 'UpdateAdminAccount']);
+    Route::get('/adminreport', [FrontEndController::class, 'AdminViewReport']);
 });
 
 Route::post('/registeraccount', [AuthController::class, 'RegisterAccount']);
 Route::post('/loginaccount', [AuthController::class, 'LoginAccount']);
 Route::post('/logoutaccount', [AuthController::class, 'LogoutAccount']);
+
+Route::get('/forgotpassword', [AuthController::class, 'ForgotPassword']);
+
+Route::post('/forgot-password', [AuthController::class, 'VerifyEmail'] )->name('password.email');
+Route::get('/reset-password/{token}', [AuthController::class, 'ResetPasswordForm'] )->name('password.reset');
+
+Route::post('/reset-password', [AuthController::class, 'ResetPasswordHandler'] )->name('password.update');
+

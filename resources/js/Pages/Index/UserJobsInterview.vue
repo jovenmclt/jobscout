@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl ">
         <div class="row pe-xl-3">
-            <UserNavigationVue />
+            <UserNavigationVue :check_unread="check_unread" />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -103,7 +103,7 @@ import jobapplication from '../Components/popup_pages/jobapplication.vue'
 export default {
     name:'UserJobsInterview',
     components:{UserNavigationVue, jobapplication},
-    props: {job_data:Object, interview_question:Array, errors:Object},
+    props: {job_data:Object, interview_question:Array, errors:Object, check_unread:Boolean},
     data(){
         return{
             jobid: this.job_data ? this.job_data.id : '',

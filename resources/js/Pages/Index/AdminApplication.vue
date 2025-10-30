@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
-            <AdminNavigationVue />
+            <AdminNavigationVue :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -15,7 +15,7 @@
                         <div class="col-lg-3 col-md-4 mt-3">
                             <div class="bg-white py-3 px-3 rounded shadow-sm border">
                                 <div class="text-start">
-                                    <p class="fw-normal text-primary mb-2">Total Applicants</p>
+                                    <p class="fw-normal text-primary mb-2">Total Applicant's</p>
                                     <h3 class="fw-semibold">{{ total_application }}</h3>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@ import application_rejectedtableVue from '../Components/AdminTable/application_r
 export default {
     name: 'AdminApplication',
     components: {AdminNavigationVue, inertiaLink, application_alltableVue, Application_processingtable, Application_hiredtable, application_rejectedtableVue},
-    props: {application_list:Object, total_application:Number, processing_application:Number, passed_application:Number, rejected_application:Number},
+    props: {application_list:Object, total_application:Number, processing_application:Number, passed_application:Number, rejected_application:Number, check_unread:Boolean},
 
 }
 </script>

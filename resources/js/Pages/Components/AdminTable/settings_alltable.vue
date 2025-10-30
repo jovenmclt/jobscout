@@ -1,5 +1,8 @@
 <template>
-    <div class="d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-between mb-3">
+            <div class="text-start mb-3 mt-2">
+                <h6 class="fw-normal text-secondary">List of all account</h6>
+            </div>
             <div class="position-relative">
                 <i class="bi bi-search position-absolute" style="top: 8px; left: 10px;"></i>
                 <input v-model="searchname" type="text" placeholder="Search"

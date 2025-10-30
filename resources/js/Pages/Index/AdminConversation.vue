@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl bg-color min-vh-100">
         <div class="row pe-xl-3">
-            <AdminNavigation />
+            <AdminNavigation :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -14,7 +14,7 @@
                                 <div class="text-start">
                                     <select v-model="search_type" class="form-select shadow-none" aria-label="Default select example">
                                         <option value="All">All</option>
-                                        <option value="1">Active</option>
+                                        <option value="1">Online</option>
                                         <option value="0">Offline</option>
                                     </select>
                                 </div>
@@ -66,7 +66,7 @@
                                         <div class="d-flex justify-content-between">
                                             <div class="text-start">
                                                 <td v-if="getuser.login == '1'" class="fw-normal py-2"  style="font-size: 12px; ">
-                                                    <div class=" text-center py-1 rounded-5 border border-success d-inline-block px-3" style="background-color: #F2FDF5; color: #16A34A;"> Active</div>
+                                                    <div class=" text-center py-1 rounded-5 border border-success d-inline-block px-3" style="background-color: #F2FDF5; color: #16A34A;"> Online</div>
                                                 </td>
                                                 <td v-else class="fw-normal py-2"  style="font-size: 12px;">
                                                     <div class="text-center py-1 rounded-5 border border-secondary d-inline-block px-3" style="background-color: #DFDEDC; color: #4E4E4E;"> Offline</div>
@@ -97,7 +97,7 @@ import { Link as inertiaLink } from '@inertiajs/vue3';
 export default {
     name: 'AdminConversation',
     components: { AdminNavigation, inertiaLink },
-    props: { all_user: Array },
+    props: { all_user: Array, check_unread:Boolean },
     data() {
         return {
             search_type: 'All',

@@ -1,7 +1,7 @@
 <template>
     <div class="container-xxl  min-vh-100">
         <div class="row pe-xl-3">
-            <UserNavigationVue />
+            <UserNavigationVue :check_unread="check_unread" />
             <main class="col-lg-10 col-md-9 col-12 ms-auto">
                 <br class="d-md-block d-none"><br class="d-md-block d-none">
                 <section id="section1">
@@ -67,7 +67,7 @@ import alreadymemberVue from '../Components/popup_pages/alreadymember.vue'
 export default {
     name: 'UserJobs',
     components: {UserNavigationVue, inertiaLink, applyfailedVue, alreadymemberVue},
-    props: {job_available:Array, check_usermember:Boolean, check_userinfo: Boolean},
+    props: {job_available:Array, check_usermember:Boolean, check_userinfo: Boolean, check_unread:Boolean},
     data(){
         return{
             search_title: '',
