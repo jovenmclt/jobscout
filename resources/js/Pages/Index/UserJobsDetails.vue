@@ -1,5 +1,5 @@
 <template>
-    <div class="container-xxl">
+    <div class="container-xxl bg-color">
         <div class="row pe-xl-3">
             <UserNavigation :check_unread="check_unread"/>
             <main class="col-lg-10 col-md-9 col-12 ms-auto">

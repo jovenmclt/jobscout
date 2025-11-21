@@ -7,7 +7,7 @@
                         <div class="col-lg-6 col-12 d-flex align-items-center justify-content-center">
                             <div class="text-start w-75">
                                 <h3 class="fw-bold">Welcome Back!</h3>
-                                <p class="fw-normal">Lorem ipsum dolor sit amet consectetur </p>
+                                <p class="fw-normal">Welcome back to Sweet Treats PH JobScout! </p>
                                 <form @submit.prevent="btnlogin" action="">
                                     <label for="Email" class="form-label">Email:</label>
                                     <input v-model="email" id="Email" type="text" class="form-control shadow-none rounded-5 w-100 ">

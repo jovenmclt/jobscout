@@ -442,11 +442,14 @@ class FrontEndController extends Controller
                     ->exists();
         }
 
-        $check_usermember = Members_table::where('userid', $userid)
-                        ->exists();
+        $check_jobapplication = Job_application::where('user_id', $userid)->pluck('job_id');
 
         $get_availjob = Job_list::where('status', true)
-                    ->get();
+                        ->whereNotIn('id', $check_jobapplication)
+                        ->get();
+
+        $check_usermember = Members_table::where('userid', $userid)
+                        ->exists();
 
         $check_userinfo = User::where('id', $userid)
                         ->whereNotNull('experience')->where('experience', '!=', '')

@@ -7,7 +7,7 @@
                         <div class="col-lg-6 col-12 d-flex align-items-center justify-content-center">
                             <div class="text-start w-75">
                                 <h3 class="fw-bold">Sign up account</h3>
-                                <p class="fw-normal">Lorem ipsum dolor sit amet consectetur </p>
+                                <p class="fw-normal">Discover job opportunities. Register now here. </p>
                                 <form @submit.prevent="btnRegisterAccount" action="">
                                     <label for="Fullname" class="form-label">Fullname:</label>
                                     <input v-model="fullname" id="Fullname" type="text" class="form-control shadow-none rounded-5 w-100 ">
