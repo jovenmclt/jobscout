@@ -21,7 +21,7 @@ Sweet Treats PH Job Portal is designed to streamline hiring for the dessert rest
   - Review applicants
 
 ## Technologies Used
-- Vue.js 3, Bootstrap 5, Inertia.js
-- Laravel 11
-- MySQL
-- Composer, NPM
+- Frontend: Vue.js 3, Bootstrap 5, Inertia.js
+- Backend: Laravel 11
+- Database: MySQL
+- Other Tools: Composer, NPM
